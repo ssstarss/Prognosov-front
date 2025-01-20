@@ -1,0 +1,44 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    
+    "@typescript-eslint", "prettier"
+  ],
+  "settings": {
+    "react": {
+      "version": "999.999.999"
+    }
+  },
+  "rules": {
+   "operator-linebreak": [
+      "error",
+      "after",
+      {
+        "overrides": {
+          ":": "before"
+        }
+      }
+    ],
+    "prettier/prettier": ["error", { "endOfLine": "auto" }],
+    "linebreak-style": "off", 
+    "import/no-extraneous-dependencies": "off"
+  }
+}
