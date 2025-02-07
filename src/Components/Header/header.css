@@ -1,0 +1,15 @@
+.header {
+  background-color: #a4c991;
+  padding: 10px 20px;
+  color: white;
+}
+
+.navigationMenu {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 5px;
+  align-content: flex-end;
+  justify-content: space-around;
+}

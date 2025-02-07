@@ -1,40 +1,58 @@
-const path = require("path");
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 module.exports = {
-    entry: "./src/index.tsx",
-    devtool: "source-map",
-    mode: "development",
-    output: {
-        path: path.resolve(__dirname, "dist"),
-        filename: "bundle.js"
-    },
-    plugins: [new HtmlWebpackPlugin({
-      template: "./src/index.html",
+  entry: './src/index.tsx',
+  devtool: 'source-map',
+  mode: 'development',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
       hash: true, // Cache busting
-      filename: '../dist/index.html'
-    })],
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: "babel-loader"
-          }
+      filename: '../dist/index.html',
+    }),
+    new NodePolyfillPlugin(),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
         },
-        {
-          test: /\.(ts|tsx)?$/,
-          loader: "ts-loader",
-          exclude: /node_modules/
-        },
-      ]
+      },
+      {
+        test: /\.(ts|tsx)?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.js$/,
+        include: /node_modules\/react-dom/,
+        // use: ['react-hot-loader/webpack'],
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.ts', '.js', '.json', '.tsx'],
+    alias: {
+      'node:http': 'http',
+      'node:https': 'https',
+      'node:url': 'url',
     },
-    resolve: {
-      extensions: ['.ts', '.js', '.json', ".tsx"]
-    },
-    devServer: {
-      port: 3000,
-      open: true,
-      hot: true
-    },
-}
+  },
+  devServer: {
+    port: 3000,
+    open: true,
+    hot: true,
+  },
+};
