@@ -16,6 +16,10 @@
   border: solid 1px black;
   border-radius: 20px;
   align-items: center;
-  
 }
-
+.competition {
+  cursor: pointer;
+}
+.currentCompetitionHeader {
+  color: blue;
+}

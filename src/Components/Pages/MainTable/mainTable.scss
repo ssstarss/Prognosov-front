@@ -1,0 +1,173 @@
+.maintableWrapper {
+  border-bottom: none;
+  overflow: auto;
+  height: 90vh;
+}
+
+.mainTable {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.mainTableHeader {
+  height: 110px;
+}
+
+.mainTable td:nth-child(1),
+.mainTable th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+}
+
+.mainTable th:nth-child(1) {
+  z-index: 6;
+}
+
+.mainTable th {
+  vertical-align: top;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: whitesmoke;
+}
+
+.mainTableHeaderCell {
+  height: 100%;
+  border: 2px solid;
+  border-width: 2px 1px 2px 0;
+}
+
+.matchCell :first-child {
+  border-right: 1px dashed grey;
+}
+
+.matchCell {
+  display: flex;
+  height: 110px;
+}
+
+.teamCell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-right-style: initial;
+}
+
+.teamName:first-child {
+  border-right: none;
+}
+
+.teamName {
+  font-size: 12px;
+  margin: 3px;
+  height: 80%;
+  font-weight: bolder;
+  margin-bottom: 10px;
+  text-align: end;
+  border-right-style: initial;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+}
+
+.matchCellScore{
+  font-size: 12px;
+  font-weight: bold;
+
+}
+.playerNameCell {
+  border: solid black;
+  border-width: 0 2px 2px 2px;
+  background-color: whitesmoke;
+}
+
+.playerName {
+  font-size: 12px;
+  white-space: nowrap;
+}
+.playerResultCell {
+  border: black solid;
+  border-width: 0px 1px 2px 0px;
+  border-right: 1px dotted ;
+}
+
+.playerResultWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.prognose {
+  font-size: 14px;
+  border-bottom: 1px black solid;
+  margin: 0 5px 0 5px;
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  width: 18px;
+  height: 18px;
+  align-self: center;
+  color: whitesmoke;
+  margin: 0;
+  margin-top: 5px;
+  border-radius: 20px;
+}
+
+.score,
+.prognose {
+  text-align: center;
+}
+.score_black {
+  color: black;
+}
+
+.score_blue {
+  background-color: blue;
+  border: 2px solid rgb(1, 1, 125);
+  background-image: linear-gradient(to top, blue, rgb(123, 123, 239));
+  position: relative;
+  border-radius: 50%;
+  box-shadow:
+    0px 2px 4px #aaa,
+    inset 0px 2px 4px rgb(1, 1, 206);
+}
+
+.score_orange {
+  background-color: orange;
+  border: 2px solid rgb(177, 115, 2);
+  background-image: linear-gradient(to top, orange, rgb(141, 92, 2));
+  position: relative;
+  border-radius: 50%;
+  box-shadow:
+    0px 2px 4px #aaa,
+    inset 0px 2px 4px rgb(215, 140, 1);
+}
+
+.score_green {
+  background-color: rgb(66, 154, 4);
+  border: 2px solid rgb(1, 116, 1);
+  background-image: linear-gradient(to top, rgb(66, 154, 4), rgb(49, 115, 2));
+  position: relative;
+  border-radius: 50%;
+  box-shadow:
+    0px 2px 4px #aaa,
+    inset 0px 2px 4px rgb(49, 117, 1);
+}
+
+.score_aqua {
+  background-color: rgb(1, 182, 248);
+  border: 2px solid rgb(3, 143, 194);
+  background-image: linear-gradient(to top, rgb(1, 182, 248), rgb(2, 154, 210));
+  position: relative;
+  border-radius: 50%;
+  box-shadow:
+    0px 2px 4px #aaa,
+    inset 0px 2px 4px rgb(1, 153, 209);
+}

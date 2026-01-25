@@ -2,7 +2,7 @@
   background-color: #a4c991;
   padding: 10px 20px;
   color: white;
-  height: 8vh;
+  margin-bottom: 20px;
 }
 
 .navigationMenu {
@@ -13,7 +13,4 @@
   padding: 5px;
   align-content: flex-end;
   justify-content: space-around;
-}
-.adminHeaderLink {
-  display: none;
 }

@@ -9,13 +9,49 @@
   align-items: center;
 }
 .prognosesForm {
-  width: 500px;
+  width: 50%;
+  max-height: 90vh;
   margin: auto;
   display: flex;
   flex-direction: column;
   border: solid 1px black;
   border-radius: 20px;
   align-items: center;
-  
+  overflow: hidden;
 }
 
+.prognoses__list {
+  width: 90%;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
+}
+
+.prognoses__prognose_wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.prognoses__prognose_wrapper:nth-child(odd) {
+  background-color: rgb(238, 237, 237);
+}
+
+.prognoses__teams_wrapper {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.prognoses__score_wrapper {
+  width: 40px;
+  text-align: center;
+}
+.prognoses__team_name {
+  margin: 3px;
+}
+
+.prognoses__score {
+  margin: 3px;
+}

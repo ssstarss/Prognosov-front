@@ -1,6 +1,6 @@
-import { commonVars } from '../constants';
+import { appState, SERVER } from '../constants';
 
-async function loginRefresh() {
+export default async function loginRefresh() {
   const refreshToken = localStorage.getItem('refreshToken');
   if (refreshToken) {
     const myHeaders = {
@@ -13,9 +13,17 @@ async function loginRefresh() {
       headers: myHeaders,
     };
     try {
-      const response = await fetch('http://localhost:5000/auth/refresh', request);
+      const response = await fetch(`${SERVER}/auth/refresh`, request);
+      if (!response.ok) return false;
       const res = await response.json();
-      commonVars.accessToken = res.accessToken;
+      appState.accessToken = res.accessToken;
+      appState.userID = res.userID;
+      const competitionID = localStorage.getItem('currentCompetitionID');
+      if (competitionID) appState.currentCompetitionID = Number(competitionID);
+      if (res.userRole === 'admin') {
+        const headerLinks = Array.from(document.getElementsByClassName('adminHeaderLink'));
+        headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'block'));
+      }
     } catch (e: any) {
       console.log('loginpage error refresh');
     }
@@ -24,4 +32,4 @@ async function loginRefresh() {
   return false;
 }
 
-export default loginRefresh;
+

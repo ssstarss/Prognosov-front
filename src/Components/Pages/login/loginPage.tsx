@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import loginPassword from '../../../functions/loginPassword';
@@ -17,12 +17,14 @@ export default function LoginPage() {
           type="email"
           placeholder="email@mail.com"
           onChange={onEmailChange}
+          onKeyDown={catchEnterPressed}
         ></input>
         <input
           className="password inputField"
           placeholder="Пароль"
           pattern=" /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^ws]).{8,}/"
           onChange={onPasswordChange}
+          onKeyDown={catchEnterPressed}
         ></input>
 
         <button
@@ -45,5 +47,11 @@ export default function LoginPage() {
     setPassword(e.target.value);
   }
 
- 
+  function catchEnterPressed(event: any) {
+    if (event.key === 'Enter') {
+      loginPassword({ email, password }).then((result) => {
+        if (result) navigate('/competitions');
+      });
+    }
+  }
 }

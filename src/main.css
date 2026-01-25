@@ -1,0 +1,27 @@
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica Neue,
+    Helvetica,
+    sans-serif;
+}
+h3,
+h4 {
+  margin: 0;
+  padding: 5px;
+}
+.submitFormButton {
+  height: 40px;
+  width: 120px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+li {
+  list-style-type: none;
+}
