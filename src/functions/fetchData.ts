@@ -1,4 +1,5 @@
 import { appState } from '../constants';
+import { SERVER } from '../constants';
 
 const fetchData = async (host: string, setFunc?: Function) => {
   const myHeaders = {
@@ -12,7 +13,7 @@ const fetchData = async (host: string, setFunc?: Function) => {
   };
 
   try {
-    const response = await fetch( host, request);
+    const response = await fetch( SERVER + host, request);
     if (response.status === 401)
       throw Error(`Error reading ${host} ${response.status} ${response.statusText} `);
     

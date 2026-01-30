@@ -16,7 +16,7 @@ function TournamentsPage() {
 
   useEffect(() => {
     
-    fetchData(`${SERVER}/tournaments`, setTournaments);
+    fetchData(`/tournaments`, setTournaments);
   }, []);
   const tournamentName = tourmaments?.find(
     (tourmament) => tourmament.id === appState.currentTournamentID

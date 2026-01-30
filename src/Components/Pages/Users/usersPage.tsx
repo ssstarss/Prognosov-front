@@ -19,7 +19,7 @@ type User = {
 export default function UsersPage() {
   let [users, setUsers] = useState<User[]>();
   useEffect(() => {
-    fetchData(`${SERVER}/users`, setUsers);
+    fetchData(`/users`, setUsers);
   }, []);
 
   const listTeams = users?.map((user) => <li key={user.id}>{user.fio} </li>);

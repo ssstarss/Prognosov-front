@@ -1,4 +1,4 @@
-import { Prognose } from "../../../../interfaces/interfaces";
+
 const matches = [
   {
     id: 0,
@@ -8,7 +8,7 @@ const matches = [
     team2_result: 1,
     starts_at: new Date('2026-01-15T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
 
   {
@@ -19,7 +19,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-15T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -29,7 +29,7 @@ const matches = [
     team2_result: 2,
     starts_at: new Date('2026-01-15T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -39,7 +39,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-16T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -49,7 +49,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-16T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -59,7 +59,7 @@ const matches = [
     team2_result: 0,
     starts_at: new Date('2026-01-16T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -69,7 +69,7 @@ const matches = [
     team2_result: 1,
     starts_at: new Date('2026-01-17T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -79,7 +79,7 @@ const matches = [
     team2_result: 0,
     starts_at: new Date('2026-01-17T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -89,7 +89,7 @@ const matches = [
     team2_result: 2,
     starts_at: new Date('2026-01-17T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -99,7 +99,7 @@ const matches = [
     team2_result: 1,
     starts_at: new Date('2026-01-18T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -109,7 +109,7 @@ const matches = [
     team2_result: 1,
     starts_at: new Date('2026-01-18T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -119,7 +119,7 @@ const matches = [
     team2_result: 0,
     starts_at: new Date('2026-01-18T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -129,7 +129,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-19T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -139,7 +139,7 @@ const matches = [
     team2_result: 2,
     starts_at: new Date('2026-01-19T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -149,7 +149,7 @@ const matches = [
     team2_result: 2,
     starts_at: new Date('2026-01-19T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -159,7 +159,7 @@ const matches = [
     team2_result: 1,
     starts_at: new Date('2026-01-20T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -169,7 +169,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-20T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -179,7 +179,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-20T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -189,7 +189,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-21T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -199,7 +199,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-21T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -209,7 +209,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-21T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -219,7 +219,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-22T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -229,7 +229,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-22T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -239,7 +239,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-22T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -249,7 +249,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-23T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -259,7 +259,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-23T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -269,7 +269,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-23T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -279,7 +279,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-24T16:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -289,7 +289,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-24T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -299,7 +299,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-24T18:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
   {
     id: 0,
@@ -309,7 +309,7 @@ const matches = [
     team2_result: 3,
     starts_at: new Date('2026-01-25T17:22'),
     competitionID: 1,
-    prognoses:new Array <Prognose>()
+     
   },
 ];
 export default matches;

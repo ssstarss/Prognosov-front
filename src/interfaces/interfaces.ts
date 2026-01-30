@@ -13,9 +13,7 @@ type Team = {
 type Prognose = {
   id: number | undefined;
   matchID: number;
-
   team1_result: number;
-
   team2_result: number;
   tournamentID: number;
   userID: number;
@@ -27,7 +25,13 @@ type Match = {
   competitionID: number;
   team1?: Team;
   team2?: Team;
-  prognoses: Prognose[];
+  prognoses?: Prognose[];
+  updateFunction?: Function;
 };
 
-export { Credetials, Team, Prognose, Match };
+type UserOnTournament = {
+  userID: number;
+  tournamentID: number;
+};
+
+export { Credetials, Team, Prognose, Match, UserOnTournament };

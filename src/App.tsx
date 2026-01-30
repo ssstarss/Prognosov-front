@@ -10,25 +10,28 @@ import FillBase from './Components/Pages/FillBase/fillBase';
 import TournamentsPage from './Components/Pages/Tournaments/tournaments';
 import MainTable from './Components/Pages/MainTable/mainTable';
 
-function App() {
 
+/*const [PopUp, setPopUp] = useState<React.ElementType>(() => {
+  return <></>;
+});*/
+
+function App() {
   return (
-    
-      <BrowserRouter>
-        <Header></Header>
-        <Routes>
-          <Route path="/" element={<StartPage />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/teams" element={<TeamsPage />}></Route>
-          <Route path="/competitions" element={<CompetitionsPage />}></Route>
-          <Route path="/tournaments" element={<TournamentsPage />}></Route>
-          <Route path="/users" element={<UsersPage />}></Route>
-          <Route path="/prognoses" element={<PrognosesPage />}></Route>
-          <Route path="/fillbase" element={<FillBase />}></Route>
-          <Route path="/mainTable" element={<MainTable />}></Route>
-        </Routes>
-      </BrowserRouter>
-   
+    <BrowserRouter>
+      <Header></Header>
+     
+      <Routes>
+        <Route path="/" element={<StartPage />}></Route>
+        <Route path="/login" element={<LoginPage />}></Route>
+        <Route path="/teams" element={<TeamsPage />}></Route>
+        <Route path="/competitions" element={<CompetitionsPage />}></Route>
+        <Route path="/tournaments" element={<TournamentsPage />}></Route>
+        <Route path="/users" element={<UsersPage />}></Route>
+        <Route path="/prognoses" element={<PrognosesPage />}></Route>
+        <Route path="/fillbase" element={<FillBase />}></Route>
+        <Route path="/mainTable" element={<MainTable />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

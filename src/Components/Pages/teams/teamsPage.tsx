@@ -16,7 +16,7 @@ export default function TeamsPage() {
     type: '',
   });
   useEffect(() => {
-    fetchData(`${SERVER}/teams`, setTeams);
+    fetchData(`/teams`, setTeams);
   }, []);
 
   const editTeamsPop = EditTeamPage(team, setTeams);

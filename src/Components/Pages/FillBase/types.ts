@@ -19,9 +19,12 @@ type Tournament = {
   name: string;
   competitionID: number;
   comments: string;
+  active:boolean;
+  users: User[]
+
 };
 
-interface Users {
+interface User {
   id: number;
   fio: string;
   email: string;
@@ -31,4 +34,4 @@ interface Users {
   city: string;
   country: string;
 }
-export { Users, Tournament, Competition, Team };
+export { User, Tournament, Competition, Team };

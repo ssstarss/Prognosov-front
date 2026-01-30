@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './competitions.css';
 import fetchData from '../../../functions/fetchData';
-import { appState, SERVER } from '../../../constants';
+import { appState } from '../../../constants';
 interface Competitions {
   id: number;
   name: String;
@@ -15,12 +15,12 @@ function CompetitionsPage() {
   let [currentCompetitionName, setCurrentCompetitionName] = useState<String>();
 
   useEffect(() => {
-    fetchData(`${SERVER}/competitions`, setCompetitions);
+    fetchData(`/competitions`, setCompetitions);
   }, []);
   const competitionName = competitions?.find(
     (competition) => competition.id === appState.currentCompetitionID
   )?.name;
-  console.log('compName', competitionName);
+  
   currentCompetitionName = competitionName;
 
   const listCompetitions = competitions?.map((competition) => (
