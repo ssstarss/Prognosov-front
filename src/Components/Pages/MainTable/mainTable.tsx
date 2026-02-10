@@ -1,117 +1,101 @@
+import { useEffect, useState } from 'react';
+import { appState } from '../../../constants';
+import { Tournament } from '../FillBase/types';
 import './mainTable.scss';
-import { teams, playerNames } from './playerNames';
+import fetchData from '../../../functions/fetchData';
+import { Prognose } from '../../../interfaces/interfaces';
+
 
 export default function MainTable() {
-  interface Match {
-    team1: string;
-    team2: string;
-    team1_score: number;
-    team2_score: number;
-  }
+  const [tournament, setTournament] = useState<Tournament[]>();
+  const [prognoses, setPrognoses] = useState<Prognose[]>();
 
-  const matches: Match[] = [];
-
-  const teamsCol = teams.length;
-
-  for (let i = 0; i < 40; i++) {
-    const indexOfTeam1 = Math.floor(Math.random() * teamsCol);
-    const indexOfTeam2 = Math.floor(Math.random() * teamsCol);
-    const scoreOfTeam1 = Math.floor(Math.random() * 5);
-    const scoreOfTeam2 = Math.floor(Math.random() * 5);
-    matches.push({
-      team1: teams[indexOfTeam1],
-      team2: teams[indexOfTeam2],
-      team1_score: scoreOfTeam1,
-      team2_score: scoreOfTeam2,
-    });
-  }
-
-  const MatchesCells = () => {
-    return matches.map((match, index) => {
-      return (
-        <th className="mainTableHeaderCell">
-          <div className="matchCell">
-            <div className="teamCell">
-              <a className="vertical-text teamName">{match.team1}</a>
-              <a className="matchCellScore">{match.team1_score}</a>
+  useEffect(() => {
+    fetchData(`/tournaments_admin/${appState.currentTournamentID}`, setTournament).then(() =>
+      fetchData(`/prognoses_admin/${appState.currentTournamentID}`, setPrognoses)
+    );
+  }, []);
+  if (tournament) {
+    const TableHeaderMatchesCells = () => {
+      return tournament[0].competition?.matches?.map((match) => {
+        return (
+          <th className="mainTableHeaderCell">
+            <div className="matchCell">
+              <div className="teamCell">
+                <a className="vertical-text teamName">{match.team1 ? match.team1.name : ''}</a>
+                <a className="matchCellScore">{match.team1_result}</a>
+              </div>
+              <div className="teamCell">
+                <a className="vertical-text teamName">{match.team2 ? match.team2.name : ''}</a>
+                <a className="matchCellScore">{match.team2_result}</a>
+              </div>
             </div>
-            <div className="teamCell">
-              <a className="vertical-text teamName">{match.team2}</a>
-              <a className="matchCellScore">{match.team2_score}</a>
-            </div>
-          </div>
-        </th>
-      );
-    });
-  };
-
-  const raws = () =>
-    playerNames.map((player, index) => {
-      const raw = [];
-
-      for (let i = 0; i < 40; i++) {
-        const t1_score = Math.floor(Math.random() * 5);
-        const t2_score = Math.floor(Math.random() * 5);
-        let score = 0;
-        let color = 'score_black';
-        if (
-          (t1_score > t2_score && matches[i].team1_score > matches[i].team2_score) ||
-          (t1_score < t2_score && matches[i].team1_score < matches[i].team2_score)
-        ) {
-          score = 2;
-          color = 'score_blue';
-        }
-        if (t1_score - t2_score === matches[i].team1_score - matches[i].team2_score) {
-          score = 3;
-          color = 'score_green';
-        }
-
-        if (t1_score - t2_score === 0 && matches[i].team1_score - matches[i].team2_score ===0) {
-          score = 4;
-          color = 'score_aqua';
-        }
-        if (t1_score === matches[i].team1_score && t2_score === matches[i].team2_score) {
-          score = 5;
-          color = 'score_orange';
-        }
-        raw.push(
-          <td className="playerResultCell" key={`playerResultCell${index}${i}`}>
-            <div className="playerResultWrapper">
-              <p className="prognose">
-                {t1_score} - {t2_score}
-              </p>
-              <div className={`score ${color}`}>{score}</div>
-            </div>
-          </td>
+          </th>
         );
-      }
+      });
+    };
 
-      return (
-        <tr>
-          <td className="playerNameCell">
-            <p className='playerName'>{player}</p>
-          </td>
-          {raw}
-        </tr>
-      );
-    });
+    const tableHeader = (
+      <tr className="mainTableHeader">
+        <th className="mainTableHeaderCell">Игра</th>
+        <TableHeaderMatchesCells></TableHeaderMatchesCells>
+      </tr>
+    );
 
-  const TableBody = raws;
-  const tableHeader = (
-    <tr className="mainTableHeader">
-      <th className="mainTableHeaderCell">Игра</th>
-      <MatchesCells />
-    </tr>
-  );
+    tournament[0].users.sort((a, b) => b.results[0].result - a.results[0].result);
+    const Raws = () => {
+      return tournament[0].users.map((user, index) => {
+        const raw = [<></>];
+        user.prognoses.map((prognose, index2) => {
+          let color = 'score_black';
+          const result = prognose.result;
+          if (result === 2) color = 'score_blue';
+          if (result === 3) color = 'score_green';
+          if (result === 4) color = 'score_aqua';
+          if (result === 5) color = 'score_orange';
+          raw.push(
+            <td className="playerResultCell" key={`playerResultCell${index}${index2}`}>
+              <div className="playerResultWrapper">
+                <p className="prognose">
+                  {prognose.team1_result} - {prognose.team2_result}
+                </p>
+                <div className={`score ${color}`}>{prognose.result}</div>
+              </div>
+            </td>
+          );
+        });
+        const userResult = user.results.find((result) => result.userID === user.id);
+        let className = 'playerRaw';
+        if (user.id === appState.userID) className = 'playerRaw currentUserRaw';
+        return (
+          <tr className={className}>
+            <td className="playerNameCell">
+              <div className="playerWrapper">
+                <a className="playerName">{user.fio}</a>
+                <a className="playerResult">{userResult?.result}</a>
+              </div>
+            </td>
+            <>{raw}</>
+          </tr>
+        );
+      });
+    };
 
-  return (
-    <>
-      <div className="maintableWrapper">
-        <table className="mainTable">
-          <thead>{tableHeader}</thead>
-          <tbody>{<TableBody />}</tbody>
-        </table>
-      </div>
-    </>
-  );
+    return (
+      <>
+        <div className="maintableWrapper">
+          <div className="mainTableHeader">
+            <h2>{tournament[0].name}</h2>
+            <h3>{tournament[0].competition?.name}</h3>
+          </div>
+          <table className="mainTable">
+            <thead>{tableHeader}</thead>
+            <tbody>{<Raws />}</tbody>
+          </table>
+        </div>
+      </>
+    );
+  }
+  return <></>;
 }
+// <tbody>{<TableBody />}</tbody>

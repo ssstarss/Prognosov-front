@@ -26,7 +26,6 @@ export default async function loginPassword(user: Credetials) {
         headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'block'));
       else headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'none'));
 
-      console.log('logged user ID:', appState.userID);
 
       return true;
     } else return false;

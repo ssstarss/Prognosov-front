@@ -11,11 +11,8 @@ import TournamentsPage from './Components/Pages/Tournaments/tournaments';
 import MainTable from './Components/Pages/MainTable/mainTable';
 
 
-/*const [PopUp, setPopUp] = useState<React.ElementType>(() => {
-  return <></>;
-});*/
-
 function App() {
+ 
   return (
     <BrowserRouter>
       <Header></Header>

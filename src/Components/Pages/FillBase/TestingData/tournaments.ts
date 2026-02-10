@@ -1,4 +1,5 @@
 import { Tournament } from '../types';
+import users from './users';
 
 const tournaments: Tournament[] = [
   {
@@ -7,7 +8,9 @@ const tournaments: Tournament[] = [
     competitionID: 2,
     comments: 'Pronin davai davai',
     active: true,
-    users: [],
+    users:[],
+    results:[]
+   
   },
 
   {
@@ -16,7 +19,9 @@ const tournaments: Tournament[] = [
     competitionID: 1,
     comments: 'Vinokurov davai davai',
     active: false,
-    users: [],
+    users:[],
+    results:[]
+   
   },
 ];
 export default tournaments;

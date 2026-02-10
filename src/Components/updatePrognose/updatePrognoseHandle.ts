@@ -4,7 +4,7 @@
  import fetchData from "../../functions/fetchData";
 
 
- export default async function updatePrognose (prognose: Prognose) {
+ export default async function updatePrognoseHandle (prognose: Prognose) {
     const body = JSON.stringify(prognose);
     const myHeaders = {
       Accept: 'application/json',

@@ -1,9 +1,9 @@
 import './updatePrognose.css';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import updatePrognose from './updateProfnose';
 import { Match, Prognose } from '../../interfaces/interfaces';
 import { appState } from '../../constants';
 import { close__popUp } from '../PopUpCanvas/popUpCanvas';
+import updatePrognoseHandle from './updatePrognoseHandle';
 
 const UpdatePrognose = (props: { match: Match; setMatch: Dispatch<SetStateAction<Match>> }) => {
   const [currentScore, setCurrentScore] = useState({ team1: 0, team2: 0 });
@@ -76,7 +76,7 @@ const UpdatePrognose = (props: { match: Match; setMatch: Dispatch<SetStateAction
     };
     if (props.match.prognoses)
       if (props.match.prognoses.length > 0) prognose.id = props.match.prognoses[0].id;
-    const updatedMatch = await updatePrognose(prognose);
+    const updatedMatch = await updatePrognoseHandle(prognose);
     props.setMatch({ ...props.match, ...updatedMatch });
     closeWindow();
   }

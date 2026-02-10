@@ -18,8 +18,7 @@ export default async function loginRefresh() {
       const res = await response.json();
       appState.accessToken = res.accessToken;
       appState.userID = res.userID;
-      const competitionID = localStorage.getItem('currentCompetitionID');
-      if (competitionID) appState.currentCompetitionID = Number(competitionID);
+      
       if (res.userRole === 'admin') {
         const headerLinks = Array.from(document.getElementsByClassName('adminHeaderLink'));
         headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'block'));
@@ -31,5 +30,3 @@ export default async function loginRefresh() {
   }
   return false;
 }
-
-

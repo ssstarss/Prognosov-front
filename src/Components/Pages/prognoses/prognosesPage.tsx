@@ -1,12 +1,10 @@
 import './prognoses.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
-
 import { appState } from '../../../constants';
 import { Match } from '../../../interfaces/interfaces';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
 import MatchLine from './matchLine';
-import competitions from '../FillBase/TestingData/competitions';
 import { Competition } from '../FillBase/types';
 
 const PrognosesPage = () => {
@@ -23,10 +21,11 @@ const PrognosesPage = () => {
         team1_result: 0,
         team2_result: 0,
         tournamentID: -1,
-        userID: -1,
+        userID:-1,
+        user: undefined,
       },
     ],
-    updateFunction: () => {},
+    
   });
 
   const [popUp, setPopUp] = useState(() => {
@@ -37,7 +36,7 @@ const PrognosesPage = () => {
     fetchData(`/matches?competitionID=${appState.currentCompetitionID}`, setMatches);
     fetchData(`/competitions/${appState.currentCompetitionID}`, setCompetition);
   }, []);
-
+  
   const listPrognoses = matches?.map((match) => {
     return (
       <MatchLine match={match} setChosenMatch={setChosenMatch} setPopUp={setPopUp}></MatchLine>

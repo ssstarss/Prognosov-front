@@ -1,3 +1,5 @@
+import tournaments from './tournaments';
+
 const users = [
   {
     id: 0,
@@ -42,9 +44,9 @@ const users = [
   },
   {
     id: 0,
-    fio: 'admin',
-    email: 'admin',
-    password: 'admin',
+    fio: '1',
+    email: '1',
+    password: '1',
     cellphone: '+79324567821',
     role: 'admin',
     city: 'Moscow',

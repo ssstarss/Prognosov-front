@@ -1,30 +1,22 @@
 import { useEffect, useState } from 'react';
 import './tournaments.css';
 import fetchData from '../../../functions/fetchData';
-import { appState, SERVER } from '../../../constants';
-interface Tournament {
-  id: number;
-  name: string;
-  competitionID: number;
-  tournamentID: number;
-  comments: string;
-}
+import { appState } from '../../../constants';
+import { Tournament } from '../FillBase/types';
 
 function TournamentsPage() {
   const [tourmaments, setTournaments] = useState<Tournament[]>();
-  let [currentTournamentName, setCurrentTournamentName] = useState<String>();
-
+ const [currentTournament, setCurrentTournament] = useState<Tournament>();
   useEffect(() => {
-    
     fetchData(`/tournaments`, setTournaments);
   }, []);
-  const tournamentName = tourmaments?.find(
-    (tourmament) => tourmament.id === appState.currentTournamentID
-  )?.name;
 
-  currentTournamentName = tournamentName;
+  const tournament = tourmaments?.find(
+    (tournament) => tournament.id === appState.currentTournamentID
+  );
+  const currentTournamentName = tournament?.name
 
-  const listTournaments = tourmaments?.map((tourmament) => (
+   const listTournaments = tourmaments?.map((tourmament) => (
     <li key={tourmament.id} onClick={() => handleTournamentClick(tourmament)}>
       {tourmament.name}
     </li>
@@ -43,13 +35,7 @@ function TournamentsPage() {
     console.log(tournament);
     localStorage.setItem('currentTournamentID', tournament.id.toString());
     appState.currentTournamentID = tournament.id;
-    const tournamentName = tourmaments?.find(
-      (tourmament) => tourmament.id === appState.currentTournamentID
-    )?.name;
-    if (tournamentName) setCurrentTournamentName(tournamentName);
-    // const url = new URL(`${SERVER}/competitions?competitionID:${tournament.competitionID}`);
-    // const competition = fetchData(url.href);
-    // console.log(competition)
+    setCurrentTournament(tournament);
   }
 }
 

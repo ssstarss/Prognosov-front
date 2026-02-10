@@ -1,8 +1,6 @@
 import './users.css';
 import { useEffect, useState } from 'react';
-
 import fetchData from '../../../functions/fetchData';
-import { SERVER } from '../../../constants';
 
 type User = {
   id: number;
@@ -19,9 +17,9 @@ type User = {
 export default function UsersPage() {
   let [users, setUsers] = useState<User[]>();
   useEffect(() => {
-    fetchData(`/users`, setUsers);
+   const users =  fetchData(`/users`, setUsers);
   }, []);
-
+console.log(users)
   const listTeams = users?.map((user) => <li key={user.id}>{user.fio} </li>);
   return (
     <div className="usersPageWrapper">

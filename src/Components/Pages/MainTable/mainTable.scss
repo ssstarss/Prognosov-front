@@ -14,6 +14,11 @@
   height: 110px;
 }
 
+.maintableWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .mainTable td:nth-child(1),
 .mainTable th:nth-child(1) {
   position: sticky;
@@ -74,25 +79,44 @@
   writing-mode: vertical-rl;
 }
 
-.matchCellScore{
-  font-size: 12px;
+.matchCellScore {
+  font-size: 16px;
   font-weight: bold;
+}
 
+.playerRaw{
+  background-color: whitesmoke;
 }
 .playerNameCell {
   border: solid black;
   border-width: 0 2px 2px 2px;
-  background-color: whitesmoke;
+  
 }
-
+.currentUserRaw{
+  background-color: rgb(235, 235, 199);
+}
+.playerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
 .playerName {
   font-size: 12px;
   white-space: nowrap;
+     
 }
+.playerResult {
+  font-size: 12px;
+  font-weight: bold;
+border-left: 2px solid black;
+ height: 100%;
+}
+
 .playerResultCell {
   border: black solid;
   border-width: 0px 1px 2px 0px;
-  border-right: 1px dotted ;
+  border-right: 1px dotted;
 }
 
 .playerResultWrapper {

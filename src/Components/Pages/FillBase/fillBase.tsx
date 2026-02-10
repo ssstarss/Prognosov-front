@@ -18,7 +18,8 @@ export default function FillBase() {
         <button
           className="submitFormButton"
           onClick={() => {
-            if (password === 'ImSure') fillData();
+           // if (password === 'ImSure')
+            fillData();
           }}
         >
           SUBMIT

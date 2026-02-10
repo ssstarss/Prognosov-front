@@ -17,6 +17,7 @@ function CompetitionsPage() {
   useEffect(() => {
     fetchData(`/competitions`, setCompetitions);
   }, []);
+  
   const competitionName = competitions?.find(
     (competition) => competition.id === appState.currentCompetitionID
   )?.name;
