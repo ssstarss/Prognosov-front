@@ -2,44 +2,32 @@ import './prognoses.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
-import { Match } from '../../../interfaces/interfaces';
+import { Prognose } from '../../../interfaces/interfaces';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
-import MatchLine from './matchLine';
+import MatchLine from './gameLine';
 import { Competition } from '../FillBase/types';
 
-const PrognosesPage = () => {
-  const [matches, setMatches] = useState<Match[]>();
+export default function PrognosesPage() {
+  const [prognoses, setPrognoses] = useState<Prognose[]>();
   const [competition, setCompetition] = useState<Competition>();
-  const [chosenMatch, setChosenMatch] = useState<Match>({
-    id: 0,
-    starts_at: new Date(),
-    competitionID: 0,
-    prognoses: [
-      {
-        id: undefined,
-        matchID: -1,
-        team1_result: 0,
-        team2_result: 0,
-        tournamentID: -1,
-        userID:-1,
-        user: undefined,
-      },
-    ],
-    
-  });
-
+  const [chosenPrognose, setChosenPrognose] = useState<Prognose>({} as Prognose);
   const [popUp, setPopUp] = useState(() => {
     return <></>;
   });
 
   useEffect(() => {
-    fetchData(`/matches?competitionID=${appState.currentCompetitionID}`, setMatches);
+    fetchData(`/prognoses/${appState.currentTournamentID}`, setPrognoses);
     fetchData(`/competitions/${appState.currentCompetitionID}`, setCompetition);
   }, []);
-  
-  const listPrognoses = matches?.map((match) => {
+
+  const listPrognoses = prognoses?.map((prognose) => {
     return (
-      <MatchLine match={match} setChosenMatch={setChosenMatch} setPopUp={setPopUp}></MatchLine>
+      <MatchLine
+        prognose={prognose}
+        setChosenPrognose={setChosenPrognose}
+        setPopUp={setPopUp}
+        key = {prognose.id}
+      ></MatchLine>
     );
   });
 
@@ -55,6 +43,4 @@ const PrognosesPage = () => {
       </div>
     </div>
   );
-};
-
-export default PrognosesPage;
+}

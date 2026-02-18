@@ -1,14 +1,14 @@
 import { deleteData, createData } from './fetchData';
 import competitions from './TestingData/competitions';
-import matches from './TestingData/matches';
+import randomGamesResults from './TestingData/games';
+import { games } from './TestingData/games';
 import teams from './TestingData/teams';
 import users from './TestingData/users';
 import tournaments from './TestingData/tournaments';
-import { Match, Prognose } from '../../../interfaces/interfaces';
+import { Game, Prognose } from '../../../interfaces/interfaces';
 import fetchData from '../../../functions/fetchData';
-import { Competition, Result, User } from './types';
-import updatePrognoseHandle from '../../updatePrognose/updatePrognoseHandle';
-import { use } from 'react';
+import { Competition, Tournament, User } from './types';
+import { UserOnTournament } from './types';
 
 async function fillData() {
   await deleteData('/fillCompetitions');
@@ -17,8 +17,10 @@ async function fillData() {
   await deleteData('/fillTeams');
   await createData('/fillTeams', teams);
 
-  await deleteData('/fillMatches');
-  await createData('/fillMatches', matches);
+  await deleteData('/fillGames');
+  const games1 = await randomGamesResults(1);
+  games1.push(...(await randomGamesResults(2)));
+  await createData('/fillGames', games1);
 
   await deleteData('/fillUsers');
   await createData('/fillUsers', users);
@@ -26,80 +28,72 @@ async function fillData() {
   await deleteData('/fillTournaments');
   await createData('/fillTournaments', tournaments);
 
-  //await createData('/fillUsersOnTournament', users);
-
-  /* await deleteData('/fillUsersOnTournament');
-  const registeredUsers: User[] = await fetchData(`/users`);
-  registeredUsers.forEach((user) => {
-    tournaments.forEach(
-      async (tournament) =>
-        await createData('/fillUsersOnTournament', { userID: user.id, tournamentID: tournament.id })
-    );
-  });
-
-  await deleteData('/fillPrognoses');
-*/
   const prognoses: Prognose[] = [];
-  const usersResults: Result[] = [];
+  const usersOnTournament = [] as UserOnTournament[];
 
   const usersOnServer: User[] = await fetchData('/users');
+  const tournamentOnServer: Tournament[] = await fetchData('/tournaments');
+  await deleteData('/fillUsersOnTournament');
+  for (const tournament of tournamentOnServer) {
+    const competition: Competition = await fetchData(`/competitions/${tournament.competitionID}`);
 
-  for (const user of usersOnServer) {
-    if (user.tournaments)
-      for (const tournament of user.tournaments) {
-        let userResult = 0;
-        const competition: Competition = await fetchData(
-          `/competitions/${tournament.competitionID}`
-        );
-        const matches: Match[] = await fetchData(`/matches?competitionID=${competition.id}`);
-        for (const match of matches) {
+    for (const user of usersOnServer) {
+      if (user.role === 'admin' || user.role === 'superadmin') continue;
+
+      const userPrognoses: Prognose[] = [];
+      let userResult = 0;
+      if (competition.games)
+        for (const game of competition.games) {
           const t1_score = Math.floor(Math.random() * 5);
           const t2_score = Math.floor(Math.random() * 5);
-
-          // const updatedMatch = await updatePrognoseHandle(prognoses);
-
           let score = 0;
-          if (typeof match.team1_result === 'number' && typeof match.team2_result === 'number') {
+          if (typeof game.team1_result === 'number' && typeof game.team2_result === 'number') {
             if (
-              (t1_score > t2_score && match.team1_result > match.team2_result) ||
-              (t1_score < t2_score && match.team1_result < match.team2_result)
+              (t1_score > t2_score && game.team1_result > game.team2_result) ||
+              (t1_score < t2_score && game.team1_result < game.team2_result)
             )
               score = 2;
 
-            if (t1_score - t2_score === match.team1_result - match.team2_result) score = 3;
-            if (t1_score - t2_score === 0 && match.team1_result - match.team2_result === 0)
-              score = 4;
-            if (t1_score === match.team1_result && t2_score === match.team2_result) score = 5;
+            if (t1_score - t2_score === game.team1_result - game.team2_result) score = 3;
+            if (t1_score - t2_score === 0 && game.team1_result - game.team2_result === 0) score = 4;
+            if (t1_score === game.team1_result && t2_score === game.team2_result) score = 5;
           }
 
           const prognose: Prognose = {
             id: undefined,
-            matchID: match.id,
+            gameID: game.id,
+            game: game,
             team1_result: t1_score,
             team2_result: t2_score,
-            tournamentID: tournament.id,
-            userID: user.id,
+            userOnTournamentTournamentID: tournament.id,
+            userOnTournamentUserID: user.id,
             result: score,
           };
+
+          //delete prognose.game;
+          userPrognoses.push(prognose);
           prognoses.push(prognose);
           userResult += score;
         }
-        const resultData = {
-          result: userResult,
-          resultCup: 0,
-          userID: user.id,
-          tournamentID: tournament.id,
-          
-        };
-        usersResults.push(resultData);
-      }
+      if (prognoses.length < 1) Object.assign(prognoses, {});
+      const userOnTournament = {
+        result: userResult,
+        prognoses: prognoses,
+        resultCup: 0,
+        userID: user.id,
+        tournamentID: tournament.id,
+        user: user,
+        tournament,
+      };
+
+      usersOnTournament.push(userOnTournament);
+      await createData('/fillUsersOnTournament', userOnTournament);
+    }
   }
 
   await deleteData('/fillPrognoses');
+  console.log('prognoses', prognoses);
   await createData('/fillPrognoses', prognoses);
-
-  await deleteData('/fillUsersResults');
-  await createData('/fillUsersResults', usersResults);
 }
 
 export default fillData;

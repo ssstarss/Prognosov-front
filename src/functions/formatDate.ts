@@ -1,4 +1,5 @@
 export default function formatDate(date: Date | undefined) {
+  console.log(date?.getHours());
   if (date) {
     const year = date.getFullYear();
     let month = (date.getMonth() + 1).toString();
@@ -7,7 +8,7 @@ export default function formatDate(date: Date | undefined) {
     if (day.length < 2) day = '0' + day;
     let hour = date.getHours().toString();
     if (hour.length < 2) hour = '0' + hour;
-    let minutes = date.getHours().toString();
+    let minutes = date.getMinutes().toString();
     if (minutes.length < 2) minutes = '0' + minutes;
     const result = `${year}-${month}-${day}   ${hour}:${minutes}`;
     return result;

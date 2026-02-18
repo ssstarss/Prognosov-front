@@ -1,6 +1,7 @@
+import { User } from '../types';
 import tournaments from './tournaments';
 
-const users = [
+const users:User[] = [
   {
     id: 0,
     fio: 'Иванов Иван',
@@ -10,6 +11,7 @@ const users = [
     role: 'user',
     city: 'Barnaul',
     country: 'Russia',
+    active: true,
   },
 
   {
@@ -21,6 +23,9 @@ const users = [
     role: 'user',
     city: 'Rubtsovsk',
     country: 'Russia',
+    active: true,
+
+
   },
   {
     id: 0,
@@ -31,6 +36,8 @@ const users = [
     role: 'user',
     city: 'Novosibirsk',
     country: 'Luxemburg',
+    active: true,
+
   },
   {
     id: 0,
@@ -41,6 +48,9 @@ const users = [
     role: 'user',
     city: 'Novosibirsk',
     country: 'Russia',
+    active: true,
+    
+
   },
   {
     id: 0,
@@ -51,6 +61,8 @@ const users = [
     role: 'admin',
     city: 'Moscow',
     country: 'Russia',
+    active: true,
+
   },
   {
     id: 0,
@@ -61,6 +73,8 @@ const users = [
     role: 'user',
     city: 'Barnaul',
     country: 'Russia',
+    active: true,
+
   },
 ];
 

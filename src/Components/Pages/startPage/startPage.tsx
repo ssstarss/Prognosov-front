@@ -3,11 +3,15 @@ import loginRefresh from '../../../functions/loginRefresh';
 
 function StartPage() {
   const navigate = useNavigate();
-
+try{
   loginRefresh().then((result) => {
-    if (result) navigate('./competitions');
+    if (result ) navigate('./tournaments');
     else navigate('./login');
   });
+} catch (e: any) {
+  navigate('./login');
+}
+
 
   return <div></div>;
 }

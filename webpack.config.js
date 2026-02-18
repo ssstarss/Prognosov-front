@@ -8,12 +8,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
       hash: true, // Cache busting
-      filename: '../dist/index.html',
+      filename: 'index.html',
     }),
     new NodePolyfillPlugin(),
   ],
@@ -54,5 +55,7 @@ module.exports = {
     port: 3000,
     open: true,
     hot: true,
+    static: false,
+    historyApiFallback: true,
   },
 };

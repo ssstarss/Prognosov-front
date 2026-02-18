@@ -1,6 +1,7 @@
 import { appState, SERVER } from '../../../constants';
 import { User, Tournament, Competition, Team } from './types';
-import { Match, Prognose, UserOnTournament } from '../../../interfaces/interfaces';
+import { Game, Prognose } from '../../../interfaces/interfaces';
+import { UserOnTournament } from './types';
 
 const deleteData = async (host: string) => {
   const myHeaders = {
@@ -26,7 +27,15 @@ const deleteData = async (host: string) => {
 };
 const createData = async (
   host: string,
-  data: Match[] | User[] | Tournament[] | Competition[] | Team[] | UserOnTournament |Prognose[] | {}
+  data:
+    | Game[]
+    | User[]
+    | Tournament[]
+    | Competition[]
+    | Team[]
+    | UserOnTournament
+    | Prognose[]
+    | {}
 ) => {
   const myHeaders = {
     Accept: 'application/json',
@@ -45,7 +54,6 @@ const createData = async (
   };
 
   try {
-    console.log('imhere', data )
     const response = await fetch(SERVER + host, request);
     if (response.status === 401)
       throw Error(`Error creating ${host} ${response.status} ${response.statusText} `);

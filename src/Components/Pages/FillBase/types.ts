@@ -1,4 +1,4 @@
-import { Match, Prognose } from '../../../interfaces/interfaces';
+import { Game, Prognose } from '../../../interfaces/interfaces';
 
 type Competition = {
   id: number;
@@ -6,7 +6,7 @@ type Competition = {
   comments: string;
   StartsAt: string | Date;
   EndsAt: string | Date;
-  matches?: Match[];
+  games?: Game[];
 };
 
 type Team = {
@@ -22,16 +22,12 @@ type Tournament = {
   competitionID: number;
   comments: string;
   active: boolean;
-  users: User[];
   competition?: Competition;
-  results: Result[];
+  usersOnTournament?: UserOnTournament[]
+  
 };
 
-interface Result {
-  result: number;
-  userID: number;
-  tournamentID: number;
-}
+
 interface User {
   id: number;
   fio: string;
@@ -41,8 +37,17 @@ interface User {
   role: string;
   city: string;
   country: string;
-  tournaments?: Tournament[];
-  prognoses: Prognose[];
-  results: Result[];
+  tournaments?: UserOnTournament[]
+  active: boolean;
 }
-export { User, Tournament, Competition, Team, Result };
+
+interface UserOnTournament {
+  result: number;
+  resultCup: number;
+  prognoses?: Prognose[];
+  userID: number;
+  tournamentID: number;
+  user: User;
+  tournament: Tournament;
+}
+export { User, Tournament, Competition, Team, UserOnTournament };

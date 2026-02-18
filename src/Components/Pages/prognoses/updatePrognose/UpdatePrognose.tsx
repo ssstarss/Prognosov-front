@@ -1,25 +1,30 @@
 import './updatePrognose.css';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Match, Prognose } from '../../interfaces/interfaces';
-import { appState } from '../../constants';
-import { close__popUp } from '../PopUpCanvas/popUpCanvas';
+import React, { useEffect, useState } from 'react';
+import { Prognose } from '../../../../interfaces/interfaces';
+import { appState } from '../../../../constants';
+import { close__popUp } from '../../../PopUpCanvas/popUpCanvas';
 import updatePrognoseHandle from './updatePrognoseHandle';
 
-const UpdatePrognose = (props: { match: Match; setMatch: Dispatch<SetStateAction<Match>> }) => {
-  const [currentScore, setCurrentScore] = useState({ team1: 0, team2: 0 });
+const UpdatePrognose = (props: {
+  prognose: Prognose;
+  updateCellPrognose?: Function;
+  updateLinePrognose?: Function;
+}) => {
+  const [currentScore, setCurrentScore] = useState({
+    team1:
+      typeof props.prognose.team1_result === 'number' ? props.prognose.team1_result : undefined,
+    team2:
+      typeof props.prognose.team2_result === 'number' ? props.prognose.team2_result : undefined,
+  });
 
   useEffect(() => {
-    if (props.match.prognoses) {
-      setCurrentScore(
-        props.match.prognoses.length > 0
-          ? {
-              team1: props.match.prognoses[0].team1_result,
-              team2: props.match.prognoses[0].team2_result,
-            }
-          : { team1: 0, team2: 0 }
-      );
-    }
-  }, [props.match]);
+    setCurrentScore({
+      team1:
+        typeof props.prognose.team1_result === 'number' ? props.prognose.team1_result : undefined,
+      team2:
+        typeof props.prognose.team2_result === 'number' ? props.prognose.team2_result : undefined,
+    });
+  }, [props.prognose.game?.id, props.prognose.team1_result, props.prognose.team2_result]);
 
   return (
     <div className="updatePrognoseCanvas" id="updatePrognoseCanvas" onClick={closeWindow}>
@@ -33,7 +38,7 @@ const UpdatePrognose = (props: { match: Match; setMatch: Dispatch<SetStateAction
         <h2 className="updatePrognoseHeader">Enter your prognose</h2>
         <div className="prognoseWrapper">
           <div className="prognoseTeamWrapper">
-            <h4 className="prognoseTeamName">{props.match.team1?.name}</h4>
+            <h4 className="prognoseTeamName">{props.prognose.game.team1?.name}</h4>
             <input
               type="number"
               className="prognoseResultInput"
@@ -50,7 +55,7 @@ const UpdatePrognose = (props: { match: Match; setMatch: Dispatch<SetStateAction
               pattern="^(\d+$)"
               onChange={(e) => onResultChange(e, 2)}
             ></input>
-            <h5 className="prognoseTeamName">{props.match.team2?.name}</h5>
+            <h5 className="prognoseTeamName">{props.prognose.game.team2?.name}</h5>
           </div>
         </div>
         <button className="submitFormButton" onClick={() => handleSubmitButton()}>
@@ -66,18 +71,23 @@ const UpdatePrognose = (props: { match: Match; setMatch: Dispatch<SetStateAction
   }
 
   async function handleSubmitButton() {
-    const prognose: Prognose = {
+    const newPrognose: Prognose = {
       id: undefined,
-      matchID: props.match.id,
+      gameID: props.prognose.game.id,
+      game: props.prognose.game,
       team1_result: currentScore.team1,
       team2_result: currentScore.team2,
-      tournamentID: 1,
-      userID: appState.userID,
+      userOnTournamentTournamentID: 1,
+      userOnTournamentUserID: appState.userID,
+      result: 0,
     };
-    if (props.match.prognoses)
-      if (props.match.prognoses.length > 0) prognose.id = props.match.prognoses[0].id;
-    const updatedMatch = await updatePrognoseHandle(prognose);
-    props.setMatch({ ...props.match, ...updatedMatch });
+
+    if (props.prognose.id) newPrognose.id = props.prognose.id;
+
+    await updatePrognoseHandle(newPrognose);
+    if (props.updateCellPrognose) props.updateCellPrognose({ ...newPrognose });
+    if (props.updateLinePrognose) props.updateLinePrognose({ ...newPrognose });
+
     closeWindow();
   }
 

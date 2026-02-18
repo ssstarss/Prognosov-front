@@ -14,17 +14,16 @@ type Team = {
 
 type Prognose = {
   id: number | undefined;
-  matchID: number;
-  match?: Match;
-  team1_result: number;
-  team2_result: number;
-  tournamentID: number;
-  userID: number;
-  user?: User;
+  gameID: number;
+  game: Game;
+  team1_result?: number;
+  team2_result?: number;
+  userOnTournamentTournamentID?: number;
+  userOnTournamentUserID?: number;
   result?: number;
 };
 
-type Match = {
+type Game = {
   id: number;
   starts_at: Date;
   competitionID: number;
@@ -35,11 +34,6 @@ type Match = {
   prognoses?: Prognose[];
 };
 
-type UserOnTournament = {
-  userID: number;
-  tournamentID: number;
-  user?: User;
-  tournament?: Tournament;
-};
 
-export { Credetials, Team, Prognose, Match, UserOnTournament };
+
+export { Credetials, Team, Prognose, Game };

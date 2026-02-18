@@ -1,81 +1,108 @@
-import { useEffect, useState } from 'react';
-import { appState } from '../../../constants';
-import { Tournament } from '../FillBase/types';
 import './mainTable.scss';
+import { useCallback, useEffect, useState } from 'react';
+import { appState } from '../../../constants';
+import { UserOnTournament } from '../FillBase/types';
 import fetchData from '../../../functions/fetchData';
-import { Prognose } from '../../../interfaces/interfaces';
-
+import { Game, Prognose } from '../../../interfaces/interfaces';
+import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
+import GameCell from './GameCell';
 
 export default function MainTable() {
-  const [tournament, setTournament] = useState<Tournament[]>();
-  const [prognoses, setPrognoses] = useState<Prognose[]>();
+  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>();
+  const [chosenPrognose, setChosenPrognose] = useState<Prognose>({} as Prognose);
+  const [popUp, setPopUp] = useState(() => {
+    return <></>;
+  });
 
   useEffect(() => {
-    fetchData(`/tournaments_admin/${appState.currentTournamentID}`, setTournament).then(() =>
-      fetchData(`/prognoses_admin/${appState.currentTournamentID}`, setPrognoses)
-    );
+    fetchData(`/usersOnTournaments/${appState.currentTournamentID}`, setUsersOnTournametns);
   }, []);
-  if (tournament) {
-    const TableHeaderMatchesCells = () => {
-      return tournament[0].competition?.matches?.map((match) => {
+
+  const games: Game[] = [];
+  const TableHeaderGamesCells = () => {
+    if (usersOnTournaments)
+      return usersOnTournaments[0].tournament.competition?.games?.map((game, index) => {
+        games.push(game);
         return (
-          <th className="mainTableHeaderCell">
-            <div className="matchCell">
+          <th className="mainTableHeaderCell" key={index}>
+            <div className="gameCell">
               <div className="teamCell">
-                <a className="vertical-text teamName">{match.team1 ? match.team1.name : ''}</a>
-                <a className="matchCellScore">{match.team1_result}</a>
+                <a className="vertical-text teamName">{game.team1 ? game.team1.name : ''}</a>
+                <a className="gameCellScore">{game.team1_result}</a>
               </div>
               <div className="teamCell">
-                <a className="vertical-text teamName">{match.team2 ? match.team2.name : ''}</a>
-                <a className="matchCellScore">{match.team2_result}</a>
+                <a className="vertical-text teamName">{game.team2 ? game.team2.name : ''}</a>
+                <a className="gameCellScore">{game.team2_result}</a>
               </div>
             </div>
           </th>
         );
       });
-    };
+  };
 
-    const tableHeader = (
-      <tr className="mainTableHeader">
-        <th className="mainTableHeaderCell">Игра</th>
-        <TableHeaderMatchesCells></TableHeaderMatchesCells>
-      </tr>
-    );
+  const tableHeader = (
+    <tr className="mainTableHeader">
+      <th className="mainTableHeaderCell" key={0}>
+        Игра
+      </th>
+      <TableHeaderGamesCells></TableHeaderGamesCells>
+    </tr>
+  );
 
-    tournament[0].users.sort((a, b) => b.results[0].result - a.results[0].result);
+  const updatePrognoseInUsers = useCallback((updatedPrognose: Prognose) => {
+    setUsersOnTournametns((prev) => {
+      if (!prev) return prev;
+      return prev.map((u) => {
+        if (u.userID !== updatedPrognose.userOnTournamentUserID) return u;
+        const existing = u.prognoses ?? [];
+        const prognoses = existing.some((p) => p.gameID === updatedPrognose.gameID)
+          ? existing.map((p) =>
+              p.gameID === updatedPrognose.gameID ? { ...updatedPrognose } : p
+            )
+          : [...existing, updatedPrognose];
+        return { ...u, prognoses };
+      });
+    });
+  }, []);
+
+  if (usersOnTournaments) {
+    usersOnTournaments.sort((a, b) => b.result - a.result);
     const Raws = () => {
-      return tournament[0].users.map((user, index) => {
-        const raw = [<></>];
-        user.prognoses.map((prognose, index2) => {
-          let color = 'score_black';
-          const result = prognose.result;
-          if (result === 2) color = 'score_blue';
-          if (result === 3) color = 'score_green';
-          if (result === 4) color = 'score_aqua';
-          if (result === 5) color = 'score_orange';
+      return usersOnTournaments.map((user) => {
+        const raw: JSX.Element[] = [];
+
+        games.forEach((game) => {
+          let emtyPrognose: Prognose = {
+            id: undefined,
+            gameID: game.id,
+            game: game,
+            team1_result: undefined,
+            team2_result: undefined,
+            result: undefined,
+          };
+          const prognose = user.prognoses?.find((prognose) => prognose.game.id === game.id);
           raw.push(
-            <td className="playerResultCell" key={`playerResultCell${index}${index2}`}>
-              <div className="playerResultWrapper">
-                <p className="prognose">
-                  {prognose.team1_result} - {prognose.team2_result}
-                </p>
-                <div className={`score ${color}`}>{prognose.result}</div>
-              </div>
-            </td>
+            <GameCell
+              prognose={prognose ? prognose : emtyPrognose}
+              setChosenPrognose={setChosenPrognose}
+              setPopUp={setPopUp}
+              onPrognoseUpdate={updatePrognoseInUsers}
+              key={`${user.userID}-${game.id}`}
+            ></GameCell>
           );
         });
-        const userResult = user.results.find((result) => result.userID === user.id);
+
         let className = 'playerRaw';
-        if (user.id === appState.userID) className = 'playerRaw currentUserRaw';
+        if (user.user.id === appState.userID) className = 'playerRaw currentUserRaw';
         return (
-          <tr className={className}>
+          <tr className={className} key={user.userID + 500}>
             <td className="playerNameCell">
               <div className="playerWrapper">
-                <a className="playerName">{user.fio}</a>
-                <a className="playerResult">{userResult?.result}</a>
+                <a className="playerName">{user.user.fio}</a>
+                <a className="playerResult">{user.result}</a>
               </div>
             </td>
-            <>{raw}</>
+            {raw}
           </tr>
         );
       });
@@ -84,9 +111,10 @@ export default function MainTable() {
     return (
       <>
         <div className="maintableWrapper">
+          <PopUpCanvas PopUp={popUp}></PopUpCanvas>
           <div className="mainTableHeader">
-            <h2>{tournament[0].name}</h2>
-            <h3>{tournament[0].competition?.name}</h3>
+            <h2>{usersOnTournaments[0].tournament.name}</h2>
+            <h3>{usersOnTournaments[0].tournament.competition?.name}</h3>
           </div>
           <table className="mainTable">
             <thead>{tableHeader}</thead>
@@ -96,6 +124,4 @@ export default function MainTable() {
       </>
     );
   }
-  return <></>;
 }
-// <tbody>{<TableBody />}</tbody>

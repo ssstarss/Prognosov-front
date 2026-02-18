@@ -14,7 +14,7 @@ export default async function loginRefresh() {
     };
     try {
       const response = await fetch(`${SERVER}/auth/refresh`, request);
-      if (!response.ok) return false;
+      if (!response.ok) throw Error(response.statusText);
       const res = await response.json();
       appState.accessToken = res.accessToken;
       appState.userID = res.userID;

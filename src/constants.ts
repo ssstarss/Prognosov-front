@@ -4,6 +4,7 @@ export const appState = {
   userRole: 'user',
   currentCompetitionID: 1,
   currentTournamentID: 1,
+  deadlineMinutes: 15
 };
 
 

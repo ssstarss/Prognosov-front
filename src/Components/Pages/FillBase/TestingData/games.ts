@@ -1,4 +1,35 @@
-const matches = [
+import fetchData from '../../../../functions/fetchData';
+import { Game } from '../../../../interfaces/interfaces';
+
+export default async function randomGamesResults(competitionID: number) {
+  const teams = await fetchData('/teams');
+  const teamsAmount = teams.length;
+  const games = [];
+  let starts_at = new Date();
+
+  for (let i = 0; i < 32; i++) {
+    const team1_id = teams[Math.floor(Math.random() * teamsAmount)].id;
+    const team2_id = teams[Math.floor(Math.random() * teamsAmount)].id;
+    const team1_result = Math.floor(Math.random() * 7);
+    const team2_result = Math.floor(Math.random() * 7);
+    const game = {
+      id: 0,
+      team1_id,
+      team1_result,
+      team2_id,
+      team2_result: 1,
+      starts_at: new Date(starts_at).toISOString(),
+      competitionID,
+    };
+    
+    games.push(game);
+    starts_at.setTime(starts_at.getTime() + 1000 * 60); // +1 минута для следующей итерации
+  }
+
+  return games;
+}
+
+const games = [
   {
     id: 0,
     team1_id: 1,
@@ -280,4 +311,5 @@ const matches = [
     competitionID: 1,
   },
 ];
-export default matches;
+
+export { games };

@@ -14,15 +14,19 @@ function Header() {
           <NavLink to="/teams" className={'adminHeaderLink'}>
             Teams
           </NavLink>
-          <NavLink to="/competitions">Competitions</NavLink>
-          <NavLink to="/tournaments" className={'adminHeaderLink'}>
-            Tournaments
+          <NavLink to="/competitions" className={'adminHeaderLink'}>
+            Competitions
           </NavLink>
+
+          <NavLink to="/tournaments">Tournaments</NavLink>
           <NavLink to="/fillbase" className={'adminHeaderLink'}>
             FillData
           </NavLink>
           <NavLink to="/mainTable">Main Table</NavLink>
-          <NavLink to="/prognoses">Matches</NavLink>
+          <NavLink to="/games" className={'adminHeaderLink'}>
+            Games{' '}
+          </NavLink>
+          <NavLink to="/prognoses">Prognoses </NavLink>
         </nav>
       </header>
     </div>
