@@ -14,6 +14,7 @@ export default async function loginRefresh() {
     };
     try {
       const response = await fetch(`${SERVER}/auth/refresh`, request);
+      console.log('response in loginRefresh', response);
       if (!response.ok) throw Error(response.statusText);
       const res = await response.json();
       appState.accessToken = res.accessToken;
@@ -25,6 +26,7 @@ export default async function loginRefresh() {
       }
     } catch (e: any) {
       console.log('loginpage error refresh');
+      return false;
     }
     return true;
   }

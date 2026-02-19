@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import './header.css';
 import { NavLink } from 'react-router-dom';
 
@@ -7,26 +6,37 @@ function Header() {
     <div>
       <header className="header">
         <nav className="navigationMenu">
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/users" className={'adminHeaderLink'}>
+        <NavLink to="/userprofile" className={'headerLink'}>
+            Profile
+          </NavLink>
+          <NavLink to="/login" className={'headerLink'}>
+            Login
+          </NavLink>
+          <NavLink to="/users" className={'headerLink adminHeaderLink'}>
             Users
           </NavLink>
-          <NavLink to="/teams" className={'adminHeaderLink'}>
+          <NavLink to="/teams" className={'headerLink adminHeaderLink'}>
             Teams
           </NavLink>
-          <NavLink to="/competitions" className={'adminHeaderLink'}>
+          <NavLink to="/competitions" className={'headerLink adminHeaderLink'}>
             Competitions
           </NavLink>
 
-          <NavLink to="/tournaments">Tournaments</NavLink>
-          <NavLink to="/fillbase" className={'adminHeaderLink'}>
+          <NavLink to="/tournaments" className={'headerLink'}>
+            Tournaments
+          </NavLink>
+          <NavLink to="/fillbase" className={'headerLink adminHeaderLink'}>
             FillData
           </NavLink>
-          <NavLink to="/mainTable">Main Table</NavLink>
-          <NavLink to="/games" className={'adminHeaderLink'}>
+          <NavLink to="/mainTable" className={'headerLink'}>
+            Main Table
+          </NavLink>
+          <NavLink to="/games" className={'headerLink adminHeaderLink'}>
             Games{' '}
           </NavLink>
-          <NavLink to="/prognoses">Prognoses </NavLink>
+          <NavLink to="/prognoses" className={'headerLink'}>
+            Prognoses{' '}
+          </NavLink>
         </nav>
       </header>
     </div>

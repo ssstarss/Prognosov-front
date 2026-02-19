@@ -1,29 +1,44 @@
 import { appState } from '../constants';
 import { Team } from '../interfaces/interfaces';
+import { User } from '../Components/Pages/FillBase/types';
 
-export const updateData = async (host: string, team: Team) => {
+export const updateData = async (host: string, data: Team | User) => {
   const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
     Authorization: 'Bearer ' + appState.accessToken,
   };
 
-  const body = JSON.stringify(team);
+  const body = JSON.stringify(data);
   const request = {
     method: 'PUT',
     headers: myHeaders,
     body,
   };
   try {
+    console.log('Sending PUT request to:', host);
+    console.log('Request body:', body);
+    
     const response = await fetch(host, request);
+
+    console.log('Response status:', response.status);
+    console.log('Response statusText:', response.statusText);
 
     if (response.status === 401)
       throw Error(`Error reading ${host} ${response.status} ${response.statusText} `);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('Response error:', errorText);
+      throw Error(`Error updating ${host}: ${response.status} ${response.statusText}. ${errorText}`);
+    }
+    
     const res = await response.json();
     console.log('result in update', response.status);
     return response.status;
   } catch (e: any) {
-    console.log(e.message);
+    console.error('Update error:', e.message);
+    throw e;
   }
 };
 export const deleteData = async (host: string, team: Team) => {

@@ -1,5 +1,6 @@
 import { Route, Routes, HashRouter, Navigate } from 'react-router-dom';
 import LoginPage from './Components/Pages/login/loginPage';
+import UserProfile from './Components/Pages/UserProfile/userProfile';
 import TeamsPage from './Components/Pages/teams/teamsPage';
 import Header from './Components/Header/header';
 import CompetitionsPage from './Components/Pages/competitions/Competitions';
@@ -27,6 +28,7 @@ function App() {
         <Route path="/prognoses" element={<PrognosesPage />}></Route>
         <Route path="/games" element={<GamesPage />}></Route>
         <Route path="/fillbase" element={<FillBase />}></Route>
+        <Route path="/userprofile" element={<UserProfile />}></Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </HashRouter>

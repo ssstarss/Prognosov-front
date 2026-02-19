@@ -5,6 +5,7 @@ function StartPage() {
   const navigate = useNavigate();
 try{
   loginRefresh().then((result) => {
+    console.log(result);
     if (result ) navigate('./tournaments');
     else navigate('./login');
   });
