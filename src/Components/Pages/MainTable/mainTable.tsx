@@ -5,19 +5,28 @@ import { UserOnTournament } from '../FillBase/types';
 import fetchData from '../../../functions/fetchData';
 import { Game, Prognose } from '../../../interfaces/interfaces';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
+import ChooseOption from '../../chooseOption/chooseOption';
+import { Tournament } from '../FillBase/types';
 import GameCell from './GameCell';
 
 export default function MainTable() {
-  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>();
+  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>(
+    appState.usersOnTournament
+  );
+  const [currentTournament, setCurrentTournament] = useState<Tournament>(
+    appState.currentTournament
+  );
   const [chosenPrognose, setChosenPrognose] = useState<Prognose>({} as Prognose);
   const [popUp, setPopUp] = useState(() => {
     return <></>;
   });
 
+  console.log('Current_Tournament:', currentTournament.id);
   useEffect(() => {
-    fetchData(`/usersOnTournaments/${appState.currentTournamentID}`, setUsersOnTournametns);
-  }, []);
-
+    fetchData(`/usersOnTournaments/${currentTournament.id}`, setUsersOnTournametns);
+  }, [currentTournament]);
+  appState.currentTournament = currentTournament;
+  localStorage.setItem('currentTournamentID', currentTournament.id.toString());
   const games: Game[] = [];
   const TableHeaderGamesCells = () => {
     if (usersOnTournaments)
@@ -56,9 +65,7 @@ export default function MainTable() {
         if (u.userID !== updatedPrognose.userOnTournamentUserID) return u;
         const existing = u.prognoses ?? [];
         const prognoses = existing.some((p) => p.gameID === updatedPrognose.gameID)
-          ? existing.map((p) =>
-              p.gameID === updatedPrognose.gameID ? { ...updatedPrognose } : p
-            )
+          ? existing.map((p) => (p.gameID === updatedPrognose.gameID ? { ...updatedPrognose } : p))
           : [...existing, updatedPrognose];
         return { ...u, prognoses };
       });
@@ -113,8 +120,12 @@ export default function MainTable() {
         <div className="maintableWrapper">
           <PopUpCanvas PopUp={popUp}></PopUpCanvas>
           <div className="mainTableHeader">
-            <h2>{usersOnTournaments[0].tournament.name}</h2>
-            <h3>{usersOnTournaments[0].tournament.competition?.name}</h3>
+            <h2>Турнир</h2>
+            <ChooseOption<Tournament>
+              currentOption={currentTournament}
+              setChosenOption={setCurrentTournament}
+              host={'/tournaments'}
+            ></ChooseOption>
           </div>
           <table className="mainTable">
             <thead>{tableHeader}</thead>

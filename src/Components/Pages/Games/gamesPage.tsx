@@ -6,19 +6,23 @@ import { Game } from '../../../interfaces/interfaces';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
 import MatchLine from './gameLine';
 import { Competition } from '../FillBase/types';
+import ChooseOption from '../../chooseOption/chooseOption';
 
 export default function GamesPage() {
   const [games, setGames] = useState<Game[]>();
-  const [competition, setCompetition] = useState<Competition>();
+  const [competition, setCompetition] = useState<Competition>(appState.currentCompetition);
   const [chosenGame, setChosenGame] = useState<Game>({} as Game);
   const [popUp, setPopUp] = useState(() => {
     return <></>;
   });
 
   useEffect(() => {
-    fetchData(`/matches/${appState.currentCompetitionID}`, setGames);
-    fetchData(`/competitions/${appState.currentCompetitionID}`, setCompetition);
-  }, []);
+    fetchData(`/matches/${competition.id}`, setGames);
+  }, [competition]);
+
+  appState.currentCompetition = competition;
+  localStorage.setItem('currentCompetitionID', competition.id.toString());
+  console.log('currentCompetition:', competition.id);
 
   const listGames = games?.map((game) => {
     return (
@@ -35,8 +39,14 @@ export default function GamesPage() {
     <div className="gamesPageWrapper">
       <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="gamesForm">
-        <h2 className="gamesPageHeader">Мои прогнозы:</h2>
-        <h2 className="gamesPageHeader">{competition?.name}</h2>
+        <div className="gamesFormHeader">
+          <h2 className="gamesPageHeader">Соревнование:</h2>
+          <ChooseOption<Competition>
+            currentOption={competition}
+            setChosenOption={setCompetition}
+            host={'/competitions'}
+          ></ChooseOption>
+        </div>
         <div className="games__list">
           <h4> {listGames}</h4>
         </div>

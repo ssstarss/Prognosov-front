@@ -1,5 +1,5 @@
 import './updateGame.css';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Game } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 import { close__popUp } from '../../../PopUpCanvas/popUpCanvas';
@@ -7,21 +7,21 @@ import updateGameHandle from './updateGameHandle';
 
 const UpdateGame = (props: {
   game: Game;
-  updateCellGame?: Function;
-  updateLineGame?: Function;
+  updateCellGame?: Dispatch<SetStateAction<Game>>;
+  updateLineGame?: Dispatch<SetStateAction<Game>>;
 }) => {
+
   const [currentScore, setCurrentScore] = useState({
     team1: typeof props.game.team1_result === 'number' ? props.game.team1_result : undefined,
     team2: typeof props.game.team2_result === 'number' ? props.game.team2_result : undefined,
   });
-
+  
   useEffect(() => {
     setCurrentScore({
       team1: typeof props.game.team1_result === 'number' ? props.game.team1_result : undefined,
       team2: typeof props.game.team2_result === 'number' ? props.game.team2_result : undefined,
     });
   }, [props.game?.id, props.game.team1_result, props.game.team2_result]);
-
   return (
     <div className="updateGameCanvas" id="updateGameCanvas" onClick={closeWindow}>
       <div
@@ -76,11 +76,22 @@ const UpdateGame = (props: {
       team2_result: currentScore.team2,
     };
 
-    
+    const result = await updateGameHandle(newGame);
+    console.log('Result', result);
 
-    await updateGameHandle(newGame);
+    if (props.updateLineGame)
+      props.updateLineGame({
+        ...newGame,
+        team1: result.team1,
+        team2: result.team2,
+      });
 
-    if (props.updateLineGame) props.updateLineGame({ ...newGame });
+    if (props.updateCellGame)
+      props.updateCellGame({
+        ...newGame,
+        team1: result.team1,
+        team2: result.team2,
+      });
 
     closeWindow();
   }

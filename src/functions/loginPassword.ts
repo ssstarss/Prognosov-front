@@ -1,5 +1,6 @@
 import { Credetials } from '../interfaces/interfaces';
 import { appState, SERVER } from '../constants';
+import loginRefresh from './loginRefresh';
 export default async function loginPassword(user: Credetials) {
   const myHeaders = {
     Accept: 'application/json',
@@ -19,12 +20,8 @@ export default async function loginPassword(user: Credetials) {
     if (response.ok) {
       const res = await response.json();
       localStorage.setItem('refreshToken', res.refreshToken);
-      appState.accessToken = res.accessToken;
-      appState.userID = res.userID;
-      const headerLinks = Array.from(document.getElementsByClassName('adminHeaderLink'));
-      if (res.userRole === 'admin')
-        headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'block'));
-      else headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'none'));
+      await loginRefresh()
+      
 
 
       return true;

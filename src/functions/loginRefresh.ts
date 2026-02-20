@@ -1,4 +1,5 @@
 import { appState, SERVER } from '../constants';
+import initStartValues from './initStartValues';
 
 export default async function loginRefresh() {
   const refreshToken = localStorage.getItem('refreshToken');
@@ -14,11 +15,12 @@ export default async function loginRefresh() {
     };
     try {
       const response = await fetch(`${SERVER}/auth/refresh`, request);
-      console.log('response in loginRefresh', response);
+      
       if (!response.ok) throw Error(response.statusText);
       const res = await response.json();
       appState.accessToken = res.accessToken;
       appState.userID = res.userID;
+      await initStartValues();
       
       if (res.userRole === 'admin') {
         const headerLinks = Array.from(document.getElementsByClassName('adminHeaderLink'));

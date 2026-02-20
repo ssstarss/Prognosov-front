@@ -1,6 +1,7 @@
 import { Game } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 import { SERVER } from '../../../../constants';
+import fetchData from '../../../../functions/fetchData';
 
 export default async function updateGameHandle(game: Game) {
   const body = JSON.stringify(game);
@@ -20,7 +21,9 @@ export default async function updateGameHandle(game: Game) {
     if (response.status === 401)
       throw Error(`Error creating games ${response.status} ${response.statusText} `);
     const result = await response.json();
-    return result;
+
+    const res = await fetchData(`/match/${game.id}`);
+    return res;
   } catch (e: any) {
     console.log(e.message);
   }

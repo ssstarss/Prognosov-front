@@ -1,5 +1,5 @@
 export default function formatDate(date: Date | undefined) {
-  console.log(date?.getHours());
+  
   if (date) {
     const year = date.getFullYear();
     let month = (date.getMonth() + 1).toString();

@@ -11,11 +11,9 @@ interface MyProps {
 }
 export default function GameLine(props: MyProps) {
   const [game, setGame] = useState<Game>(props.game);
-  function updateGame(game: Game) {
-    setGame(game);
-  }
+
   const popUp = (
-    <UpdateGame game={game} updateLineGame={updateGame}></UpdateGame>
+    <UpdateGame game={game} updateLineGame={setGame}></UpdateGame>
   );
   let score = (
     <>
