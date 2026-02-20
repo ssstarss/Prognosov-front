@@ -5,6 +5,15 @@ type Credetials = {
   password: string;
 };
 
+export type RegisterFormData = {
+  fio: string;
+  email: string;
+  password?: string;
+  cellphone: string;
+  city: string;
+  country: string;
+};
+
 type Team = {
   id?: number;
   name: string;

@@ -1,0 +1,90 @@
+.codeInputModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.codeInputModal {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  width: 400px;
+  border: solid 1px black;
+}
+
+.codeInputModal h3 {
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.codeInputModalHint {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.codeInputModalAttempts {
+  font-size: 14px;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.codeInputField {
+  width: 100%;
+  padding: 12px;
+  font-size: 24px;
+  letter-spacing: 8px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.codeInputField:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+.codeInputModal .errorMessage {
+  display: block;
+  color: #f44336;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.codeInputModalButtons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.codeInputButton {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.codeInputButton:hover {
+  background-color: #45a049;
+}
+
+.codeInputButtonCancel {
+  background-color: #999;
+}
+
+.codeInputButtonCancel:hover {
+  background-color: #777;
+}

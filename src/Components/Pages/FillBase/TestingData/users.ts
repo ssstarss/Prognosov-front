@@ -1,7 +1,7 @@
 import { User } from '../types';
 import tournaments from './tournaments';
 
-const users:User[] = [
+const users: User[] = [
   {
     id: 0,
     fio: 'Иванов Иван',
@@ -24,8 +24,6 @@ const users:User[] = [
     city: 'Rubtsovsk',
     country: 'Russia',
     active: true,
-
-
   },
   {
     id: 0,
@@ -37,7 +35,6 @@ const users:User[] = [
     city: 'Novosibirsk',
     country: 'Luxemburg',
     active: true,
-
   },
   {
     id: 0,
@@ -49,20 +46,17 @@ const users:User[] = [
     city: 'Novosibirsk',
     country: 'Russia',
     active: true,
-    
-
   },
   {
     id: 0,
-    fio: '1',
-    email: '1',
-    password: '1',
+    fio: 'a',
+    email: 'a',
+    password: 'a',
     cellphone: '+79324567821',
     role: 'admin',
     city: 'Moscow',
     country: 'Russia',
     active: true,
-
   },
   {
     id: 0,
@@ -74,7 +68,6 @@ const users:User[] = [
     city: 'Barnaul',
     country: 'Russia',
     active: true,
-
   },
 ];
 
