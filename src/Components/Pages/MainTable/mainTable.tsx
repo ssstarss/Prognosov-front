@@ -109,6 +109,7 @@ export default function MainTable() {
                 <a className="playerResult">{user.result}</a>
               </div>
             </td>
+
             {raw}
           </tr>
         );
@@ -117,20 +118,22 @@ export default function MainTable() {
 
     return (
       <>
-        <div className="maintableWrapper">
+        <div className="mainTablePageWrapper">
           <PopUpCanvas PopUp={popUp}></PopUpCanvas>
           <div className="mainTableHeader">
-            <h2>Турнир</h2>
+            <a className='mainTableHeaderText'>Турнир</a>
             <ChooseOption<Tournament>
               currentOption={currentTournament}
               setChosenOption={setCurrentTournament}
               host={'/tournaments'}
             ></ChooseOption>
           </div>
+          <div className="mainTableWrapper">
           <table className="mainTable">
             <thead>{tableHeader}</thead>
             <tbody>{<Raws />}</tbody>
           </table>
+          </div>
         </div>
       </>
     );

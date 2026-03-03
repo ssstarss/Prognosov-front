@@ -36,7 +36,7 @@ export default function GamesPage() {
   });
 
   return (
-    <div className="gamesPageWrapper">
+    <div className="pageWrapper">
       <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="gamesForm">
         <div className="gamesFormHeader">

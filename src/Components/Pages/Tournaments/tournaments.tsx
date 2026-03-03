@@ -12,7 +12,7 @@ function TournamentsPage() {
   );
 
   return (
-    <div className="tournamentsPageWrapper">
+    <div className="pageWrapper">
       <div className="tournamentsForm">
         <h3 className="currentTournamentHeader">Active Tournament:</h3>
         <ChooseOption<Tournament>

@@ -22,7 +22,7 @@ export default function UsersPage() {
 console.log(users)
   const listTeams = users?.map((user) => <li key={user.id}>{user.fio} </li>);
   return (
-    <div className="usersPageWrapper">
+    <div className="pageWrapper">
       <div className="usersForm">
         <h2 className="usersPageHeader">USERS registered on Server:</h2>
         <h4> {listTeams}</h4>

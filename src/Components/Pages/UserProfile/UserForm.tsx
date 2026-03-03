@@ -41,14 +41,14 @@ export default function UserForm({
     const value = formatPhoneInput(e.target.value);
     setCellphone(value);
     if (value) validateCellphone(value);
-    else setCellphoneError('');
+    else setCellphoneError('Неверный телефон');
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
     if (value) validateEmail(value, setEmailError);
-    else setEmailError('');
+    else setEmailError('Неверный email');
   };
 
   const validatePassword = (): boolean => {

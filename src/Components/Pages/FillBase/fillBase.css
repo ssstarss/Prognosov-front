@@ -1,13 +1,4 @@
-.fillBasePageWrapper {
-  display: flex;
-  margin: auto;
-  width: 90%;
-  height: 100vh;
-  border: solid 1px black;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-}
+
 .fillBaseForm {
   width: 500px;
   margin: auto;

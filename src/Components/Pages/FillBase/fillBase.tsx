@@ -5,7 +5,7 @@ import './fillBase.css';
 export default function FillBase() {
   const [password, setPassword] = useState('');
   return (
-    <div className="fillBasePageWrapper">
+    <div className="pageWrapper">
       <div className="fillBaseForm">
         <h2 className="fillBaseHeader">Введите пароль ImSure b нажмите чтобы обновить базу </h2>
 

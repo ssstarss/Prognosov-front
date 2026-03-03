@@ -46,7 +46,7 @@ export default function TeamsPage() {
     </div>
   ));
   return (
-    <div className="teamsPageWrapper">
+    <div className="pageWrapper">
       {editTeamsPop}
       {ConfirmPopUp(team, deleteData, `'${SERVER}/teams`, setTeams)}
       <div className="teamsListWrapper">

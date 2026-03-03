@@ -1,13 +1,4 @@
-.loginPageWrapper {
-  display: flex;
-  margin: auto;
-  width: 90%;
-  height: 90vh;
-  border: solid 1px black;
-  border-radius: 20px;
-  justify-content: center;
-  align-items: center;
-}
+
 
 .loginForm {
   width: 500px;

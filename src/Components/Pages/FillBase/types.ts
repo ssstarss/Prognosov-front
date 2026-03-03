@@ -4,9 +4,10 @@ type Competition = {
   id: number;
   name: string;
   comments: string;
-  StartsAt: string | Date;
-  EndsAt: string | Date;
+  StartsAt: Date;
+  EndsAt: Date;
   games?: Game[];
+  active: boolean;
 };
 
 type Team = {
@@ -23,10 +24,8 @@ type Tournament = {
   comments: string;
   active: boolean;
   competition?: Competition;
-  usersOnTournament?: UserOnTournament[]
-  
+  usersOnTournament?: UserOnTournament[];
 };
-
 
 interface User {
   id: number;
@@ -37,7 +36,7 @@ interface User {
   role: string;
   city: string;
   country: string;
-  tournaments?: UserOnTournament[]
+  tournaments?: UserOnTournament[];
   active: boolean;
 }
 

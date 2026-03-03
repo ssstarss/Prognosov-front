@@ -1,51 +1,76 @@
-import { useEffect, useState } from 'react';
 import './competitions.css';
+import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
-interface Competitions {
-  id: number;
-  name: String;
-  comments: String;
-  StartsAt: Date;
-  EndsAt: Date;
-}
+import EditCompetitionForm from './editCompetitionForm';
+import { Competition } from '../FillBase/types';
 
 function CompetitionsPage() {
-  const [competitions, setCompetitions] = useState<Competitions[]>();
-  let [currentCompetitionName, setCurrentCompetitionName] = useState<String>();
+  const [competitions, setCompetitions] = useState<Competition[]>();
+  const [currentCompetition, setCurrentCompetition] = useState<Competition>(
+    appState.currentCompetition
+  );
 
   useEffect(() => {
     fetchData(`/competitions`, setCompetitions);
   }, []);
-  
-  const competitionName = competitions?.find(
-    (competition) => competition.id === appState.currentCompetitionID
-  )?.name;
-  
-  currentCompetitionName = competitionName;
 
-  const listCompetitions = competitions?.map((competition) => (
-    <li key={competition.id} onClick={() => handleCompetitionClick(competition.id)}>
-      {competition.name}
-    </li>
-  ));
+  const listCompetitions = competitions?.map((competition) => {
+    return (
+      <li
+        className={`competitionLine ${currentCompetition.id === competition.id ? 'currentCompetition' : ''}`}
+        key={competition.id}
+      >
+        <div className="iconsBlock">
+          <div
+            className="editIcon"
+            onClick={() => {
+              editCompetition(competition);
+            }}
+          >
+            E
+          </div>
+          <div className="deleteIcon">D</div>
+        </div>
+        <h4 className="competitionName" onClick={() => handleCompetitionClick(competition.id)}>
+          {competition.name}{' '}
+        </h4>
+      </li>
+    );
+  });
   return (
-    <div className="competitionsPageWrapper">
-      <div className="competitionsForm">
+    <div className="pageWrapper">
+      <div className="competitionsForm" id="competitionsForm">
+        <EditCompetitionForm competition={currentCompetition} />
         <h2 className="competitionsPageHeader">COMPETITIONS:</h2>
-        <h4 className="competition"> {listCompetitions}</h4>
-        <h3 className="currentCompetitionHeader">Active Competition:</h3>
-        <h3 className="currentCompetition">{currentCompetitionName}</h3>
+        <div className="competitionList"> {listCompetitions}</div>
+        <button className="addButton" onClick={() => {}}>
+          ADD
+        </button>
       </div>
     </div>
   );
+
+  function editCompetition(competition: Competition) {
+    
+    setCurrentCompetition(competition);
+    const competitionsForm = document.getElementById('competitionsForm');
+    
+    //if (competitionsForm) competitionsForm.style.visibility = 'hidden';
+    const body = document.getElementsByTagName('body')[0];
+    const element = document.getElementById('editCompetitionForm');
+    
+    if (element) element.style.display = 'flex';
+    if (body) body.style.overflow = 'hidden';
+  }
+
   function handleCompetitionClick(competitionID: number) {
     localStorage.setItem('currentCompetitionID', competitionID.toString());
     appState.currentCompetitionID = competitionID;
-    const competitionName = competitions?.find(
+    const competition = competitions?.find(
       (competition) => competition.id === appState.currentCompetitionID
-    )?.name;
-    if (competitionName) setCurrentCompetitionName(competitionName);
+    );
+    if (competition) setCurrentCompetition(competition);
   }
 }
 

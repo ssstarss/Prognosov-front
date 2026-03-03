@@ -1,24 +1,49 @@
-.maintableWrapper {
+.mainTablePageWrapper {
+  display: block;
+  margin: auto;
+  width: 95%;
+  height: 90vh;
+  border: solid 1px black;
+  border-radius: 20px;
+
+}
+.mainTableWrapper {
   border-bottom: none;
   overflow: auto;
   height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
 }
-
 .mainTable {
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;
+  overflow: auto;
 }
 
 .mainTableHeader {
-  height: 110px;
+  height: 40px;
+  text-align: center;
+margin-top: 20px;
+}
+.mainTableHeaderText {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 20px;
 }
 
-.maintableWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.selectItem {
+  
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 5px;
+  margin-left: 20px;
 }
+
+
 .mainTable td:nth-child(1),
 .mainTable th:nth-child(1) {
   position: sticky;

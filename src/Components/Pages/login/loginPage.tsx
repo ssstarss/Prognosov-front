@@ -86,7 +86,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="loginPageWrapper">
+    <div className="pageWrapper">
       <div className="loginForm">
         <div className="loginTabs">
           <button

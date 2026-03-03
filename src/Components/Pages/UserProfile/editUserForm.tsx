@@ -19,7 +19,7 @@ export default function EditUserForm({ user, setUser }: EditUserFormProps) {
   };
 
   return (
-    <div className="editUserFormWrapper" onClick={(e) => e.stopPropagation()}>
+    <div className="pageWrapper" onClick={(e) => e.stopPropagation()}>
       <UserForm
         mode="edit"
         initialData={{

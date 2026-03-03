@@ -1,9 +1,5 @@
 .header {
-  background-color: whitesmoke;
-  
-padding-bottom: 10px;
-padding-bottom: 10px;
-  height: 5vh;
+  height: 10vh;
   color: black;
 }
 a {
@@ -11,17 +7,17 @@ a {
 }
 
 .navigationMenu {
+  background-color: whitesmoke;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 90%;
-
-  align-content: flex-end;
+  height: 100%;
+  align-content: center;
   justify-content: space-around;
   border: solid 1px black;
-  border-radius: 10px;
-padding-top: 10px;
-padding-bottom: 10px;
+  border-radius: 20px;
+ 
   justify-self: center;
   border-bottom: none;
 }

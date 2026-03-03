@@ -34,7 +34,7 @@ export default function PrognosesPage() {
   });
 
   return (
-    <div className="prognosesPageWrapper">
+    <div className="pageWrapper">
       <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="prognosesForm">
         <h2 className="prognosesPageHeader">Мои прогнозы:</h2>
