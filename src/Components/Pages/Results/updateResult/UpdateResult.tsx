@@ -1,14 +1,13 @@
-import './updateGame.css';
+import './updateResult.css';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Game } from '../../../../interfaces/interfaces';
-import { appState } from '../../../../constants';
-import { close__popUp } from '../../../PopUpCanvas/popUpCanvas';
-import updateGameHandle from './updateGameHandle';
+import updateResultHandle from './updateResultHandle';
 
-const UpdateGame = (props: {
+const UpdateResult = (props: {
   game: Game;
   updateCellGame?: Dispatch<SetStateAction<Game>>;
   updateLineGame?: Dispatch<SetStateAction<Game>>;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
 
   const [currentScore, setCurrentScore] = useState({
@@ -23,17 +22,17 @@ const UpdateGame = (props: {
     });
   }, [props.game?.id, props.game.team1_result, props.game.team2_result]);
   return (
-    <div className="updateGameCanvas" id="updateGameCanvas" onClick={closeWindow}>
+    
       <div
-        className="updateGameWrapper"
+        className="updateResultWrapper"
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
           if (e.key === 'Enter') handleSubmitButton();
         }}
       >
-        <h2 className="updateGameHeader">Enter your game</h2>
-        <div className="gameWrapper">
-          <div className="gameTeamWrapper">
+        <h2 className="updateResultHeader">Enter your result</h2>
+        <div className="resultWrapper">
+          <div className="resultTeamWrapper">
             <h4 className="gameTeamName">{props.game.team1?.name}</h4>
             <input
               type="number"
@@ -43,7 +42,7 @@ const UpdateGame = (props: {
               onChange={(e) => onResultChange(e, 1)}
             ></input>
           </div>
-          <div className="gameTeamWrapper">
+          <div className="resultTeamWrapper">
             <input
               type="number"
               className="gameResultInput"
@@ -58,7 +57,7 @@ const UpdateGame = (props: {
           Submit
         </button>
       </div>
-    </div>
+    
   );
   function onResultChange(e: React.ChangeEvent<HTMLInputElement>, team: number) {
     const result = Number(e.target.value);
@@ -76,8 +75,7 @@ const UpdateGame = (props: {
       team2_result: currentScore.team2,
     };
 
-    const result = await updateGameHandle(newGame);
-    console.log('Result', result);
+    const result = await updateResultHandle(newGame);
 
     if (props.updateLineGame)
       props.updateLineGame({
@@ -93,13 +91,9 @@ const UpdateGame = (props: {
         team2: result.team2,
       });
 
-    closeWindow();
+    props.setShowModal(false);
   }
 
-  function closeWindow() {
-    const element = document.getElementById('updateGameCanvas');
-    if (element) element.style.display = 'none';
-    close__popUp();
-  }
+
 };
-export default UpdateGame;
+export default UpdateResult;

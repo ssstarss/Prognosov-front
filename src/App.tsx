@@ -6,7 +6,7 @@ import Header from './Components/Header/header';
 import CompetitionsPage from './Components/Pages/competitions/Competitions';
 import UsersPage from './Components/Pages/Users/usersPage';
 import PrognosesPage from './Components/Pages/prognoses/prognosesPage';
-import GamesPage from './Components/Pages/Games/gamesPage';
+import GamesPage from './Components/Pages/Results/resultsPage';
 import StartPage from './Components/Pages/startPage/startPage';
 import FillBase from './Components/Pages/FillBase/fillBase';
 import TournamentsPage from './Components/Pages/Tournaments/tournaments';

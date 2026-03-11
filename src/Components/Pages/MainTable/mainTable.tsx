@@ -4,7 +4,7 @@ import { appState } from '../../../constants';
 import { UserOnTournament } from '../FillBase/types';
 import fetchData from '../../../functions/fetchData';
 import { Game, Prognose } from '../../../interfaces/interfaces';
-import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
+
 import ChooseOption from '../../chooseOption/chooseOption';
 import { Tournament } from '../FillBase/types';
 import GameCell from './GameCell';
@@ -91,9 +91,6 @@ export default function MainTable() {
           raw.push(
             <GameCell
               prognose={prognose ? prognose : emtyPrognose}
-              setChosenPrognose={setChosenPrognose}
-              setPopUp={setPopUp}
-              onPrognoseUpdate={updatePrognoseInUsers}
               key={`${user.userID}-${game.id}`}
             ></GameCell>
           );
@@ -119,9 +116,8 @@ export default function MainTable() {
     return (
       <>
         <div className="mainTablePageWrapper">
-          <PopUpCanvas PopUp={popUp}></PopUpCanvas>
           <div className="mainTableHeader">
-            <a className='mainTableHeaderText'>Турнир</a>
+            <a className="mainTableHeaderText">Турнир</a>
             <ChooseOption<Tournament>
               currentOption={currentTournament}
               setChosenOption={setCurrentTournament}
@@ -129,10 +125,10 @@ export default function MainTable() {
             ></ChooseOption>
           </div>
           <div className="mainTableWrapper">
-          <table className="mainTable">
-            <thead>{tableHeader}</thead>
-            <tbody>{<Raws />}</tbody>
-          </table>
+            <table className="mainTable">
+              <thead>{tableHeader}</thead>
+              <tbody>{<Raws />}</tbody>
+            </table>
           </div>
         </div>
       </>

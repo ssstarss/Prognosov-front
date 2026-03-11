@@ -1,31 +1,23 @@
 import { useState } from 'react';
 import { Game } from '../../../interfaces/interfaces';
 import { Dispatch, SetStateAction } from 'react';
-import UpdateGame from './updateGame/UpdateGame';
+import UpdateGame from './updateResult/UpdateResult';
 import formatDate from '../../../functions/formatDate';
+import { createPortal } from 'react-dom';
+import ModalWrapper from '../../ModalPortal/modalWrapper';
 
 interface MyProps {
   game: Game;
   setChosenGame: Dispatch<SetStateAction<Game>>;
-  setPopUp: Dispatch<SetStateAction<JSX.Element>>;
 }
 export default function GameLine(props: MyProps) {
   const [game, setGame] = useState<Game>(props.game);
+  const [showModal, setShowModal] = useState(false);
 
-  const popUp = (
-    <UpdateGame game={game} updateLineGame={setGame}></UpdateGame>
-  );
-  let score = (
-    <>
-      <p className="games__score">__</p>
-      <p className="games__score">__</p>
-    </>
-  );
-
-  score = (
+  const score = (
     <div className="games__score_wrapper">
-      <p className="games__score">{game.team1_result}</p>
-      <p className="games__score">{game.team2_result}</p>
+      <p className="games__score">{typeof game.team1_result === 'number' ? game.team1_result : '__'}</p>
+      <p className="games__score">{typeof game.team2_result === 'number' ? game.team2_result : '__'}</p>
     </div>
   );
 
@@ -34,11 +26,22 @@ export default function GameLine(props: MyProps) {
       key={props.game.id}
       className="games__game_wrapper"
       onClick={() => {
-        handleGameClick();
+        props.setChosenGame(game);
+        setShowModal(true);
       }}
     >
+      {showModal &&
+        createPortal(
+          <ModalWrapper showModal={showModal} setShowModal={setShowModal}>
+            <UpdateGame
+              game={game}
+              updateLineGame={setGame}
+              setShowModal={setShowModal}
+            ></UpdateGame>
+          </ModalWrapper>,
+          document.body
+        )}
       <div className="games__date">{formatDate(new Date(game.starts_at))}</div>
-      
       <div className="games__teams_wrapper">
         <p className="games__team_name">{game.team1?.name}</p>
         <p className="games__team_name">{game.team2?.name}</p>
@@ -46,13 +49,4 @@ export default function GameLine(props: MyProps) {
       <div className="games__score">{score}</div>
     </li>
   );
-
-  function handleGameClick() {
-    const body = document.getElementsByTagName('body')[0];
-    if (body) body.style.overflow = 'hidden';
-    props.setChosenGame(game);
-    props.setPopUp(popUp);
-    const updateGameWrapper = document.getElementById('updateGameCanvas');
-    if (updateGameWrapper) updateGameWrapper.style.display = 'flex';
-  }
 }

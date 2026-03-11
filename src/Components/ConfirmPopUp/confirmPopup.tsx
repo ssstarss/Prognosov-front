@@ -1,49 +1,47 @@
+import fetchData from '../../functions/fetchData';
 import { Team } from '../../interfaces/interfaces';
+import { Competition, User } from '../Pages/FillBase/types';
 import './confirmPopUp.css';
 
-export default function ConfirmPopUp(
-  team: Team,
-  action: Function,
-  host: string,
-  setTeams: Function
-) {
+export default function ConfirmPopUp(props: {
+  message: string;
+  data: Team | Competition | User;
+  action: Function;
+  host: string;
+  setData: Function;
+  setShowModal: Function;
+}) {
   return (
-    <div className="confirmPopUpCanvas" id="confirmPopUpCanvas">
-      <div className="confirmPopUpWrapper">
+    
+      <div className="confirmPopUpWrapper" onClick={(e) => e.stopPropagation()}>
         <div className="closeCrossWrapper">
-          <div className="closeCross" onClick={closeWindow}>
+          <div className="closeCross" onClick={() => props.setShowModal(false)}>
             X
           </div>
         </div>
-        <h3 className="popUpHeader">Вы уверены, что хотите удалить:{team.name}??</h3>
+        <h3 className="popUpHeader">{props.message}</h3>
         <div className="buttonsWrapper">
           <button className="submitFormButton" onClick={submit}>
             SUBMIT
           </button>
-          <button className="submitFormButton" onClick={closeWindow}>
+          <button className="submitFormButton" onClick={() => props.setShowModal(false)}>
             CANCEL
           </button>
         </div>
       </div>
-    </div>
+    
   );
 
-  function closeWindow() {
-    const element = document.getElementById('confirmPopUpCanvas');
-    if (element) element.style.visibility = 'hidden';
-    const body = document.getElementsByTagName('body')[0];
-    if (body) body.style.overflow = 'scroll';
-  }
+  
   async function submit() {
-    await action(host, team).then(async (result: any) => {
+    await props.action(props.host, props.data).then(async (result: any) => {
       if (result === 200) {
-        await setTeams((teams: Team[]) => {
-          const updatedTeams = [];
-          for (let item of teams) if (item.id !== team.id) updatedTeams.push(item);
-          return updatedTeams;
-        });
-        closeWindow();
-      }
+        const updatedData = await fetchData(props.host);
+        if (props.setData) {
+          await props.setData(updatedData as Team[] | Competition[] | User[]);
+        }
+        props.setShowModal(false);
+      } 
     });
   }
 }

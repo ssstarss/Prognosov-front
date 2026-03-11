@@ -1,15 +1,23 @@
 import './competitions.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
-import { appState } from '../../../constants';
+import { appState, SERVER } from '../../../constants';
 import EditCompetitionForm from './editCompetitionForm';
 import { Competition } from '../FillBase/types';
+import ModalWrapper from '../../ModalPortal/modalWrapper';
+import { createPortal } from 'react-dom';
+import { deleteData } from '../../../functions/updateData';
+import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
+
 
 function CompetitionsPage() {
-  const [competitions, setCompetitions] = useState<Competition[]>();
+  const [competitions, setCompetitions] = useState<Competition[]>([] as Competition[]);
   const [currentCompetition, setCurrentCompetition] = useState<Competition>(
     appState.currentCompetition
   );
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [addNewCompetition, setAddNewCompetition] = useState(false);
 
   useEffect(() => {
     fetchData(`/competitions`, setCompetitions);
@@ -25,53 +33,72 @@ function CompetitionsPage() {
           <div
             className="editIcon"
             onClick={() => {
-              editCompetition(competition);
+              setCurrentCompetition(competition);
+              setShowModalEdit(true);
+              setAddNewCompetition(false);
             }}
           >
             E
           </div>
-          <div className="deleteIcon">D</div>
+          <div
+            className="deleteIcon"
+            onClick={() => {
+              setCurrentCompetition(competition);
+              setShowModalDelete(true);
+            }}
+          >
+            D
+          </div>
         </div>
-        <h4 className="competitionName" onClick={() => handleCompetitionClick(competition.id)}>
-          {competition.name}{' '}
-        </h4>
+        <h4 className="competitionName">{competition.name} </h4>
       </li>
     );
   });
   return (
     <div className="pageWrapper">
+      {showModalDelete &&
+        createPortal(
+          <ModalWrapper showModal={showModalDelete} setShowModal={setShowModalDelete}>
+            <ConfirmPopUp
+              data={currentCompetition}
+              message={`Вы уверены, что хотите удалить: ${currentCompetition.name}?`}
+              action={deleteData}
+              host={`/competitions`}
+              setData={setCompetitions}
+              setShowModal={setShowModalDelete}
+            />
+          </ModalWrapper>,
+          document.body
+        )}
+      {showModalEdit &&
+        createPortal(
+          <ModalWrapper showModal={showModalEdit} setShowModal={setShowModalEdit}>
+            <EditCompetitionForm
+              addNewCompetition={addNewCompetition}
+              competition={currentCompetition}
+              setCompetitions={setCompetitions}
+              setShowModal={setShowModalEdit}
+            />
+          </ModalWrapper>,
+          document.body
+        )}
+
       <div className="competitionsForm" id="competitionsForm">
-        <EditCompetitionForm competition={currentCompetition} />
         <h2 className="competitionsPageHeader">COMPETITIONS:</h2>
         <div className="competitionList"> {listCompetitions}</div>
-        <button className="addButton" onClick={() => {}}>
+        <button
+          className="addButton"
+          onClick={() => {
+            setCurrentCompetition({} as Competition);
+            setAddNewCompetition(true);
+            setShowModalEdit(true);
+          }}
+        >
           ADD
         </button>
       </div>
     </div>
   );
-
-  function editCompetition(competition: Competition) {
-    
-    setCurrentCompetition(competition);
-    const competitionsForm = document.getElementById('competitionsForm');
-    
-    //if (competitionsForm) competitionsForm.style.visibility = 'hidden';
-    const body = document.getElementsByTagName('body')[0];
-    const element = document.getElementById('editCompetitionForm');
-    
-    if (element) element.style.display = 'flex';
-    if (body) body.style.overflow = 'hidden';
-  }
-
-  function handleCompetitionClick(competitionID: number) {
-    localStorage.setItem('currentCompetitionID', competitionID.toString());
-    appState.currentCompetitionID = competitionID;
-    const competition = competitions?.find(
-      (competition) => competition.id === appState.currentCompetitionID
-    );
-    if (competition) setCurrentCompetition(competition);
-  }
 }
 
 export default CompetitionsPage;

@@ -26,8 +26,6 @@ export default function PrognosesPage() {
     return (
       <MatchLine
         prognose={prognose}
-        setChosenPrognose={setChosenPrognose}
-        setPopUp={setPopUp}
         key={prognose.id}
       ></MatchLine>
     );

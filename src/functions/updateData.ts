@@ -69,24 +69,24 @@ export const deleteData = async (host: string, team: Team) => {
   }
 };
 
-export const addData = async (host: string, team: Team) => {
-  const myHeaders = {
+export const addData = async (host: string, data: Team | Omit<Competition, 'id'>) => {
+        const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
     Authorization: 'Bearer ' + appState.accessToken,
   };
 
-  const body = JSON.stringify(team);
+  const body = JSON.stringify(data);
   const request = {
     method: 'POST',
     headers: myHeaders,
     body,
   };
   try {
-    const response = await fetch(host, request);
+    const response = await fetch(SERVER + host, request);
 
     if (response.status === 401)
-      throw Error(`Error reading ${host} ${response.status} ${response.statusText} `);
+      throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
     const res = await response.json();
     console.log('result in add', response.status);
     return response.status;

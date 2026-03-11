@@ -7,9 +7,14 @@ import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';
 import { SERVER } from '../../../constants';
 import { appState } from '../../../constants';
+import { createPortal } from 'react-dom';
+import ModalWrapper from '../../ModalPortal/modalWrapper';
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
+  const [showModalDelete, setShowModalDelete] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [addNewTeam, setAddNewTeam] = useState(false);
   const [team, setTeam] = useState<Team>({
     id: 0,
     name: '',
@@ -20,8 +25,6 @@ export default function TeamsPage() {
     fetchData(`/teams`, setTeams);
   }, []);
 
-  const editTeamsPop = EditTeamPage(team, setTeams);
-
   const listTeams = teams?.map((team) => (
     <div className="teamRaw" key={team.id}>
       {team.name}
@@ -29,7 +32,7 @@ export default function TeamsPage() {
         <button
           onClick={() => {
             setTeam(team);
-            showPopUp();
+            setShowModalEdit(true);
           }}
         >
           E
@@ -37,7 +40,7 @@ export default function TeamsPage() {
         <button
           onClick={() => {
             setTeam(team);
-            showDeleteConfirm();
+            setShowModalDelete(true);
           }}
         >
           D
@@ -46,9 +49,35 @@ export default function TeamsPage() {
     </div>
   ));
   return (
-    <div className="pageWrapper">
-      {editTeamsPop}
-      {ConfirmPopUp(team, deleteData, `'${SERVER}/teams`, setTeams)}
+    <div className="pageWrapper" onClick={() => {
+     
+    }}>
+     {showModalEdit &&
+        createPortal(
+          <ModalWrapper showModal={showModalEdit} setShowModal={setShowModalEdit}>
+           <EditTeamPage
+            team={team}
+            setTeams={setTeams}
+            setShowModal={setShowModalEdit}
+            key={team.id}
+           />
+          </ModalWrapper>,
+          document.body
+        )}
+      {showModalDelete &&
+        createPortal(
+          <ModalWrapper showModal={showModalDelete} setShowModal={setShowModalDelete}>
+            <ConfirmPopUp
+              data={team}
+              message={`Вы уверены, что хотите удалить: ${team.name}?`}
+              action={deleteData}
+              host={`/teams`}
+              setData={setTeams}
+              setShowModal={setShowModalDelete}
+            />
+          </ModalWrapper>,
+          document.body
+        )}
       <div className="teamsListWrapper">
         <div className="selectTeamTypeWrapper">
           <select
@@ -81,28 +110,16 @@ export default function TeamsPage() {
               type: '',
             };
             setTeam(emptyTeam);
-            showPopUp();
+            setShowModalEdit(true);
+            setAddNewTeam(true);
           }}
-        >
+        >   
           ADD
         </button>
       </div>
     </div>
   );
 
-  function showPopUp() {
-    const element = document.getElementById('editTeamPageWrapper');
-    const body = document.getElementsByTagName('body')[0];
-    if (element) element.style.visibility = 'visible';
-    if (body) body.style.overflow = 'hidden';
-  }
-
-  function showDeleteConfirm() {
-    const element = document.getElementById('confirmPopUpCanvas');
-    const body = document.getElementsByTagName('body')[0];
-    if (element) element.style.visibility = 'visible';
-    if (body) body.style.overflow = 'hidden';
-  }
 
   async function fetchDataTeam(host: string, setFunc?: Function) {
     const myHeaders = {

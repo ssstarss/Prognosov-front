@@ -5,12 +5,16 @@ import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';
 import { SERVER } from '../../../constants';
 
-export default function EditTeamPage(team: Team, setTeams: Function) {
+export default function EditTeamPage(props: { team: Team, setTeams: Function, setShowModal: Function }) {
   return (
-    <div className="editTeamPageWrapper" id="editTeamPageWrapper">
-      <div className="editTeamBlock">
+    <div
+      className="editTeamPageWrapper"
+      id="editTeamPageWrapper"
+      onClick={(e) => e.stopPropagation()}
+    >
+      
         <div className="closeCrossWrapper">
-          <div className="closeCross" onClick={closeWindow}>
+          <div className="closeCross" onClick={() => props.setShowModal(false)}>
             X
           </div>
         </div>
@@ -21,7 +25,7 @@ export default function EditTeamPage(team: Team, setTeams: Function) {
             className="teamNameInput inputField"
             id="teamNameInput"
             type="text"
-            defaultValue={team.name}
+            defaultValue={props.team.name}
           ></input>
         </div>
         <div className="teamCountryInputWrapper">
@@ -30,12 +34,12 @@ export default function EditTeamPage(team: Team, setTeams: Function) {
             className="teamCountryInput inputField"
             id="teamCountryInput"
             type="text"
-            defaultValue={team.country}
+            defaultValue={props.team.country}
           ></input>
         </div>
         <div className="typeTeamInputWrapper">
           <h4>Тип</h4>
-          <select className="typeTeamInput inputField" id="typeTeamInput" defaultValue={team.type}>
+          <select className="typeTeamInput inputField" id="typeTeamInput" defaultValue={props.team.type}>
             <option value="Club">Club</option>
             <option value="National">National</option>
           </select>
@@ -44,7 +48,7 @@ export default function EditTeamPage(team: Team, setTeams: Function) {
           SUBMIT
         </button>
       </div>
-    </div>
+    
   );
 
   async function submit() {
@@ -55,39 +59,33 @@ export default function EditTeamPage(team: Team, setTeams: Function) {
     const typeElement = document.getElementById('typeTeamInput');
     const type = (typeElement as HTMLInputElement).value;
     const newTeam = {
-      id: team.id,
+      id: props.team.id,
       name: name,
       country: country,
       type: type,
     };
 
-    if (team.id === 0) {
+    if (props.team.id === 0) {
       delete newTeam.id;
-      addData(`${SERVER}/teams`, newTeam).then((result: any) => {
+      addData(`/teams`, newTeam).then((result: any) => {
         if (result === 200) {
-          fetchData(`${SERVER}/teams`, setTeams).then(() => {
-            closeWindow();
+          fetchData(`/teams`, props.setTeams).then(() => {
+            props.setShowModal(false);
           });
         }
       });
     } else
-      await updateData(`${SERVER}/teams`, newTeam).then((result) => {
+      await updateData(`/teams`, newTeam).then((result) => {
         if (result === 200) {
-          setTeams((teams: Team[]) => {
+          props.setTeams((teams: Team[]) => {
             let updatedteams = [...teams].map((item) => {
-              if (item.id === team.id) return newTeam;
+              if (item.id === props.team.id) return newTeam;
               return item;
             });
             return updatedteams;
           });
-          closeWindow();
+          props.setShowModal(false);
         }
       });
-  }
-  function closeWindow() {
-    const element = document.getElementById('editTeamPageWrapper');
-    if (element) element.style.visibility = 'hidden';
-    const body = document.getElementsByTagName('body')[0];
-    if (body) body.style.overflow = 'scroll';
   }
 }

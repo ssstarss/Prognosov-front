@@ -1,19 +1,30 @@
 import './editCompetitionForm.scss';
 import { Competition } from '../FillBase/types';
-import { useState } from 'react';
-import { updateData } from '../../../functions/updateData';
-export default function EditCompetitionForm(props: { competition: Competition }) {
+import { SetStateAction, Dispatch, useState } from 'react';
+import { addData, updateData } from '../../../functions/updateData';
+import fetchData from '../../../functions/fetchData';
+export default function EditCompetitionForm(props: {
+  competition: Competition;
+  setCompetitions: Dispatch<SetStateAction<Competition[]>>;
+  setShowModal: Dispatch<SetStateAction<boolean>>;
+  addNewCompetition: boolean;
+}) {
   const [competition, setCompetition] = useState<Competition>(props.competition);
   const [competitionName, setCompetitionName] = useState<string>(competition.name);
   const [competitionComments, setCompetitionComments] = useState<string>(competition.comments);
   const [competitionStartsAt, setCompetitionStartsAt] = useState<Date>(
-    new Date(competition.StartsAt)
+    new Date(competition.StartsAt || new Date())
   );
-  const [competitionEndsAt, setCompetitionEndsAt] = useState<Date>(new Date(competition.EndsAt));
-console.log(competition);
-console.log(competition.StartsAt);
+  const [competitionEndsAt, setCompetitionEndsAt] = useState<Date>(
+    new Date(competition.EndsAt || new Date())
+  );
+  const [competitionActive, setCompetitionActive] = useState<boolean>(competition.active || false);
   return (
-    <div className="editCompetitionForm" id="editCompetitionForm">
+    <div
+      className="editCompetitionForm"
+      id="editCompetitionForm"
+      onClick={(e) => e.stopPropagation()}
+    >
       <h2> Competition</h2>
       <h3 className="inputFieldLabel">
         Name:
@@ -51,6 +62,15 @@ console.log(competition.StartsAt);
           onChange={(e) => setCompetitionEndsAt(new Date(e.target.value))}
         />
       </h3>
+      <h3 className="inputFieldLabel">
+        Active: 
+        <input
+          type="checkbox"
+          placeholder="Competition Active"
+          checked={competitionActive}
+          onChange={(e) => setCompetitionActive(e.target.checked)}
+        />
+      </h3>
       <div className="buttonsWrapper">
         <button
           className="submitButton"
@@ -66,30 +86,34 @@ console.log(competition.StartsAt);
       </div>
     </div>
   );
-  function submitForm() {
-    const uodatedCompetition = {
+  async function submitForm() {
+    const updatedCompetition = {
       id: competition.id,
-      active: competition.active,
+      active: competitionActive,
       name: competitionName,
       comments: competitionComments,
       StartsAt: competitionStartsAt,
       EndsAt: competitionEndsAt,
     };
-
-    updateData(`/competitions`, uodatedCompetition).then((result) => {
-      if (result === 200) {
-        closeForm();
-      }
-    });
+    if (props.addNewCompetition) {
+      const { id, ...competitionWithoutId } = updatedCompetition;
+      
+      await addData(`/competitions`, competitionWithoutId).then(async (result: any) => {
+        if (result === 200) {
+          await fetchData(`/competitions`, props.setCompetitions);
+          closeForm();
+        }
+        });
+    } else {
+      await updateData(`/competitions`, updatedCompetition).then(async (result: any) => {
+        if (result === 200) {
+          await fetchData(`/competitions`, props.setCompetitions);
+          closeForm();
+        }
+      });
+    }
   }
-}
-
-function closeForm() {
-  const competitionsForm = document.getElementById('competitionsForm');
-  if (competitionsForm) competitionsForm.style.visibility = 'visible';
-  const body = document.getElementsByTagName('body')[0];
-  const element = document.getElementById('editCompetitionForm');
-
-  if (element) element.style.display = 'none';
-  if (body) body.style.overflow = 'scroll';
+  function closeForm() {
+    if (props.setShowModal) props.setShowModal(false);
+  }
 }

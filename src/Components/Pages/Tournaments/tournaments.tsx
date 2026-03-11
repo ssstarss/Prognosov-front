@@ -10,6 +10,10 @@ function TournamentsPage() {
   const [currentTournament, setCurrentTournament] = useState<Tournament>(
     appState.currentTournament
   );
+  useEffect(() => {
+    appState.currentTournament = currentTournament;
+    localStorage.setItem('currentTournamentID', currentTournament.id.toString());
+  }, [currentTournament]);
 
   return (
     <div className="pageWrapper">
