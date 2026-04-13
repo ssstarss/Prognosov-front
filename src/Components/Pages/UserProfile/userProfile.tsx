@@ -40,7 +40,7 @@ export default function UserProfile() {
       <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="userProfileForm">
         <h2 className="userProfilePageHeader">User Profile</h2>
-        <h3 className="userProfilePageHeader">FIO: {user?.fio}</h3>
+        <h3 className="userProfilePageHeader">FIO: {user?.name}</h3>
         <h3 className="userProfilePageHeader">EMAIL: {user?.email}</h3>
         <h3 className="userProfilePageHeader">CELLPHONE: {user?.cellphone}</h3>
         <h3 className="userProfilePageHeader">ROLE: {user?.role}</h3>

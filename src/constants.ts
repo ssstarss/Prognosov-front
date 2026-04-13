@@ -8,7 +8,7 @@ export const appState = {
   currentTournamentID: 1,
   currentTournament: {} as Tournament,
   usersOnTournament: [] as UserOnTournament[],
-  deadlineMinutes: 15,
+  deadlineMinutes: 60,
 };
 
 export const SERVER = 'http://localhost:5000';

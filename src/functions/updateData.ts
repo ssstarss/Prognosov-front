@@ -1,9 +1,14 @@
 import { appState } from '../constants';
 import { Team } from '../interfaces/interfaces';
-import { Competition, User } from '../Components/Pages/FillBase/types';
+import {
+  Competition,
+  User,
+  Tournament,
+  UserOnTournament,
+} from '../Components/Pages/FillBase/types';
 import { SERVER } from '../constants';
 
-export const updateData = async (host: string, data: Team | User | Competition) => {
+export const updateData = async (host: string, data: Team | User | Competition | Tournament) => {
   const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
@@ -17,13 +22,7 @@ export const updateData = async (host: string, data: Team | User | Competition) 
     body,
   };
   try {
-    console.log('Sending PUT request to:', host);
-    console.log('Request body:', body);
-
     const response = await fetch(SERVER + host, request);
-
-    console.log('Response status:', response.status);
-    console.log('Response statusText:', response.statusText);
 
     if (response.status === 401)
       throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
@@ -37,22 +36,20 @@ export const updateData = async (host: string, data: Team | User | Competition) 
     }
 
     const res = await response.json();
-    console.log('result in update', response.status);
+
     return response.status;
   } catch (e: any) {
     console.error('Update error:', e.message);
     throw e;
   }
 };
-export const deleteData = async (host: string, team: Team) => {
+export const deleteData = async (host: string, data: UserOnTournament) => {
   const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
     Authorization: 'Bearer ' + appState.accessToken,
   };
 
-  host += '/' + team.id;
-  const body = JSON.stringify(team);
   const request = {
     method: 'DELETE',
     headers: myHeaders,
@@ -61,7 +58,7 @@ export const deleteData = async (host: string, team: Team) => {
     const response = await fetch(SERVER + host, request);
 
     if (response.status === 401)
-      throw Error(`Error reading ${SERVER +   host} ${response.status} ${response.statusText} `);
+      throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
     const res = await response.json();
     return response.status;
   } catch (e: any) {
@@ -69,8 +66,17 @@ export const deleteData = async (host: string, team: Team) => {
   }
 };
 
-export const addData = async (host: string, data: Team | Omit<Competition, 'id'>) => {
-        const myHeaders = {
+export const addData = async (
+  host: string,
+  data: Team | Omit<Competition, 'id'> | Omit<Tournament, 'id'> | {
+      
+    team1_id: number,
+    team2_id: number,
+    starts_at: Date,
+    competitionID: number,
+  }
+) => {
+  const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
     Authorization: 'Bearer ' + appState.accessToken,

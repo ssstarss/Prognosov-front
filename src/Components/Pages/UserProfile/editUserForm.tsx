@@ -13,7 +13,7 @@ export default function EditUserForm({ user, setUser }: EditUserFormProps) {
   const handleSubmit = async (data: UserFormData) => {
     await updateUser(
       user,
-      { fio: data.fio, email: data.email, cellphone: data.cellphone, city: data.city, country: data.country },
+      { name: data.name, email: data.email, cellphone: data.cellphone, city: data.city, country: data.country },
       { setUser, onSuccess: close__popUp }
     );
   };
@@ -23,7 +23,7 @@ export default function EditUserForm({ user, setUser }: EditUserFormProps) {
       <UserForm
         mode="edit"
         initialData={{
-          fio: user.fio,
+          name: user.name,
           email: user.email,
           cellphone: user.cellphone,
           city: user.city,

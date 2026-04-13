@@ -71,7 +71,7 @@ export default function TeamsPage() {
               data={team}
               message={`Вы уверены, что хотите удалить: ${team.name}?`}
               action={deleteData}
-              host={`/teams`}
+              host={`/teams/${team.id}`}
               setData={setTeams}
               setShowModal={setShowModalDelete}
             />

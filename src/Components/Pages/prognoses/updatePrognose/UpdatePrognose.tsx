@@ -76,7 +76,7 @@ const UpdatePrognose = (props: {
       game: props.prognose.game,
       team1_result: currentScore.team1,
       team2_result: currentScore.team2,
-      userOnTournamentTournamentID: 1,
+      userOnTournamentTournamentID: appState.currentTournamentID || appState.currentTournament?.id,
       userOnTournamentUserID: appState.userID,
       result: 0,
     };

@@ -1,0 +1,37 @@
+.updateResultWrapper {
+  position: absolute;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+  border-radius: 20px;
+  padding: 20px;
+  align-items: center;
+  background-color: antiquewhite;
+}
+
+.resultWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
+}
+.gameResultInput {
+  height: 20px;
+  width: 30px;
+}
+
+.resultTeamWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.gameResultInput {
+  text-align: center;
+}

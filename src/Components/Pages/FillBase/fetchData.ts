@@ -43,9 +43,7 @@ const createData = async (
     Authorization: 'Bearer ' + appState.accessToken,
   };
 
-  const body = JSON.stringify({
-    data,
-  });
+  const body = JSON.stringify({ data });
 
   let request = {
     method: 'POST',

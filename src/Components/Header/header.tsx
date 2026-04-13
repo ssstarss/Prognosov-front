@@ -20,7 +20,9 @@ function Header() {
         <NavLink to="/competitions" className={'headerLink adminHeaderLink'}>
           Competitions
         </NavLink>
-
+        <NavLink to="/usersOnTournament" className={'headerLink adminHeaderLink'}>
+          Users On Tournament
+        </NavLink>
         <NavLink to="/tournaments" className={'headerLink'}>
           Tournaments
         </NavLink>

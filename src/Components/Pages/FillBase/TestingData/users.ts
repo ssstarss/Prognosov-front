@@ -1,10 +1,9 @@
 import { User } from '../types';
-import tournaments from './tournaments';
 
 const users: User[] = [
   {
     id: 0,
-    fio: 'Иванов Иван',
+    name: 'Иванов Иван',
     email: 'ivanov@mail.ru',
     password: 'ivanov',
     cellphone: '+79132567896',
@@ -16,7 +15,7 @@ const users: User[] = [
 
   {
     id: 0,
-    fio: 'Петров Пётр',
+    name: 'Петров Пётр',
     email: 'petrov@mail.ru',
     password: 'petrov',
     cellphone: '+79132338956',
@@ -27,18 +26,18 @@ const users: User[] = [
   },
   {
     id: 0,
-    fio: 'Сидоров Сидор',
+    name: 'Сидоров Сидор',
     email: 'sidorov@mail.ru',
     password: 'sidorov',
     cellphone: '+79132151365',
     role: 'user',
     city: 'Novosibirsk',
     country: 'Luxemburg',
-    active: true,
+    active: true, 
   },
   {
     id: 0,
-    fio: 'Винокуров Алексей',
+    name: 'Винокуров Алексей',
     email: 'vinokurov@mail.ru',
     password: 'vinokurov',
     cellphone: '+79631245698',
@@ -46,10 +45,10 @@ const users: User[] = [
     city: 'Novosibirsk',
     country: 'Russia',
     active: true,
-  },
+    },
   {
     id: 0,
-    fio: 'a',
+    name: 'a',
     email: 'a',
     password: 'a',
     cellphone: '+79324567821',
@@ -57,18 +56,8 @@ const users: User[] = [
     city: 'Moscow',
     country: 'Russia',
     active: true,
-  },
-  {
-    id: 0,
-    fio: 'Старченко Сергей',
-    email: 'starchenko@mail.ru',
-    password: 'starchenko',
-    cellphone: '+7945689875',
-    role: 'user',
-    city: 'Barnaul',
-    country: 'Russia',
-    active: true,
-  },
+    },
+  
 ];
 
 export default users;

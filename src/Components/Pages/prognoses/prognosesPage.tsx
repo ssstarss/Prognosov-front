@@ -5,7 +5,7 @@ import { appState } from '../../../constants';
 import { Prognose } from '../../../interfaces/interfaces';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
 import MatchLine from './gameLine';
-import { Tournament } from '../FillBase/types';
+import { Tournament, UserOnTournament } from '../FillBase/types';
 import ChooseOption from '../../chooseOption/chooseOption';
 
 export default function PrognosesPage() {
@@ -15,20 +15,22 @@ export default function PrognosesPage() {
   const [popUp, setPopUp] = useState(() => {
     return <></>;
   });
-
+  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>(
+    appState.usersOnTournament
+  );
+  const [tournaments, setTournaments] = useState<Tournament[]>([]);
   useEffect(() => {
+    fetchData(`/usersOnTournament/${tournament.id}`, setUsersOnTournametns);
     fetchData(`/prognoses/${tournament.id}`, setPrognoses);
   }, [tournament]);
   appState.currentTournament = tournament;
   localStorage.setItem('currentTournamentID', tournament.id.toString());
+  useEffect(() => {
+    fetchData(`/tournaments`, setTournaments);
+  }, []);
 
   const listPrognoses = prognoses?.map((prognose) => {
-    return (
-      <MatchLine
-        prognose={prognose}
-        key={prognose.id}
-      ></MatchLine>
-    );
+    return <MatchLine prognose={prognose} key={prognose.id}></MatchLine>;
   });
 
   return (
@@ -36,11 +38,13 @@ export default function PrognosesPage() {
       <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="prognosesForm">
         <h2 className="prognosesPageHeader">Мои прогнозы:</h2>
+
         <ChooseOption<Tournament>
           currentOption={tournament}
           setChosenOption={setTournament}
-          host="/tournaments"
+          options={tournaments}
         />
+
         <div className="prognoses__list">
           <h4> {listPrognoses}</h4>
         </div>

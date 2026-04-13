@@ -1,31 +1,26 @@
 import './chooseOption.scss';
-import { useEffect, useState, Dispatch, SetStateAction } from 'react';
-import fetchData from '../../functions/fetchData';
-
+import { Dispatch, SetStateAction, useEffect } from 'react';
 type Options = { id: number; name: string };
 
 export default function ChooseOption<T extends Options>(props: {
-  currentOption: T;
+  currentOption?: T;
   setChosenOption: Dispatch<SetStateAction<T>>;
-  host: string;
+
+  options?: T[];
 }) {
-  const [options, setOptions] = useState<T[]>([]);
-  useEffect(() => {
-    fetchData(props.host, setOptions);
-  }, []);
   return (
     <select
       className="selectItem"
-      value={props.currentOption.id}
+      value={props.currentOption?.id || 0}
       onChange={(e) => {
         const id = Number(e.target.value);
-        const found = options.find((c) => c.id === id);
+        const found = props.options?.find((c) => c.id === id);
         if (found) props.setChosenOption(found);
-        
+        console.log('chosenOption:', found);
       }}
     >
-      {options.map((option) => (
-        <option className="option" key={option.id} value={option.id}>
+      {props.options?.map((option) => (
+        <option className="option" key={option?.id || 0} value={option?.id || 0}>
           {option.name}
         </option>
       ))}

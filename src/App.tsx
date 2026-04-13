@@ -11,7 +11,7 @@ import StartPage from './Components/Pages/startPage/startPage';
 import FillBase from './Components/Pages/FillBase/fillBase';
 import TournamentsPage from './Components/Pages/Tournaments/tournaments';
 import MainTable from './Components/Pages/MainTable/mainTable';
-
+import UsersOnTournament from './Components/Pages/UsersOnTournament/usersOnTornament';
 function App() {
   return (
     <HashRouter>
@@ -23,6 +23,7 @@ function App() {
         <Route path="/teams" element={<TeamsPage />}></Route>
         <Route path="/competitions" element={<CompetitionsPage />}></Route>
         <Route path="/tournaments" element={<TournamentsPage />}></Route>
+        <Route path="/usersOnTournament" element={<UsersOnTournament />}></Route>
         <Route path="/users" element={<UsersPage />}></Route>
         <Route path="/mainTable" element={<MainTable />}></Route>
         <Route path="/prognoses" element={<PrognosesPage />}></Route>

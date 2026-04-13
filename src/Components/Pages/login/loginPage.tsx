@@ -69,7 +69,7 @@ export default function LoginPage() {
         setPendingFormData(null);
         setCodeError('');
         setRegisterData({
-          fio: pendingFormData.fio,
+          name: pendingFormData.name,
           cellphone: pendingFormData.cellphone,
           city: pendingFormData.city,
           country: pendingFormData.country,

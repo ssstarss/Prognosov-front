@@ -1,14 +1,13 @@
 import './competitions.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
-import { appState, SERVER } from '../../../constants';
+import { appState } from '../../../constants';
 import EditCompetitionForm from './editCompetitionForm';
 import { Competition } from '../FillBase/types';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import { createPortal } from 'react-dom';
 import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
-
 
 function CompetitionsPage() {
   const [competitions, setCompetitions] = useState<Competition[]>([] as Competition[]);
@@ -63,8 +62,11 @@ function CompetitionsPage() {
               data={currentCompetition}
               message={`Вы уверены, что хотите удалить: ${currentCompetition.name}?`}
               action={deleteData}
-              host={`/competitions`}
-              setData={setCompetitions}
+              host={`/competitions/${currentCompetition.id}`}
+              setData={async ()=>{
+                const updatedData = await fetchData(`/competitions`, setCompetitions);
+                
+              }}
               setShowModal={setShowModalDelete}
             />
           </ModalWrapper>,

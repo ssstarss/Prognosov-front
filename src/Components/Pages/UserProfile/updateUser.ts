@@ -3,7 +3,7 @@ import { updateData } from '../../../functions/updateData';
 import { SERVER } from '../../../constants';
 
 export interface UpdateUserFormData {
-  fio: string;
+  name: string;
   email: string;
   cellphone: string;
   city: string;
@@ -26,7 +26,7 @@ export async function updateUser(
 ): Promise<void> {
   const updatedUser: User = {
     ...user,
-    fio: formData.fio,
+    name: formData.name,
     email: formData.email,
     cellphone: formData.cellphone,
     city: formData.city,

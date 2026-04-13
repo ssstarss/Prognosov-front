@@ -20,9 +20,20 @@
   margin-top: 10px;
   
 }
-.currentTournament{
-  
-  color: brown;
-}
+.tournamentLine {
+  display: flex;
 
+  width: 80%;
+  padding: 5px;
+  cursor: pointer;
+}
+.tournamentName {
+  align-self: center;
+  padding: 5px;
+  font-size: 18px;
+  margin-left: 20px;
+}
+.currentTournament {
+  background-color: rgb(238, 237, 237);
+}
 

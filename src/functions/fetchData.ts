@@ -1,7 +1,7 @@
 import { appState } from '../constants';
 import { SERVER } from '../constants';
 
-const fetchData = async (host: string, setFunc?:Function) => {
+const fetchData = async (host: string, setFunc?: Function) => {
   const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
@@ -13,7 +13,6 @@ const fetchData = async (host: string, setFunc?:Function) => {
     headers: myHeaders,
   };
 
-
   try {
     const response = await fetch(URL, request);
     if (response.status === 401)
@@ -21,7 +20,7 @@ const fetchData = async (host: string, setFunc?:Function) => {
 
     const res = await response.json();
 
-    if (setFunc) setFunc(res);
+    if (setFunc) {console.log('res in fetchData', setFunc.name, res); setFunc(res);}
     return res;
   } catch (e: any) {
     console.log(e.message);

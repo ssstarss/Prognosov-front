@@ -1,11 +1,11 @@
 import { deleteData, createData } from './fetchData';
 import competitions from './TestingData/competitions';
 import randomGamesResults from './TestingData/games';
-import { games } from './TestingData/games';
+
 import teams from './TestingData/teams';
 import users from './TestingData/users';
 import tournaments from './TestingData/tournaments';
-import { Game, Prognose } from '../../../interfaces/interfaces';
+import { Prognose } from '../../../interfaces/interfaces';
 import fetchData from '../../../functions/fetchData';
 import { Competition, Tournament, User } from './types';
 import { UserOnTournament } from './types';
@@ -92,7 +92,6 @@ async function fillData() {
   }
 
   await deleteData('/fillPrognoses');
-  console.log('prognoses', prognoses);
   await createData('/fillPrognoses', prognoses);
 }
 

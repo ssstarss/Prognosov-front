@@ -1,0 +1,45 @@
+.editTournamentForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  background-color: whitesmoke;
+  border: solid 1px black;
+  border-radius: 20px;
+  padding: 20px;
+}
+.tournamentList {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tournamentLine {
+  display: flex;
+    align-items: center;
+  width: 80%;
+  padding: 5px;
+  cursor: pointer;
+}
+.iconsBlock {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 10%;
+  padding: 5px;
+}
+.editIcon,
+.deleteIcon {
+  cursor: pointer;
+  color: blue;
+  font-weight: bold;
+  font-size: 20px;
+}
+.deleteIcon {
+  color: red;
+}

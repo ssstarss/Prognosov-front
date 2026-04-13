@@ -25,16 +25,18 @@ type Tournament = {
   active: boolean;
   competition?: Competition;
   usersOnTournament?: UserOnTournament[];
+  roomAdminID?: number;
 };
 
 interface User {
   id: number;
-  fio: string;
+  name: string;
   email: string;
   password: string;
   cellphone: string;
-  role: string;
-  city: string;
+  avatar?: Uint8Array;
+  role?: string;
+  city?: string;
   country: string;
   tournaments?: UserOnTournament[];
   active: boolean;

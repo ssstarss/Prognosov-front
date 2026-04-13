@@ -19,9 +19,16 @@ export default async function updatePrognoseHandle(prognose: Prognose) {
     const response = await fetch(`${SERVER}/prognoses/`, request);
     if (response.status === 401)
       throw Error(`Error creating prognoses ${response.status} ${response.statusText} `);
-    const result = await response.json();
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw Error(
+        `Error updating prognose: ${response.status} ${response.statusText}. ${errorText}`
+      );
+    }
+    const result = await response.json().catch(() => null);
     return result;
   } catch (e: any) {
-    console.log(e.message);
+    console.log(e?.message ?? e);
+    throw e;
   }
 }

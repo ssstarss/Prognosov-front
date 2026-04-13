@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { Prognose } from '../../../interfaces/interfaces';
-import { Dispatch, SetStateAction } from 'react';
+
 import UpdatePrognose from '../prognoses/updatePrognose/UpdatePrognose';
 import { appState } from '../../../constants';
 import { createPortal } from 'react-dom';
@@ -15,23 +15,25 @@ function GameCell(props: MyProps) {
   const [chosenPrognose, setChosenPrognose] = useState<Prognose>(prognose);
 
   let color = 'score_black';
-  const result = prognose.result;
+  const shownPrognose = chosenPrognose;
+  const result = shownPrognose.result;
   if (result === 2) color = 'score_blue';
   if (result === 3) color = 'score_green';
   if (result === 4) color = 'score_aqua';
   if (result === 5) color = 'score_orange';
   const nowMs = Date.now();
   const deadlineMs = nowMs + appState.deadlineMinutes * 60 * 1000; // сейчас + 15 минут (в UTC)
-  const gameStartMs = new Date(props.prognose.game.starts_at).getTime();
-  const editable = gameStartMs > deadlineMs;
+  const gameStartMs = new Date(shownPrognose.game.starts_at).getTime();
+  const editable =
+    gameStartMs > deadlineMs && appState.userID === shownPrognose.userOnTournamentUserID;
   return (
     <td
       className="playerResultCell"
-      key={prognose.id}
+      key={shownPrognose.id}
       onClick={
         editable
           ? () => {
-              setChosenPrognose(prognose);
+              setChosenPrognose(shownPrognose);
               setShowModal(true);
             }
           : undefined
@@ -50,11 +52,11 @@ function GameCell(props: MyProps) {
         )}
       <div className="playerResultWrapper">
         <p className="prognose">
-          {typeof prognose.team1_result === 'number' ? prognose.team1_result : '-'} -{' '}
-          {typeof prognose.team2_result === 'number' ? prognose.team2_result : '_'}
+          {typeof shownPrognose.team1_result === 'number' ? shownPrognose.team1_result : '-'} -{' '}
+          {typeof shownPrognose.team2_result === 'number' ? shownPrognose.team2_result : '_'}
         </p>
         <div className={`score ${color}`}>
-          {typeof prognose.result === 'number' ? prognose.result : '-'}
+          {typeof shownPrognose.result === 'number' ? shownPrognose.result : '-'}
         </div>
       </div>
     </td>

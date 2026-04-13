@@ -6,7 +6,7 @@ type Credetials = {
 };
 
 export type RegisterFormData = {
-  fio: string;
+  name: string;
   email: string;
   password?: string;
   cellphone: string;

@@ -21,9 +21,9 @@ export default async function randomGamesResults(competitionID: number) {
       starts_at: new Date(starts_at).toISOString(),
       competitionID,
     };
-    
+
     games.push(game);
-    starts_at.setTime(starts_at.getTime() + 1000 * 60); // +1 минута для следующей итерации
+    starts_at.setTime(starts_at.getTime() + 1000 * 60 * 15); // +15 минут для следующей итерации
   }
 
   return games;

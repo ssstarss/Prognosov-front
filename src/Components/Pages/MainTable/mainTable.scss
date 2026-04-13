@@ -5,7 +5,6 @@
   height: 90vh;
   border: solid 1px black;
   border-radius: 20px;
-
 }
 .mainTableWrapper {
   border-bottom: none;
@@ -14,7 +13,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  
 }
 .mainTable {
   border-collapse: separate;
@@ -26,7 +24,7 @@
 .mainTableHeader {
   height: 40px;
   text-align: center;
-margin-top: 20px;
+  margin-top: 20px;
 }
 .mainTableHeaderText {
   font-size: 20px;
@@ -35,14 +33,12 @@ margin-top: 20px;
 }
 
 .selectItem {
-  
   height: 30px;
   border-radius: 5px;
   border: 1px solid black;
   padding: 5px;
   margin-left: 20px;
 }
-
 
 .mainTable td:nth-child(1),
 .mainTable th:nth-child(1) {
@@ -69,15 +65,27 @@ margin-top: 20px;
   border-width: 2px 1px 2px 0;
 }
 
-.gameCell :first-child {
+.gameCellDateWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px black solid;
+}
+
+.gameResultWrapper {
+  display: flex;
+  height: 110px;
+  border-bottom: 1 px black solid;
+}
+.gameResultWrapper :first-child {
   border-right: 1px dashed grey;
 }
 
-.gameCell {
-  display: flex;
-  height: 110px;
+.gameCellDate,
+.gameCellTime {
+  font-size: 8px;
 }
-
 .teamCell {
   display: flex;
   flex-direction: column;

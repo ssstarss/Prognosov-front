@@ -62,7 +62,7 @@ export default function UserForm({
   };
 
   async function submit() {
-    const fio = (document.getElementById('userFormFioInput') as HTMLInputElement)?.value;
+    const name = (document.getElementById('userFormFioInput') as HTMLInputElement)?.value;
     const city = (document.getElementById('userFormCityInput') as HTMLInputElement)?.value;
     const country = (document.getElementById('userFormCountryInput') as HTMLInputElement)?.value;
 
@@ -72,7 +72,7 @@ export default function UserForm({
 
     if (!isEmailValid || !isCellphoneValid || !isPasswordValid) return;
 
-    const data: RegisterFormData = { fio, email, cellphone, city, country };
+    const data: RegisterFormData = { name, email, cellphone, city, country };
     if (mode === 'register') data.password = password;
 
     await onSubmit(data);
@@ -92,7 +92,7 @@ export default function UserForm({
           className="inputField"
           id="userFormFioInput"
           type="text"
-          defaultValue={initialData.fio}
+          defaultValue={initialData.name}
         />
       </div>
       <div className="userFormField">

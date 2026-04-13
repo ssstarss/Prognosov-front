@@ -10,7 +10,7 @@ interface MyProps {
   game: Game;
   setChosenGame: Dispatch<SetStateAction<Game>>;
 }
-export default function GameLine(props: MyProps) {
+export default function MatchLine(props: MyProps) {
   const [game, setGame] = useState<Game>(props.game);
   const [showModal, setShowModal] = useState(false);
 

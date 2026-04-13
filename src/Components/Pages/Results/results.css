@@ -10,15 +10,28 @@
   align-items: center;
   overflow: hidden;
 }
-
+.gamesFormHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
 .games__list {
   width: 90%;
   overflow-y: scroll;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
 }
-
+.games__list_wrapper {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .games__game_wrapper {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   padding: 5px;

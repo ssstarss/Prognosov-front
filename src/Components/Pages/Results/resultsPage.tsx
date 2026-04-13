@@ -3,15 +3,23 @@ import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
 import { Game } from '../../../interfaces/interfaces';
-import MatchLine from './gameResult';
 import { Competition } from '../FillBase/types';
 import ChooseOption from '../../chooseOption/chooseOption';
 
+import MatchLine from './matchLine';
+import { createPortal } from 'react-dom';
+import ModalWrapper from '../../ModalPortal/modalWrapper';
+import NewGame from './newGame/newGame';
+
 export default function GamesPage() {
-  const [games, setGames] = useState<Game[]>();
+  const [games, setGames] = useState<Game[]>([]);
   const [competition, setCompetition] = useState<Competition>(appState.currentCompetition);
   const [chosenGame, setChosenGame] = useState<Game>({} as Game);
-
+  const [competitions, setCompetitions] = useState<Competition[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    fetchData(`/competitions`, setCompetitions);
+  }, []);
   useEffect(() => {
     fetchData(`/matches/${competition.id}`, setGames);
   }, [competition]);
@@ -25,17 +33,37 @@ export default function GamesPage() {
 
   return (
     <div className="pageWrapper">
+      {showModal &&
+        createPortal(
+          <ModalWrapper showModal={showModal} setShowModal={setShowModal}>
+            <NewGame
+              setShowModal={setShowModal}
+              setGames={setGames}
+              competition={competition}
+            ></NewGame>
+          </ModalWrapper>,
+          document.body
+        )}
       <div className="gamesForm">
         <div className="gamesFormHeader">
           <h2 className="gamesPageHeader">Соревнование:</h2>
-          <ChooseOption<Competition>
-            currentOption={competition}
-            setChosenOption={setCompetition}
-            host={'/competitions'}
-          ></ChooseOption>
+          <div className="horisontalWrapper">
+            <ChooseOption<Competition>
+              currentOption={competition}
+              setChosenOption={setCompetition}
+              options={competitions as Competition[]}
+            ></ChooseOption>
+            <button className="addButton"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              ADD GAME
+            </button>
+          </div>
         </div>
         <div className="games__list">
-          <h4> {listGames}</h4>
+          <div className="games__list_wrapper"> {listGames}</div>
         </div>
       </div>
     </div>

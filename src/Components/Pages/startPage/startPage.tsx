@@ -7,7 +7,7 @@ function StartPage() {
 try{
   loginRefresh().then((result) => {
     
-    if (result ) navigate('./tournaments');
+    if (result ) navigate('./competitions');
     else navigate('./login');
   });
 } catch (e: any) {
