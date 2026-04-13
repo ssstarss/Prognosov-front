@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 function Header() {
   return (
-    <header className="header">
+    <header className="header" id="header">
       <nav className="navigationMenu">
         <NavLink to="/userprofile" className={'headerLink'}>
           Profile
