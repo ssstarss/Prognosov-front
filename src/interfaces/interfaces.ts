@@ -10,8 +10,9 @@ export type RegisterFormData = {
   email: string;
   password?: string;
   cellphone: string;
-  city: string;
-  country: string;
+  city?: string;
+  country?: string;
+  avatar?: string | null;
 };
 
 type Team = {
@@ -19,6 +20,7 @@ type Team = {
   name: string;
   country: string;
   type: string;
+  avatar?: Uint8Array | string | null;
 };
 
 type Prognose = {

@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Prognose } from '../../../interfaces/interfaces';
 
 import UpdatePrognose from '../prognoses/updatePrognose/UpdatePrognose';
 import { appState } from '../../../constants';
+import { isPrognoseDeadlineBypassRole } from '../../../functions/prognoseEditPolicy';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 
 interface MyProps {
   prognose: Prognose;
+  onPrognoseSaved?: (p: Prognose) => void;
 }
 function GameCell(props: MyProps) {
-  const { prognose } = props;
+  const { prognose, onPrognoseSaved } = props;
   const [showModal, setShowModal] = useState(false);
   const [chosenPrognose, setChosenPrognose] = useState<Prognose>(prognose);
+
+  useEffect(() => {
+    if (!showModal) setChosenPrognose(prognose);
+  }, [prognose, showModal]);
 
   let color = 'score_black';
   const shownPrognose = chosenPrognose;
@@ -24,8 +30,10 @@ function GameCell(props: MyProps) {
   const nowMs = Date.now();
   const deadlineMs = nowMs + appState.deadlineMinutes * 60 * 1000; // сейчас + 15 минут (в UTC)
   const gameStartMs = new Date(shownPrognose.game.starts_at).getTime();
+  const beforeDeadline = gameStartMs > deadlineMs;
+  const isOwn = appState.userID === shownPrognose.userOnTournamentUserID;
   const editable =
-    gameStartMs > deadlineMs && appState.userID === shownPrognose.userOnTournamentUserID;
+    isPrognoseDeadlineBypassRole() || (beforeDeadline && isOwn);
   return (
     <td
       className="playerResultCell"
@@ -33,7 +41,7 @@ function GameCell(props: MyProps) {
       onClick={
         editable
           ? () => {
-              setChosenPrognose(shownPrognose);
+              setChosenPrognose(prognose);
               setShowModal(true);
             }
           : undefined
@@ -45,6 +53,7 @@ function GameCell(props: MyProps) {
             <UpdatePrognose
               prognose={chosenPrognose}
               updateCellPrognose={setChosenPrognose}
+              onPrognoseSaved={onPrognoseSaved}
               setShowModal={setShowModal}
             ></UpdatePrognose>
           </ModalWrapper>,

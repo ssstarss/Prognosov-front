@@ -20,6 +20,34 @@
 .teamRaw {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.teamIdentity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.teamAvatar {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  flex-shrink: 0;
+}
+
+.teamAvatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .teamList {

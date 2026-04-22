@@ -20,9 +20,10 @@ export default async function loginRefresh() {
       const res = await response.json();
       appState.accessToken = res.accessToken;
       appState.userID = res.userID;
+      appState.userRole = typeof res.userRole === 'string' ? res.userRole : 'user';
       await initStartValues();
-      
-      if (res.userRole === 'admin') {
+
+      if (appState.userRole === 'admin' || appState.userRole === 'superadmin') {
         const headerLinks = Array.from(document.getElementsByClassName('adminHeaderLink'));
         headerLinks.forEach((link) => ((link as HTMLElement).style.display = 'block'));
       }

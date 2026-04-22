@@ -1,9 +1,9 @@
+@use '../../../variables.scss' as *;
 .codeInputModalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
@@ -51,7 +51,24 @@
 
 .codeInputField:focus {
   outline: none;
-  border-color: #4caf50;
+  border-color: $dark-blue;
+}
+
+.codeInputModalOverlay .inputField.inputError {
+  border: 1px solid #f44336;
+  background-color: #ffebee;
+}
+
+.codeInputModalOverlay .errorMessage {
+  display: block;
+  color: #f44336;
+  font-size: 12px;
+}
+
+.codeInputModalOverlay .submitFormButton:disabled {
+  background-color: #999;
+  border-color: #999;
+  cursor: not-allowed;
 }
 
 .codeInputModal .errorMessage {
@@ -59,12 +76,6 @@
   color: #f44336;
   font-size: 12px;
   margin-bottom: 12px;
-}
-
-.codeInputModalButtons {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
 }
 
 .codeInputButton {
@@ -79,10 +90,6 @@
 
 .codeInputButton:hover {
   background-color: #45a049;
-}
-
-.codeInputButtonCancel {
-  background-color: #999;
 }
 
 .codeInputButtonCancel:hover {

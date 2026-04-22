@@ -8,6 +8,7 @@ import { User } from '../FillBase/types';
 import EditUserForm from '../UserProfile/editUserForm';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';
+import AvatarCircle from '../../common/AvatarCircle';
 
 export default function UsersPage() {
   let [users, setUsers] = useState<User[]>([] as User[]);
@@ -22,8 +23,14 @@ export default function UsersPage() {
   const listUsers = users?.map((user) => 
   {return (
   <li className="userLine" key={user.id}>
-  
     <div className="userLine__wrapper">
+      <AvatarCircle
+        avatar={user.avatar}
+        alt={user.name}
+        className="userAvatar"
+        placeholderClassName="userAvatarPlaceholder"
+        placeholderText={user.name?.charAt(0).toUpperCase() || '?'}
+      />
       <h3 className="userLine__name">{user.name}</h3>
       </div>
       <div className="userLine__buttons">
@@ -66,7 +73,7 @@ export default function UsersPage() {
         {showModalEdit &&
         createPortal(
           <ModalWrapper showModal={showModalEdit} setShowModal={setShowModalEdit}>
-            <EditUserForm user={user} setUser={setUser} />
+            <EditUserForm user={user} setUser={setUser} onClose={() => setShowModalEdit(false)} />
             </ModalWrapper>,
             document.body
           )}

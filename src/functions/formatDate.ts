@@ -1,5 +1,4 @@
 export default function formatDate(date: Date | undefined) {
-  
   if (date) {
     const year = date.getFullYear();
     let month = (date.getMonth() + 1).toString();
@@ -15,7 +14,7 @@ export default function formatDate(date: Date | undefined) {
   } else return '00-00-00';
 }
 
-export function formatDateString(date: Date | undefined) {
+export function formatDateString(date: Date | undefined, withYear: boolean = false) {
   const monthes = [
     'янв',
     'фев',
@@ -35,9 +34,20 @@ export function formatDateString(date: Date | undefined) {
     let month = monthes[date.getMonth()];
     let day = date.getDate().toString();
     if (day.length < 2) day = '0' + day;
-    const result = `${day} ${month}`;
+    const result = `${day} ${month} ${withYear ? year : ''}`;
     return result;
   } else return '00-00-00';
+}
+
+export function formatTimeString(date: Date | undefined) {
+  if (date) {
+    let hour = date.getHours().toString();
+    let minute = date.getMinutes().toString();
+    if (hour.length < 2) hour = '0' + hour;
+    if (minute.length < 2) minute = '0' + minute;
+    const result = `${hour}:${minute}`;
+    return result;
+  } else return '--:--';
 }
 
 export function dateNoHours(date: Date) {

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Tournament, User } from '../../FillBase/types';
+import { Tournament, User, UserOnTournament } from '../../FillBase/types';
 import './addUserOnTournament.scss';
 import { createData } from '../../FillBase/fetchData';
 import ConfirmPopUp from '../../../ConfirmPopUp/confirmPopup';
@@ -10,23 +10,27 @@ export default function AddUserOnTournament(props: {
   currentTournament: Tournament;
   users: User[] | undefined;
   onClose?: () => void;
+  onAdded: (users: UserOnTournament[]) => void;
 }) {
   const [currentUser, setCurrentUser] = useState<User>({} as User);
   const [showModal, setShowModal] = useState(false);
+  const listHost = `/usersOnTournament/${props.currentTournament.id}`;
   return (
     <div className="addUserOnTournamentPageWrapper">
       {showModal && (
         <ConfirmPopUp
           message="Are you sure you want to add this user to the tournament?"
           data={{ userID: currentUser.id, tournamentID: props.currentTournament.id }}
-          action={async () => {
-            await createData(`/usersOnTournaments`, {
-              userID: currentUser.id,
-              tournamentID: props.currentTournament.id,
-            });
+          action={async (_host: string, data: { userID: number; tournamentID: number }) => {
+            await createData(`/usersOnTournaments`, data);
+            /* ConfirmPopUp обновляет список только при result === 200 (как deleteData/addData) */
+            return 200;
           }}
-          host={`/usersOnTournament`}
-          setData={setCurrentUser}
+          host={listHost}
+          setData={async (updated: UserOnTournament[]) => {
+            props.onAdded(updated);
+            props.onClose?.();
+          }}
           setShowModal={setShowModal}
         />
       )}

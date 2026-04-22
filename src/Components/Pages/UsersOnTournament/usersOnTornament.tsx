@@ -63,6 +63,7 @@ export default function UsersOnTournament() {
             currentTournament={currentTournament}
             users={users}
             onClose={() => setShowModalAddUser(false)}
+            onAdded={(list) => setUsersOnTournament(list)}
           />
         </ModalWrapper>
       )}

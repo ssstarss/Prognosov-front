@@ -4,8 +4,6 @@ type Competition = {
   id: number;
   name: string;
   comments: string;
-  StartsAt: Date;
-  EndsAt: Date;
   games?: Game[];
   active: boolean;
 };
@@ -15,6 +13,7 @@ type Team = {
   name: string;
   country: string;
   type: string;
+  avatar?: Uint8Array | string | null;
 };
 
 type Tournament = {
@@ -34,10 +33,10 @@ interface User {
   email: string;
   password: string;
   cellphone: string;
-  avatar?: Uint8Array;
+  avatar?: Uint8Array | string | null;
   role?: string;
   city?: string;
-  country: string;
+  country?: string;
   tournaments?: UserOnTournament[];
   active: boolean;
 }

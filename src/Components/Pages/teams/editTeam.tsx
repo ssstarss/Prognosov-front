@@ -3,9 +3,15 @@ import './editTeam.css';
 import { Team } from '../../../interfaces/interfaces';
 import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';
-import { SERVER } from '../../../constants';
+import { useState } from 'react';
+import avatarToDataUrl from '../../../functions/avatarToDataUrl';
 
 export default function EditTeamPage(props: { team: Team, setTeams: Function, setShowModal: Function }) {
+  const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(
+    avatarToDataUrl(props.team.avatar) || null
+  );
+  const [avatarTouched, setAvatarTouched] = useState(false);
+
   return (
     <div
       className="editTeamPageWrapper"
@@ -44,6 +50,17 @@ export default function EditTeamPage(props: { team: Team, setTeams: Function, se
             <option value="National">National</option>
           </select>
         </div>
+        <div className="teamAvatarInputWrapper">
+          <h4>Аватар</h4>
+          <input
+            className="inputField"
+            id="teamAvatarInput"
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+          />
+          {avatarDataUrl && <img src={avatarDataUrl} className="teamAvatarPreview" alt="Team avatar preview" />}
+        </div>
         <button className="submitFormButton" onClick={submit}>
           SUBMIT
         </button>
@@ -63,11 +80,20 @@ export default function EditTeamPage(props: { team: Team, setTeams: Function, se
       name: name,
       country: country,
       type: type,
+      avatar: avatarDataUrl,
     };
+    const requestTeam = avatarTouched
+      ? newTeam
+      : {
+          id: newTeam.id,
+          name: newTeam.name,
+          country: newTeam.country,
+          type: newTeam.type,
+        };
 
     if (props.team.id === 0) {
-      delete newTeam.id;
-      addData(`/teams`, newTeam).then((result: any) => {
+      const { id, ...teamToCreate } = requestTeam;
+      addData(`/teams`, teamToCreate).then((result: any) => {
         if (result === 200) {
           fetchData(`/teams`, props.setTeams).then(() => {
             props.setShowModal(false);
@@ -75,11 +101,11 @@ export default function EditTeamPage(props: { team: Team, setTeams: Function, se
         }
       });
     } else
-      await updateData(`/teams`, newTeam).then((result) => {
+      await updateData(`/teams`, requestTeam).then((result) => {
         if (result === 200) {
           props.setTeams((teams: Team[]) => {
             let updatedteams = [...teams].map((item) => {
-              if (item.id === props.team.id) return newTeam;
+              if (item.id === props.team.id) return { ...item, ...requestTeam };
               return item;
             });
             return updatedteams;
@@ -87,5 +113,52 @@ export default function EditTeamPage(props: { team: Team, setTeams: Function, se
           props.setShowModal(false);
         }
       });
+  }
+
+  function fileToDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(typeof reader.result === 'string' ? reader.result : '');
+      reader.onerror = () => reject(new Error('Не удалось прочитать файл'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function resizeAvatar(dataUrl: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => {
+        const maxSide = 256;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const width = Math.max(1, Math.round(image.width * scale));
+        const height = Math.max(1, Math.round(image.height * scale));
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Не удалось обработать изображение'));
+          return;
+        }
+        ctx.drawImage(image, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.8));
+      };
+      image.onerror = () => reject(new Error('Не удалось обработать изображение'));
+      image.src = dataUrl;
+    });
+  }
+
+  async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setAvatarTouched(true);
+    const file = e.target.files?.[0];
+    if (!file) {
+      setAvatarDataUrl(null);
+      return;
+    }
+    if (!file.type.startsWith('image/')) return;
+
+    const dataUrl = await fileToDataUrl(file);
+    const resizedDataUrl = await resizeAvatar(dataUrl);
+    setAvatarDataUrl(resizedDataUrl);
   }
 }

@@ -20,12 +20,21 @@ export default function GamesPage() {
   useEffect(() => {
     fetchData(`/competitions`, setCompetitions);
   }, []);
-  useEffect(() => {
-    fetchData(`/matches/${competition.id}`, setGames);
-  }, [competition]);
 
-  appState.currentCompetition = competition;
-  localStorage.setItem('currentCompetitionID', competition.id.toString());
+  useEffect(() => {
+    if (competition?.id) return;
+    if (competitions?.length) setCompetition(competitions[0]);
+  }, [competitions, competition?.id]);
+
+  useEffect(() => {
+    if (!competition?.id) return;
+    fetchData(`/matches/${competition.id}`, setGames);
+  }, [competition?.id]);
+
+  if (competition?.id) {
+    appState.currentCompetition = competition;
+    localStorage.setItem('currentCompetitionID', String(competition.id));
+  }
 
   const listGames = games?.map((game) => {
     return <MatchLine game={game} setChosenGame={setChosenGame} key={game.id}></MatchLine>;

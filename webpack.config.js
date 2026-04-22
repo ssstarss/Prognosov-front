@@ -39,7 +39,11 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(woff2?|ttf|eot|otf)$/i,
+        type: 'asset/resource',
       },
     ],
   },

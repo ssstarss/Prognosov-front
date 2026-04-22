@@ -1,0 +1,83 @@
+@use '../../../variables.scss' as *;
+
+.loginTabs {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 0;
+  margin-bottom: 1.25rem;
+  font-family: 'Druk Cyr', sans-serif;
+  color: $dark-blue;
+}
+
+.loginTab {
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.loginTabActive {
+  display: none;
+}
+
+.userDataInputWrapper {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 1.25rem;
+}
+.loginFormInputWrapper input {
+  padding: $input-padding-y-tall;
+}
+.loginFormInputWrapper .inputField {
+  width: 100%;
+}
+
+input {
+  font-size: 14px;
+}
+
+.loginError {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.loginSubmitButton {
+  min-width: 90%;
+
+  margin-top: 1.25rem;
+  transition: background-color 0.3s ease;
+}
+.loginSubmitButton:hover {
+  background-color: $dark-blue;
+}
+.loginForm .userFormBlock {
+  border: none;
+  padding: 0;
+}
+
+.forgotPasswordLink {
+  border: none;
+  background: transparent;
+  color: $light-blue;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  align-self: flex-end;
+}
+.forgotPasswordWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.forgotPasswordLink:hover {
+  text-decoration: underline;
+}
+
+.forgotEmailInput,
+.forgotPasswordInput {
+  width: 100%;
+  box-sizing: border-box;
+}

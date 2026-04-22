@@ -1,15 +1,30 @@
+@use '../../../variables.scss' as *;
+
 .mainTablePageWrapper {
-  display: block;
+  display: flex;
+  flex-direction: column;
   margin: auto;
   width: 95%;
-  height: 90vh;
-  border: solid 1px black;
+  height: 100%;
+
+  border: solid 1px $dark-blue;
   border-radius: 20px;
 }
+
+.mainTablePageWrapper .formHeaderWrapper {
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
 .mainTableWrapper {
   border-bottom: none;
-  overflow: auto;
-  height: 90vh;
+  overflow-y: auto;
+  overflow-x: auto;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -17,12 +32,18 @@
 .mainTable {
   border-collapse: separate;
   border-spacing: 0;
+  border-color: $dark-blue;
   width: 100%;
   overflow: auto;
 }
 
+.mainTableEmptyCell {
+  padding: 16px;
+  text-align: center;
+}
+
 .mainTableHeader {
-  height: 40px;
+  height: 60px;
   text-align: center;
   margin-top: 20px;
 }
@@ -34,8 +55,7 @@
 
 .selectItem {
   height: 30px;
-  border-radius: 5px;
-  border: 1px solid black;
+  width: auto;
   padding: 5px;
   margin-left: 20px;
 }
@@ -63,6 +83,8 @@
   height: 100%;
   border: 2px solid;
   border-width: 2px 1px 2px 0;
+  border-color: $dark-blue;
+  color: $dark-blue;
 }
 
 .gameCellDateWrapper {
@@ -70,21 +92,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px black solid;
+  border-bottom: 1px $dark-blue solid;
 }
 
 .gameResultWrapper {
   display: flex;
-  height: 110px;
-  border-bottom: 1 px black solid;
+  height: 140px;
+  border-bottom: 1 px $dark-blue solid;
+  border-color: $dark-blue;
+  width: 4rem;
 }
 .gameResultWrapper :first-child {
   border-right: 1px dashed grey;
 }
 
-.gameCellDate,
-.gameCellTime {
-  font-size: 8px;
+.gameCellDate {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  line-height: 1;
+  color: $dark-blue;
 }
 .teamCell {
   display: flex;
@@ -93,6 +119,29 @@
   height: 100%;
   border-right-style: initial;
   width: 50%;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+}
+
+.teamAvatarInHeader {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  align-self: center;
+
+  flex-shrink: 0;
+}
+
+.teamAvatarInHeaderPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  color: #666;
 }
 
 .teamName:first-child {
@@ -100,13 +149,16 @@
 }
 
 .teamName {
-  font-size: 10px;
-  margin: 3px;
-  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.875rem;
 
-  margin-bottom: 10px;
+  height: 85%;
+  margin-bottom: 5px;
   text-align: end;
   border-right-style: initial;
+  line-height: 1;
 }
 
 .vertical-text {
@@ -114,8 +166,12 @@
 }
 
 .gameCellScore {
-  font-size: 14px;
+  font-size: 1rem;
   font-weight: bold;
+  border-top: 2px $dark-blue solid;
+  color: $dark-blue;
+  background-color: $light-blue;
+  margin-top: 3px;
 }
 
 .playerRaw {
@@ -124,7 +180,7 @@
 }
 .playerNameCell {
   height: 50px;
-  border: solid black;
+  border: solid $dark-blue;
   border-width: 0 2px 2px 2px;
   background-color: whitesmoke;
 }
@@ -137,22 +193,54 @@
   align-items: center;
   height: 100%;
 }
+
+.playerIdentity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.playerAvatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  flex-shrink: 0;
+}
+
+.playerAvatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+}
+
 .playerName {
-  font-size: 12px;
+  font-family: 'Manrope', sans-serif;
+  color: $dark-blue;
+  font-size: 1rem;
   white-space: nowrap;
 }
 .playerResult {
   width: 30px;
-  font-size: 12px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
   font-weight: bold;
-  border-left: 2px solid black;
+  color: $dark-blue;
+  border-left: 2px solid $dark-blue;
   height: 100%;
   align-content: center;
   text-align: center;
 }
 
 .playerResultCell {
-  border: black solid;
+  border: $dark-blue solid;
   border-width: 0px 1px 2px 0px;
   border-right: 1px dotted;
 }
@@ -162,74 +250,60 @@
   flex-direction: column;
 }
 .prognose {
-  font-size: 14px;
-  border-bottom: 1px black solid;
+  font-size: 0.875rem;
+  border-bottom: 1px $dark-blue solid;
   margin: 0 5px 0 5px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.score,
+.prognose {
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  color: $dark-blue;
 }
 
 .score {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
-  font-weight: bold;
-  width: 18px;
-  height: 18px;
   align-self: center;
-  color: whitesmoke;
-  margin: 0;
-  margin-top: 5px;
-  border-radius: 20px;
-}
-
-.score,
-.prognose {
+  margin: 3px;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #fff;
   text-align: center;
+  justify-content: center;
+  padding: 3px 9px;
+  cursor: default;
+  font-weight: bold;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3);
 }
 .score_black {
-  color: black;
+  color: $dark-blue;
+  box-shadow: none;
 }
 
 .score_blue {
-  background-color: blue;
-  border: 2px solid rgb(1, 1, 125);
-  background-image: linear-gradient(to top, blue, rgb(123, 123, 239));
-  position: relative;
-  border-radius: 50%;
-  box-shadow:
-    0px 2px 4px #aaa,
-    inset 0px 2px 4px rgb(1, 1, 206);
+  background: linear-gradient(145deg, #4a90e2, #2f76e2);
+  border: 1px solid #1e5bbf;
 }
 
 .score_orange {
-  background-color: orange;
-  border: 2px solid rgb(177, 115, 2);
-  background-image: linear-gradient(to top, orange, rgb(141, 92, 2));
-  position: relative;
-  border-radius: 50%;
-  box-shadow:
-    0px 2px 4px #aaa,
-    inset 0px 2px 4px rgb(215, 140, 1);
+  background: linear-gradient(145deg, orange, rgb(141, 92, 2));
+  border: 1px solid rgb(177, 115, 2);
 }
 
 .score_green {
-  background-color: rgb(66, 154, 4);
-  border: 2px solid rgb(1, 116, 1);
-  background-image: linear-gradient(to top, rgb(66, 154, 4), rgb(49, 115, 2));
-  position: relative;
-  border-radius: 50%;
-  box-shadow:
-    0px 2px 4px #aaa,
-    inset 0px 2px 4px rgb(49, 117, 1);
+  background: linear-gradient(145deg, rgb(66, 154, 4), rgb(49, 115, 2));
+  border: 1px solid rgb(1, 116, 1);
 }
 
 .score_aqua {
-  background-color: rgb(1, 182, 248);
-  border: 2px solid rgb(3, 143, 194);
-  background-image: linear-gradient(to top, rgb(1, 182, 248), rgb(2, 154, 210));
-  position: relative;
-  border-radius: 50%;
-  box-shadow:
-    0px 2px 4px #aaa,
-    inset 0px 2px 4px rgb(1, 153, 209);
+  background: linear-gradient(145deg, rgb(1, 182, 248), rgb(2, 154, 210));
+  border: 1px solid rgb(3, 143, 194);
 }

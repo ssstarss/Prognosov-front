@@ -9,6 +9,8 @@ const UpdatePrognose = (props: {
   prognose: Prognose;
   updateCellPrognose?: Function;
   updateLinePrognose?: Function;
+  /** Обновить данные в родителе (таблица турнира и т.п.) до закрытия модалки */
+  onPrognoseSaved?: (p: Prognose) => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [currentScore, setCurrentScore] = useState({
@@ -76,16 +78,32 @@ const UpdatePrognose = (props: {
       game: props.prognose.game,
       team1_result: currentScore.team1,
       team2_result: currentScore.team2,
-      userOnTournamentTournamentID: appState.currentTournamentID || appState.currentTournament?.id,
-      userOnTournamentUserID: appState.userID,
+      userOnTournamentTournamentID:
+        props.prognose.userOnTournamentTournamentID ??
+        appState.currentTournamentID ??
+        appState.currentTournament?.id,
+      userOnTournamentUserID: props.prognose.userOnTournamentUserID ?? appState.userID,
       result: 0,
     };
 
-    if (props.prognose.id) newPrognose.id = props.prognose.id;
+    if (props.prognose.id != null) newPrognose.id = props.prognose.id;
 
-    await updatePrognoseHandle(newPrognose);
-    if (props.updateCellPrognose) props.updateCellPrognose({ ...newPrognose });
-    if (props.updateLinePrognose) props.updateLinePrognose({ ...newPrognose });
+    const saved = await updatePrognoseHandle(newPrognose);
+    const merged: Prognose = {
+      ...newPrognose,
+      game: newPrognose.game,
+    };
+    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+      const s = saved as Record<string, unknown>;
+      if (s.id != null && Number.isFinite(Number(s.id))) merged.id = Number(s.id);
+      if (typeof s.team1_result === 'number') merged.team1_result = s.team1_result;
+      if (typeof s.team2_result === 'number') merged.team2_result = s.team2_result;
+      if (typeof s.result === 'number') merged.result = s.result;
+    }
+
+    if (props.onPrognoseSaved) props.onPrognoseSaved(merged);
+    if (props.updateCellPrognose) props.updateCellPrognose(merged);
+    if (props.updateLinePrognose) props.updateLinePrognose(merged);
 
     props.setShowModal(false);
   }

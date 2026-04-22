@@ -1,27 +1,13 @@
-.userFormBlock {
-  position: relative;
-  width: 500px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  border: solid 1px black;
-  border-radius: 20px;
-  align-items: center;
-  background-color: white;
-  padding: 20px;
-  box-sizing: border-box;
-  max-height: 90vh;
-  overflow-y: auto;
-}
+@use '../../../variables.scss' as *;
 
-.userFormBlock .closeCrossWrapper {
+.closeCrossWrapper {
   width: 100%;
   display: flex;
   justify-content: end;
   margin-bottom: 10px;
 }
 
-.userFormBlock .closeCross {
+.closeCross {
   padding: 5px 10px 0 0;
   cursor: pointer;
   font-size: 20px;
@@ -29,36 +15,25 @@
   color: #333;
 }
 
-.userFormBlock .closeCross:hover {
+.closeCross:hover {
   color: red;
 }
 
+.userDateEditWrapper {
+  width: 50%;
+}
 .userFormField {
   width: 100%;
   margin: 5px 0;
   display: flex;
-  flex-direction: column;
+
   align-items: center;
 }
 
 .userFormField h3 {
   margin: 5px;
-  width: 100%;
-  text-align: left;
-}
 
-.userFormBlock .inputField {
-  width: 90% !important;
-  min-width: 90% !important;
-  max-width: 90% !important;
-  padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  text-align: center;
-  outline: none;
-  flex-shrink: 0;
-  display: block;
+  text-align: left;
 }
 
 .userFormBlock .inputField:focus,
@@ -93,4 +68,13 @@
 
 .userFormSubmitButton:hover {
   background-color: #45a049;
+}
+
+.userAvatarPreview {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  margin-top: 8px;
 }

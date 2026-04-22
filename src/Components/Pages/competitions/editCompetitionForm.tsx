@@ -12,12 +12,6 @@ export default function EditCompetitionForm(props: {
   const [competition, setCompetition] = useState<Competition>(props.competition);
   const [competitionName, setCompetitionName] = useState<string>(competition.name);
   const [competitionComments, setCompetitionComments] = useState<string>(competition.comments);
-  const [competitionStartsAt, setCompetitionStartsAt] = useState<Date>(
-    new Date(competition.StartsAt || new Date())
-  );
-  const [competitionEndsAt, setCompetitionEndsAt] = useState<Date>(
-    new Date(competition.EndsAt || new Date())
-  );
   const [competitionActive, setCompetitionActive] = useState<boolean>(competition.active || false);
   return (
     <div
@@ -42,24 +36,6 @@ export default function EditCompetitionForm(props: {
           placeholder="Competition Comments"
           value={competitionComments}
           onChange={(e) => setCompetitionComments(e.target.value)}
-        />
-      </h3>
-      <h3 className="inputFieldLabel">
-        Starts At:
-        <input
-          type="date"
-          placeholder="Competition Starts At"
-          value={competitionStartsAt.toISOString().split('T')[0]}
-          onChange={(e) => setCompetitionStartsAt(new Date(e.target.value))}
-        />
-      </h3>
-      <h3 className="inputFieldLabel">
-        Ends At:
-        <input
-          type="date"
-          placeholder="Competition Ends At"
-          value={competitionEndsAt.toISOString().split('T')[0]}
-          onChange={(e) => setCompetitionEndsAt(new Date(e.target.value))}
         />
       </h3>
       <h3 className="inputFieldLabel">
@@ -92,8 +68,6 @@ export default function EditCompetitionForm(props: {
       active: competitionActive,
       name: competitionName,
       comments: competitionComments,
-      StartsAt: competitionStartsAt,
-      EndsAt: competitionEndsAt,
     };
     if (props.addNewCompetition) {
       const { id, ...competitionWithoutId } = updatedCompetition;

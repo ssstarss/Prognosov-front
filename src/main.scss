@@ -1,0 +1,174 @@
+@use './variables.scss' as *;
+
+@font-face {
+  font-family: 'Druk Wide Medium Desktop';
+  src: url('./fonts/DrukCur/Druk-Wide-Medium-Desktop.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family:
+    'Druk Cyr',
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica Neue,
+    Helvetica,
+    sans-serif;
+  text-decoration: none;
+  margin: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+h3,
+h4 {
+  margin: 0;
+  padding: 5px;
+}
+
+.submitFormButtonWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+.submitFormButton {
+  height: 50px;
+  width: 80%;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  border: 1px solid $light-blue;
+  border-radius: $button-border-radius;
+  background-color: $light-blue;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.submitFormButton:hover {
+  background-color: $dark-blue;
+  border: 1px solid $dark-blue;
+}
+
+.shortButton {
+  width: 180px;
+  align-self: center;
+}
+li {
+  list-style-type: none;
+}
+
+.buttonCancel {
+  background-color: #999;
+}
+
+.pageWrapper {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  height: 85vh;
+
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  background-color: $body-bg-color;
+}
+
+.formWrapper {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px white;
+  border-radius: 1.5rem;
+  align-items: start;
+  box-sizing: border-box;
+  background-color: white;
+  padding: 1.875rem;
+}
+.formHeaderWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid $transparent-blue;
+}
+
+.formHeader {
+  margin: 10px 0;
+  font-family: 'Druk Wide Medium Desktop', sans-serif;
+  font-size: 1.625rem;
+  font-weight: 500;
+
+  text-transform: uppercase;
+  color: $dark-blue;
+}
+
+.userDataInputWrapper {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 1.25rem;
+  align-self: center;
+}
+
+.horisontalWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.inputHint {
+  margin: 5px;
+  width: 120px;
+  font-size: 14px;
+  color: $dark-blue;
+}
+.inputHint {
+  width: 100%;
+}
+
+.inputField {
+  width: 50%;
+  border: $input-border-width solid $transparent-blue;
+  border-radius: $input-border-radius;
+  padding: $input-padding-y $input-padding-x;
+  margin-bottom: 10px;
+  transition: border-color 0.3s;
+  outline: none;
+  text-decoration-color: $dark-blue;
+  font-size: $input-font-size;
+  color: $input-color !important;
+  box-sizing: border-box;
+  &:-webkit-autofill {
+    -webkit-text-fill-color: $input-color !important;
+    box-shadow: 0 0 0px 1000px white inset !important;
+  }
+}
+
+.inputField:focus,
+.inputField:hover {
+  border-color: $dark-blue;
+}
+
+.submitFormButtonsWrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+}

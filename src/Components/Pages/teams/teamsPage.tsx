@@ -9,6 +9,7 @@ import { SERVER } from '../../../constants';
 import { appState } from '../../../constants';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
+import AvatarCircle from '../../common/AvatarCircle';
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
@@ -20,6 +21,7 @@ export default function TeamsPage() {
     name: '',
     country: '',
     type: '',
+    avatar: null,
   });
   useEffect(() => {
     fetchData(`/teams`, setTeams);
@@ -27,7 +29,15 @@ export default function TeamsPage() {
 
   const listTeams = teams?.map((team) => (
     <div className="teamRaw" key={team.id}>
-      {team.name}
+      <div className="teamIdentity">
+        <AvatarCircle
+          avatar={team.avatar}
+          className="teamAvatar"
+          placeholderClassName="teamAvatarPlaceholder"
+          placeholderText=""
+        />
+        {team.name}
+      </div>
       <div className="teamButtonsWrapper">
         <button
           onClick={() => {
@@ -108,6 +118,7 @@ export default function TeamsPage() {
               name: '',
               country: '',
               type: '',
+              avatar: null,
             };
             setTeam(emptyTeam);
             setShowModalEdit(true);

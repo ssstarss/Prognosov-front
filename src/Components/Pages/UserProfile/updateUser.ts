@@ -1,13 +1,13 @@
 import { User } from '../FillBase/types';
 import { updateData } from '../../../functions/updateData';
-import { SERVER } from '../../../constants';
 
 export interface UpdateUserFormData {
   name: string;
   email: string;
   cellphone: string;
-  city: string;
-  country: string;
+  city?: string;
+  country?: string;
+  avatar?: string | null;
 }
 
 export interface UpdateUserCallbacks {
@@ -29,12 +29,17 @@ export async function updateUser(
     name: formData.name,
     email: formData.email,
     cellphone: formData.cellphone,
-    city: formData.city,
-    country: formData.country,
+    city: formData.city ?? user.city,
+    country: formData.country ?? user.country ,
+    avatar: formData.avatar ?? user.avatar,
   };
+  const requestData: Partial<User> = { ...updatedUser };
+  if (formData.avatar === undefined) {
+    delete requestData.avatar;
+  }
 
   try {
-    const result = await updateData(`${SERVER}/users/${user.id}`, updatedUser);
+    const result = await updateData(`/users/${user.id}`, requestData as User);
     if (result === 200) {
       callbacks.setUser(updatedUser);
       callbacks.onSuccess();

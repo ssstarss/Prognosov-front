@@ -1,20 +1,27 @@
 import './editUserForm.css';
 import { User } from '../FillBase/types';
-import { close__popUp } from '../../PopUpCanvas/popUpCanvas';
 import { updateUser } from './updateUser';
 import UserForm, { UserFormData } from './UserForm';
 
 interface EditUserFormProps {
   user: User;
   setUser: (user: User) => void;
+  onClose: () => void;
 }
 
-export default function EditUserForm({ user, setUser }: EditUserFormProps) {
+export default function EditUserForm({ user, setUser, onClose }: EditUserFormProps) {
   const handleSubmit = async (data: UserFormData) => {
     await updateUser(
       user,
-      { name: data.name, email: data.email, cellphone: data.cellphone, city: data.city, country: data.country },
-      { setUser, onSuccess: close__popUp }
+      {
+        name: data.name,
+        email: data.email,
+        cellphone: data.cellphone,
+        city: data.city,
+        country: data.country,
+        avatar: data.avatar,
+      },
+      { setUser, onSuccess: onClose }
     );
   };
 
@@ -28,9 +35,11 @@ export default function EditUserForm({ user, setUser }: EditUserFormProps) {
           cellphone: user.cellphone,
           city: user.city,
           country: user.country,
+          avatar:
+            typeof user.avatar === 'string' ? user.avatar : undefined,
         }}
         onSubmit={handleSubmit}
-        onClose={close__popUp}
+        onClose={onClose}
       />
     </div>
   );

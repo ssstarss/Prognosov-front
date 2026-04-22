@@ -37,17 +37,18 @@ export default function PrognosesPage() {
     <div className="pageWrapper">
       <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="prognosesForm">
-        <h2 className="prognosesPageHeader">Мои прогнозы:</h2>
-
-        <ChooseOption<Tournament>
+        <div className="formHeaderWrapper prognosesHeaderWrapper">
+          <h2 className="formHeader">Мои прогнозы:</h2>
+          <ChooseOption<Tournament>
           currentOption={tournament}
           setChosenOption={setTournament}
           options={tournaments}
         />
-
-        <div className="prognoses__list">
-          <h4> {listPrognoses}</h4>
         </div>
+
+        
+
+        <ul className="prognoses__list">{listPrognoses}</ul>
       </div>
     </div>
   );
