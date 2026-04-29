@@ -53,24 +53,26 @@ export default function GamesPage() {
           </ModalWrapper>,
           document.body
         )}
-      <div className="gamesForm">
-        <div className="gamesFormHeader">
-          <h2 className="gamesPageHeader">Соревнование:</h2>
-          <div className="horisontalWrapper">
-            <ChooseOption<Competition>
-              currentOption={competition}
-              setChosenOption={setCompetition}
-              options={competitions as Competition[]}
-            ></ChooseOption>
-            <button className="addButton"
-              onClick={() => {
-                setShowModal(true);
-              }}
-            >
-              ADD GAME
-            </button>
-          </div>
+      <div className="prognosesForm">
+        <div className="formHeaderWrapper">
+          <h2 className="formHeader">GAMES:</h2>
         </div>
+        <div className="horisontalWrapper">
+          <ChooseOption<Competition>
+            currentOption={competition}
+            setChosenOption={setCompetition}
+            options={competitions as Competition[]}
+          ></ChooseOption>
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
+            ADD GAME
+          </button>
+        </div>
+
         <div className="games__list">
           <div className="games__list_wrapper"> {listGames}</div>
         </div>

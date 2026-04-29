@@ -12,6 +12,7 @@ import { useTournamentContext } from '../../../context/TournamentContext';
 
 export default function MainTable() {
   const { currentTournament } = useTournamentContext();
+  const [showCupResult, setShowCupResult] = useState(false);
   const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>(
     appState.usersOnTournament
   );
@@ -38,10 +39,17 @@ export default function MainTable() {
   }, [currentTournament?.id, currentTournament?.competitionID, currentTournament?.competition]);
 
   const games = useMemo((): Game[] => {
-    return currentCompetition?.games ?? [];
-  }, [currentCompetition]);
+    const allGames = currentCompetition?.games ?? [];
+    if (!showCupResult) return allGames;
+    return allGames.filter((game) => game.cup === true);
+  }, [currentCompetition, showCupResult]);
 
-  const rows = Array.isArray(usersOnTournaments) ? usersOnTournaments : [];
+  const rows = useMemo(() => {
+    const source = Array.isArray(usersOnTournaments) ? usersOnTournaments : [];
+    if (!showCupResult) return source;
+
+    return [...source].sort((a, b) => (b.resultCup ?? 0) - (a.resultCup ?? 0));
+  }, [usersOnTournaments, showCupResult]);
 
   const gameStartsAt = (startsAt: Game['starts_at']) => {
     if (startsAt == null) return null;
@@ -163,8 +171,7 @@ export default function MainTable() {
                 />
                 <a className="playerName">{user.user.name}</a>
               </div>
-              <a className="playerResult">{user.result}</a>
-              <a className="playerResult">{user.resultCup}</a>
+              <a className="playerResult">{showCupResult ? user.resultCup : user.result}</a>
             </div>
           </td>
 
@@ -179,6 +186,15 @@ export default function MainTable() {
       <div className="mainTablePageWrapper">
         <div className="formHeaderWrapper">
           <h2 className="formHeader">Таблица результатов</h2>
+          <div className="mainTableHeaderControls">
+            <input
+              id="mainTable-cup-toggle"
+              type="checkbox"
+              checked={showCupResult}
+              onChange={(e) => setShowCupResult(e.target.checked)}
+            />
+            <label htmlFor="mainTable-cup-toggle">Cup</label>
+          </div>
         </div>
 
         <div className="mainTableWrapper">

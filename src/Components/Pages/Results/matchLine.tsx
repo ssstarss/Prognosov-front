@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Game } from '../../../interfaces/interfaces';
 import { Dispatch, SetStateAction } from 'react';
 import UpdateGame from './updateResult/UpdateResult';
-import formatDate from '../../../functions/formatDate';
+import formatDate, { formatDateString, formatTimeString } from '../../../functions/formatDate';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
+import AvatarCircle from '../../common/AvatarCircle';
 
 interface MyProps {
   game: Game;
@@ -14,17 +15,10 @@ export default function MatchLine(props: MyProps) {
   const [game, setGame] = useState<Game>(props.game);
   const [showModal, setShowModal] = useState(false);
 
-  const score = (
-    <div className="games__score_wrapper">
-      <p className="games__score">{typeof game.team1_result === 'number' ? game.team1_result : '__'}</p>
-      <p className="games__score">{typeof game.team2_result === 'number' ? game.team2_result : '__'}</p>
-    </div>
-  );
-
   return (
-    <li
+    <div
       key={props.game.id}
-      className="games__game_wrapper"
+      className="prognoses__prognose_wrapper"
       onClick={() => {
         props.setChosenGame(game);
         setShowModal(true);
@@ -41,12 +35,40 @@ export default function MatchLine(props: MyProps) {
           </ModalWrapper>,
           document.body
         )}
-      <div className="games__date">{formatDate(new Date(game.starts_at))}</div>
-      <div className="games__teams_wrapper">
-        <p className="games__team_name">{game.team1?.name}</p>
-        <p className="games__team_name">{game.team2?.name}</p>
+      <div className="prognose__date-wrapper">
+        <div className="prognoses__date">{formatDateString(new Date(game.starts_at), true)}</div>
+        <div className="prognoses__time">{formatTimeString(new Date(game.starts_at))}</div>
       </div>
-      <div className="games__score">{score}</div>
-    </li>
+
+      <div className="prognoses__match-wrapper">
+        <div className="prognoses__team-wrapper prognoses__team-wrapper--left">
+          <div className="prognoses__team-name">{game.team1?.name}</div>
+          <div className="prognoses__team-logo">
+            <AvatarCircle
+              avatar={game.team1?.avatar}
+              alt={game.team1?.name ? `${game.team1.name} logo` : 'Team logo'}
+              className="prognoses__team-logo-circle"
+            />
+          </div>
+        </div>
+
+        <div className="prognoses__score-block">
+          <span className="prognoses__team-score">{game.team1_result ?? '-'}</span>
+          <span className="prognoses__separator">:</span>
+          <span className="prognoses__team-score">{game.team2_result ?? '-'}</span>
+        </div>
+
+        <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
+          <div className="prognoses__team-logo">
+            <AvatarCircle
+              avatar={game.team2?.avatar}
+              alt={game.team2?.name ? `${game.team2.name} logo` : 'Team logo'}
+              className="prognoses__team-logo-circle"
+            />
+          </div>
+          <div className="prognoses__team-name">{game.team2?.name}</div>
+        </div>
+      </div>
+    </div>
   );
 }
