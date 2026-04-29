@@ -12,27 +12,33 @@ import FillBase from './Components/Pages/FillBase/fillBase';
 import TournamentsPage from './Components/Pages/Tournaments/tournaments';
 import MainTable from './Components/Pages/MainTable/mainTable';
 import UsersOnTournament from './Components/Pages/UsersOnTournament/usersOnTornament';
+import { TournamentProvider } from './context/TournamentContext';
+import RulesPage from './Components/Pages/Rules/rules';
 function App() {
   return (
-    <HashRouter>
-      <Header></Header>
+    <TournamentProvider>
+      <HashRouter>
+        <Header></Header>
 
-      <Routes>
-        <Route path="/" element={<StartPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route path="/teams" element={<TeamsPage />}></Route>
-        <Route path="/competitions" element={<CompetitionsPage />}></Route>
-        <Route path="/tournaments" element={<TournamentsPage />}></Route>
-        <Route path="/usersOnTournament" element={<UsersOnTournament />}></Route>
-        <Route path="/users" element={<UsersPage />}></Route>
-        <Route path="/mainTable" element={<MainTable />}></Route>
-        <Route path="/prognoses" element={<PrognosesPage />}></Route>
-        <Route path="/games" element={<GamesPage />}></Route>
-        <Route path="/fillbase" element={<FillBase />}></Route>
-        <Route path="/userprofile" element={<UserProfile />}></Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </HashRouter>
+        <Routes>
+          <Route path="/" element={<StartPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/teams" element={<TeamsPage />}></Route>
+          <Route path="/competitions" element={<CompetitionsPage />}></Route>
+          <Route path="/tournaments" element={<TournamentsPage />}></Route>
+          <Route path="/usersOnTournament" element={<UsersOnTournament />}></Route>
+          <Route path="/users" element={<UsersPage />}></Route>
+          <Route path="/mainTable" element={<MainTable />}></Route>
+          <Route path="/prognoses" element={<PrognosesPage />}></Route>
+          <Route path="/games" element={<GamesPage />}></Route>
+          <Route path="/fillbase" element={<FillBase />}></Route>
+          <Route path="/userprofile" element={<UserProfile />}></Route>
+          <Route path="/rules" element={<RulesPage />}></Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </HashRouter>
+    </TournamentProvider>
   );
 }
 

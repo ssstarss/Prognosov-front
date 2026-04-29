@@ -1,4 +1,6 @@
 import { SERVER } from '../constants';
+import { getErrorMessageFromData } from './errorMessage';
+import { notifyError } from '../Components/common/notifications/notificationBus';
 
 export interface ForgotPasswordRequestResult {
   success: boolean;
@@ -15,12 +17,15 @@ export async function forgotPasswordRequest(email: string): Promise<ForgotPasswo
 
     const data = await response.json();
     if (!response.ok) {
-      return { success: false, error: data.message || data.error || 'Ошибка запроса' };
+      const errorMessage = getErrorMessageFromData(data, 'Ошибка запроса');
+      notifyError(errorMessage);
+      return { success: false, error: errorMessage };
     }
 
     return { success: true };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Ошибка сети';
+    notifyError(msg);
     return { success: false, error: msg };
   }
 }

@@ -38,7 +38,7 @@
   display: flex;
   align-items: center;
   flex: 1;
-  gap: 10px;
+  gap: 50px;
   min-width: 0;
 }
 
@@ -71,7 +71,7 @@
 
 .prognoses__team-name {
   font-family: 'Manrope', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.8rem;
   color: $dark-blue;
   white-space: nowrap;
   overflow: hidden;
@@ -88,7 +88,7 @@
 
 .prognoses__team-score {
   font-family: 'Druk Text', sans-serif;
-  font-size: 1.2rem;
+  font-size: 2rem;
   line-height: 1;
   font-weight: 800;
   color: $dark-blue;

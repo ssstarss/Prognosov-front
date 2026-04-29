@@ -63,9 +63,8 @@ function CompetitionsPage() {
               message={`Вы уверены, что хотите удалить: ${currentCompetition.name}?`}
               action={deleteData}
               host={`/competitions/${currentCompetition.id}`}
-              setData={async ()=>{
+              setData={async () => {
                 const updatedData = await fetchData(`/competitions`, setCompetitions);
-                
               }}
               setShowModal={setShowModalDelete}
             />
@@ -89,7 +88,7 @@ function CompetitionsPage() {
         <h2 className="competitionsPageHeader">COMPETITIONS:</h2>
         <div className="competitionList"> {listCompetitions}</div>
         <button
-          className="addButton"
+          className="submitFormButton shortButton"
           onClick={() => {
             setCurrentCompetition({} as Competition);
             setAddNewCompetition(true);

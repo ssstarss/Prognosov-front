@@ -9,11 +9,9 @@ export default function ModalWrapper(props: {
   const backdropRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    props.showModal
-      ? (document.body.style.overflow = 'hidden')
-      : (document.body.style.overflow = 'auto');
+    document.body.style.overflow = 'hidden';
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'hidden';
     };
   }, [props.showModal]);
 

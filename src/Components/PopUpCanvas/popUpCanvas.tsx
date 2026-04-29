@@ -3,14 +3,10 @@ import './popUpCanvas.css';
 
 export function PopUpCanvas(props: { PopUp: ReactElement | null; onClose?: () => void }) {
   useEffect(() => {
-    if (props.PopUp) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = 'hidden';
     };
   }, [props.PopUp]);
 
@@ -33,5 +29,5 @@ export function close__popUp() {
   const popup__canvas_wrapper = document.getElementById('popup__canvas_wrapper');
   if (popup__canvas_wrapper) popup__canvas_wrapper.style.visibility = 'hidden';
   const body = document.getElementsByTagName('body')[0];
-  if (body) body.style.overflow = 'scroll';
+  if (body) body.style.overflow = 'hidden';
 }

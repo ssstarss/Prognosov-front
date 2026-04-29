@@ -1,6 +1,8 @@
 import { Prognose } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 import { SERVER } from '../../../../constants';
+import { notifyError } from '../../../common/notifications/notificationBus';
+import { readErrorMessage } from '../../../../functions/errorMessage';
 
 /** Только поля для API: без вложенного game (иначе циклы game.prognoses → JSON.stringify падает). */
 function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
@@ -50,14 +52,16 @@ export default async function updatePrognoseHandle(prognose: Prognose) {
     if (response.status === 401)
       throw Error(`Error creating prognoses ${response.status} ${response.statusText} `);
     if (!response.ok) {
-      const errorText = await response.text();
-      throw Error(
-        `Error updating prognose: ${response.status} ${response.statusText}. ${errorText}`
+      const message = await readErrorMessage(
+        response,
+        `Ошибка сохранения прогноза: ${response.status} ${response.statusText}`
       );
+      throw Error(message);
     }
     const result = await response.json().catch(() => null);
     return result;
   } catch (e: any) {
+    notifyError(e?.message || 'Ошибка сохранения прогноза');
     console.log(e?.message ?? e);
     throw e;
   }

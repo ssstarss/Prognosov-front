@@ -109,6 +109,8 @@ export default function UserForm({
 
   async function submit() {
     const name = (document.getElementById('userFormFioInput') as HTMLInputElement)?.value;
+    const city = (document.getElementById('userFormCityInput') as HTMLInputElement)?.value;
+    const country = (document.getElementById('userFormCountryInput') as HTMLInputElement)?.value;
 
     const isEmailValid = validateEmail(email, setEmailError);
     const isCellphoneValid = validateCellphone(cellphone);
@@ -116,7 +118,13 @@ export default function UserForm({
 
     if (!isEmailValid || !isCellphoneValid || !isPasswordValid) return;
 
-    const data: RegisterFormData = { name, email, cellphone };
+    const data: RegisterFormData = {
+      name,
+      email,
+      cellphone,
+      city: city ?? '',
+      country: country ?? '',
+    };
     if (mode === 'register') data.password = password;
     if (avatarTouched) data.avatar = avatarDataUrl;
 
@@ -155,7 +163,7 @@ export default function UserForm({
 
   return (
     <div
-      className={useFormWrapper ? 'formWrapper' : undefined}
+      className={useFormWrapper ? 'formWrapper' : 'userFormRoot'}
       onClick={(e) => e.stopPropagation()}
     >
       {onClose && (

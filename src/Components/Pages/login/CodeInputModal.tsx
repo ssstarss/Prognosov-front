@@ -33,11 +33,11 @@ export default function CodeInputModal({
   return (
     <div className="codeInputModalOverlay" onClick={onCancel}>
       <div className="codeInputModal" onClick={(e) => e.stopPropagation()}>
-        <div className="pageHeaderWrapper">
-          <h2 className="pageHeader">Введите код подтверждения</h2>
+        <div className="formHeaderWrapper">
+          <h2 className="formHeader">Введите код подтверждения</h2>
         </div>
         <div className="userDataInputWrapper">
-          <p className="inputHint">Код отправлен на {email}</p>
+          <p className="inputHint">Код отправлен на почтовый адрес: {email}</p>
           <p className="inputHint">Осталось попыток: {attemptsLeft}</p>
           <input
             className="codeInputField"

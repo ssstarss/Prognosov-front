@@ -9,7 +9,7 @@ import UserForm from '../UserProfile/UserForm';
 import CodeInputModal from './CodeInputModal';
 import { RegisterFormData } from '../../../interfaces/interfaces';
 import ForgotPasswordFlowModal from '../../common/ForgotPasswordFlowModal';
-import loginRefresh from '../../../functions/loginRefresh';
+import validateEmail from '../../../functions/validateEmail';
 
 type Tab = 'login' | 'register';
 
@@ -24,16 +24,29 @@ export default function LoginPage() {
   const [registerError, setRegisterError] = useState('');
   const [codeError, setCodeError] = useState('');
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+  const [emailError, setEmailError] = useState('');
   const navigate = useNavigate();
+  const isEmailReadyToSubmit = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+      if (value) validateEmail(value, setEmailError);
+     else setEmailError('Неверный email');
+  };
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
+
+  const handlePasswordLogin = () => {
+    const isEmailValid = validateEmail(email, setEmailError);
+    if (!isEmailValid) return;
+    loginPassword({ email, password }).then((result) => {
+      if (result) navigate('/prognoses');
+    });
+  };
 
   const catchEnterPressed = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
-      loginPassword({ email, password }).then((result) => {
-        if (result) navigate('/competitions');
-      });
+      handlePasswordLogin();
     }
   };
 
@@ -123,14 +136,16 @@ export default function LoginPage() {
             </div>
             <div className="userDataInputWrapper loginFormInputWrapper">
               <input
-                className="inputField"
+                className={`inputField ${emailError ? 'inputError' : ''}`}
                 type="email"
                 autoComplete="off"
                 placeholder="email@mail.com"
                 value={email}
                 onChange={onEmailChange}
+                onBlur={() => validateEmail(email, setEmailError)}
                 onKeyDown={catchEnterPressed}
               />
+              {emailError && <span className="errorMessage">{emailError}</span>}
               <input
                 className="inputField"
                 type="password"
@@ -150,13 +165,8 @@ export default function LoginPage() {
               </div>
               <button
                 className="submitFormButton loginSubmitButton"
-                onClick={() => {
-                  loginPassword({ email, password }).then((result) => {
-                    if (result) {
-                      loginRefresh();
-                    }
-                  });
-                }}
+                onClick={handlePasswordLogin}
+                disabled={!isEmailReadyToSubmit}
               >
                 SUBMIT
               </button>

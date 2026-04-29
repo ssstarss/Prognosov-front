@@ -3,12 +3,18 @@ import { Team } from '../interfaces/interfaces';
 import {
   Competition,
   User,
+  UserProfile,
   Tournament,
   UserOnTournament,
 } from '../Components/Pages/FillBase/types';
 import { SERVER } from '../constants';
+import { notifyError } from '../Components/common/notifications/notificationBus';
+import { readErrorMessage } from './errorMessage';
 
-export const updateData = async (host: string, data: Team | User | Competition | Tournament) => {
+export const updateData = async (
+  host: string,
+  data: Team | User | UserProfile | Partial<User> | Competition | Tournament
+) => {
   const myHeaders = {
     Accept: 'application/json',
     'Content-type': 'application/json',
@@ -28,17 +34,15 @@ export const updateData = async (host: string, data: Team | User | Competition |
       throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Response error:', errorText);
-      throw Error(
-        `Error updating ${SERVER + host}: ${response.status} ${response.statusText}. ${errorText}`
-      );
+      const message = await readErrorMessage(response, `Ошибка обновления данных: ${host}`);
+      throw Error(message);
     }
 
     const res = await response.json();
 
     return response.status;
   } catch (e: any) {
+    notifyError(e?.message || `Ошибка обновления данных: ${host}`);
     console.error('Update error:', e.message);
     throw e;
   }
@@ -57,11 +61,14 @@ export const deleteData = async (host: string, data: UserOnTournament) => {
   try {
     const response = await fetch(SERVER + host, request);
 
-    if (response.status === 401)
-      throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
+    if (!response.ok) {
+      const message = await readErrorMessage(response, `Ошибка удаления данных: ${host}`);
+      throw Error(message);
+    }
     const res = await response.json();
     return response.status;
   } catch (e: any) {
+    notifyError(e?.message || `Ошибка удаления данных: ${host}`);
     console.log(e.message);
   }
 };
@@ -91,12 +98,15 @@ export const addData = async (
   try {
     const response = await fetch(SERVER + host, request);
 
-    if (response.status === 401)
-      throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
+    if (!response.ok) {
+      const message = await readErrorMessage(response, `Ошибка добавления данных: ${host}`);
+      throw Error(message);
+    }
     const res = await response.json();
     console.log('result in add', response.status);
     return response.status;
   } catch (e: any) {
+    notifyError(e?.message || `Ошибка добавления данных: ${host}`);
     console.log(e.message);
   }
 };

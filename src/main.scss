@@ -13,6 +13,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family:
     'Druk Cyr',
@@ -26,7 +32,6 @@ body {
   text-decoration: none;
   margin: 0;
   max-height: 100%;
-  overflow: hidden;
 }
 h3,
 h4 {
@@ -96,6 +101,10 @@ li {
   box-sizing: border-box;
   background-color: white;
   padding: 1.875rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 8px 28px 0px,
+    rgba(0, 0, 0, 0.04) 0px 4px 16px 0px,
+    rgba(0, 0, 0, 0.03) 0px 2px 8px 0px;
 }
 .formHeaderWrapper {
   width: 100%;
@@ -134,16 +143,15 @@ li {
 
 .inputHint {
   margin: 5px;
-  width: 120px;
-  font-size: 14px;
+
+  font-size: 1rem;
+  font-weight: 100;
   color: $dark-blue;
-}
-.inputHint {
-  width: 100%;
 }
 
 .inputField {
-  width: 50%;
+  width: 55%;
+  height: 4rem;
   border: $input-border-width solid $transparent-blue;
   border-radius: $input-border-radius;
   padding: $input-padding-y $input-padding-x;
@@ -171,4 +179,32 @@ li {
   justify-content: center;
   width: 90%;
   margin: auto;
+}
+
+.globalLoadingOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(9, 20, 43, 0.35);
+  backdrop-filter: blur(2px);
+  pointer-events: all;
+}
+
+.globalLoadingSpinner {
+  width: 88px;
+  height: 88px;
+  animation: globalSpinnerRotate 1s linear infinite;
+  user-select: none;
+}
+
+@keyframes globalSpinnerRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,6 +1,8 @@
 import { Credetials } from '../interfaces/interfaces';
 import { appState, SERVER } from '../constants';
 import loginRefresh from './loginRefresh';
+import { notifyError } from '../Components/common/notifications/notificationBus';
+import { readErrorMessage } from './errorMessage';
 export default async function loginPassword(user: Credetials) {
   const myHeaders = {
     Accept: 'application/json',
@@ -15,8 +17,12 @@ export default async function loginPassword(user: Credetials) {
   };
   try {
     const response = await fetch(`${SERVER}/auth/password`, request);
-    if (response.status === 401)
-      throw Error(`Ошибка чтения юзеров ${response.status} ${response.statusText} `);
+    if (!response.ok) {
+      const fallback = response.status === 401 ? 'Неверный email или пароль' : 'Ошибка авторизации';
+      const message = await readErrorMessage(response, fallback);
+      notifyError(message);
+      return false;
+    }
     if (response.ok) {
       const res = await response.json();
       localStorage.setItem('refreshToken', res.refreshToken);
@@ -27,6 +33,7 @@ export default async function loginPassword(user: Credetials) {
       return true;
     } else return false;
   } catch (e: any) {
+    notifyError(e?.message || 'Ошибка авторизации');
     console.log(e.message);
     return false;
   }

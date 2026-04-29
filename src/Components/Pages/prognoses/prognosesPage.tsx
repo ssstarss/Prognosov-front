@@ -3,31 +3,18 @@ import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
 import { Prognose } from '../../../interfaces/interfaces';
-import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
 import MatchLine from './gameLine';
-import { Tournament, UserOnTournament } from '../FillBase/types';
-import ChooseOption from '../../chooseOption/chooseOption';
+import { useTournamentContext } from '../../../context/TournamentContext';
 
 export default function PrognosesPage() {
+  const { currentTournament: tournament } = useTournamentContext();
   const [prognoses, setPrognoses] = useState<Prognose[]>();
-  const [tournament, setTournament] = useState<Tournament>(appState.currentTournament);
-  const [chosenPrognose, setChosenPrognose] = useState<Prognose>({} as Prognose);
-  const [popUp, setPopUp] = useState(() => {
-    return <></>;
-  });
-  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>(
-    appState.usersOnTournament
-  );
-  const [tournaments, setTournaments] = useState<Tournament[]>([]);
   useEffect(() => {
-    fetchData(`/usersOnTournament/${tournament.id}`, setUsersOnTournametns);
+    if (!tournament?.id) return;
     fetchData(`/prognoses/${tournament.id}`, setPrognoses);
-  }, [tournament]);
+  }, [tournament?.id]);
   appState.currentTournament = tournament;
-  localStorage.setItem('currentTournamentID', tournament.id.toString());
-  useEffect(() => {
-    fetchData(`/tournaments`, setTournaments);
-  }, []);
+  if (tournament?.id) localStorage.setItem('currentTournamentID', tournament.id.toString());
 
   const listPrognoses = prognoses?.map((prognose) => {
     return <MatchLine prognose={prognose} key={prognose.id}></MatchLine>;
@@ -35,15 +22,9 @@ export default function PrognosesPage() {
 
   return (
     <div className="pageWrapper">
-      <PopUpCanvas PopUp={popUp}></PopUpCanvas>
       <div className="prognosesForm">
         <div className="formHeaderWrapper prognosesHeaderWrapper">
           <h2 className="formHeader">Мои прогнозы:</h2>
-          <ChooseOption<Tournament>
-          currentOption={tournament}
-          setChosenOption={setTournament}
-          options={tournaments}
-        />
         </div>
 
         

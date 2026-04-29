@@ -1,5 +1,6 @@
 import { SERVER } from '../constants';
 import { RegisterFormData } from '../interfaces/interfaces';
+import { getErrorMessageFromData } from './errorMessage';
 
 export async function registerRequest(formData: RegisterFormData): Promise<{ success: boolean; error?: string }> {
   try {
@@ -10,7 +11,7 @@ export async function registerRequest(formData: RegisterFormData): Promise<{ suc
     });
     const data = await response.json();
     if (!response.ok) {
-      return { success: false, error: data.message || data || 'Ошибка регистрации' };
+      return { success: false, error: getErrorMessageFromData(data, 'Ошибка регистрации') };
     }
     return { success: true };
   } catch (e: unknown) {

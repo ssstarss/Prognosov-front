@@ -17,21 +17,17 @@ a {
   align-items: center;
   justify-content: center;
 }
-.bottomBar {
-  height: 40%;
-  width: 100%;
-  background-color: $dark-blue;
-}
+
 .navigationMenu {
   display: flex;
   flex-direction: row;
   align-content: center;
   width: 100%;
-  gap: 1rem;
+  gap: 2rem;
   margin-left: 5%;
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
 }
 .headerLink {
@@ -52,12 +48,41 @@ a {
 }
 
 .bottomBar {
+  height: 40%;
+  width: 100%;
+  background-color: $dark-blue;
   display: flex;
-  justify-content: center;
+
+  gap: 100px;
   align-items: center;
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
   font-size: 2rem;
   text-transform: uppercase;
   color: white;
+  padding: 0 50px;
+}
+
+.bottomBarTitle {
+  white-space: nowrap;
+}
+
+.bottomBarControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bottomBarLabel {
+  font-size: 1.2rem;
+  color: #d6e6ff;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.bottomBarControls .selectItem {
+  margin-left: 0;
+  min-width: 180px;
+  max-width: 260px;
+  height: 34px;
 }

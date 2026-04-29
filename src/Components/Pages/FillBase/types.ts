@@ -41,6 +41,17 @@ interface User {
   active: boolean;
 }
 
+interface UserProfile {
+  id: number;
+  name: string;
+  email: string;
+  cellphone: string;
+  avatar?: Uint8Array | string | null;
+  role?: string;
+  city?: string;
+  country?: string;
+}
+
 interface UserOnTournament {
   result: number;
   resultCup: number;
@@ -48,6 +59,6 @@ interface UserOnTournament {
   userID: number;
   tournamentID: number;
   user: User;
-  tournament: Tournament;
+  tournament?: Tournament;
 }
-export { User, Tournament, Competition, Team, UserOnTournament };
+export { User, UserProfile, Tournament, Competition, Team, UserOnTournament };

@@ -1,6 +1,6 @@
 import fetchData from '../../functions/fetchData';
 import { Team } from '../../interfaces/interfaces';
-import { Competition, User, Tournament, UserOnTournament } from '../Pages/FillBase/types';
+import { Competition, User, UserProfile, Tournament, UserOnTournament } from '../Pages/FillBase/types';
 import './confirmPopUp.css';
 
 export default function ConfirmPopUp(props: {
@@ -9,6 +9,7 @@ export default function ConfirmPopUp(props: {
     | Team
     | Competition
     | User
+    | UserProfile
     | Tournament
     | UserOnTournament
     | { userID: number; tournamentID: number };
@@ -16,6 +17,7 @@ export default function ConfirmPopUp(props: {
   host: string;
   setData: Function;
   setShowModal: Function;
+  skipFetchAfterAction?: boolean;
 }) {
   return (
     <div className="confirmPopUpWrapper" onClick={(e) => e.stopPropagation()}>
@@ -40,9 +42,13 @@ export default function ConfirmPopUp(props: {
     await props.action(props.host, props.data).then(async (result: any) => {
       console.log('result in confirmPopup', result);
       if (result === 200) {
-        const updatedData = await fetchData(props.host);
         if (props.setData) {
-          await props.setData(updatedData as Team[] | Competition[] | User[] | UserOnTournament[]);
+          if (props.skipFetchAfterAction) {
+            await props.setData();
+          } else {
+            const updatedData = await fetchData(props.host);
+            await props.setData(updatedData as Team[] | Competition[] | User[] | UserOnTournament[]);
+          }
         }
       }
       if (result === 206) props.setData();

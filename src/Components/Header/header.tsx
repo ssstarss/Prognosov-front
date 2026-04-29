@@ -1,10 +1,25 @@
 import './header.scss';
 import { NavLink } from 'react-router-dom';
+import ChooseOption from '../chooseOption/chooseOption';
+import { Tournament } from '../Pages/FillBase/types';
+import { useTournamentContext } from '../../context/TournamentContext';
 
 function Header() {
+  const { currentTournament, setCurrentTournament, tournaments } = useTournamentContext();
+
   return (
     <div className="headerWrapper">
-      <div className="bottomBar">PROGNOSOV.NET</div>
+      <div className="bottomBar">
+        <span className="bottomBarTitle">PROGNOSOV.NET</span>
+        <div className="bottomBarControls">
+          <span className="bottomBarLabel">Турнир:</span>
+          <ChooseOption<Tournament>
+            currentOption={currentTournament}
+            setChosenOption={setCurrentTournament}
+            options={tournaments}
+          />
+        </div>
+      </div>
       <header className="header" id="header">
         <nav className="navigationMenu">
           <NavLink to="/userprofile" className={'headerLink'}>
@@ -25,7 +40,7 @@ function Header() {
           <NavLink to="/usersOnTournament" className={'headerLink adminHeaderLink'}>
             Users On Tournament
           </NavLink>
-          <NavLink to="/tournaments" className={'headerLink'}>
+          <NavLink to="/tournaments" className={'headerLink adminHeaderLink'}>
             Tournaments
           </NavLink>
           <NavLink to="/fillbase" className={'headerLink adminHeaderLink'}>
@@ -39,6 +54,9 @@ function Header() {
           </NavLink>
           <NavLink to="/prognoses" className={'headerLink'}>
             Prognoses{' '}
+          </NavLink>
+          <NavLink to="/rules" className={'headerLink'}>
+            Rules{' '}
           </NavLink>
         </nav>
       </header>

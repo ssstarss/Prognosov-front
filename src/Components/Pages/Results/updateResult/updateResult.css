@@ -1,3 +1,16 @@
+.updateResult__cupRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.updateResult__cupLabel {
+  cursor: pointer;
+  user-select: none;
+}
 
 .updateResultWrapper {
   position: absolute;

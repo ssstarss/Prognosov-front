@@ -1,5 +1,9 @@
 @use '../../../variables.scss' as *;
 
+.userFormRoot {
+  width: 100%;
+}
+
 .closeCrossWrapper {
   width: 100%;
   display: flex;

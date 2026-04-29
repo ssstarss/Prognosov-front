@@ -1,9 +1,10 @@
-import './updatePrognose.css';
+import './updatePrognose.scss';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Prognose } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 
 import updatePrognoseHandle from './updatePrognoseHandle';
+import AvatarCircle from '../../../common/AvatarCircle';
 
 const UpdatePrognose = (props: {
   prognose: Prognose;
@@ -31,25 +32,41 @@ const UpdatePrognose = (props: {
 
   return (
     <div
-      className="updatePrognoseWrapper"
+      className="formWrapper updatePrognoseWrapper"
       onClick={(e) => e.stopPropagation()}
       onKeyDown={(e) => {
         if (e.key === 'Enter') handleSubmitButton();
       }}
     >
-      <h2 className="updatePrognoseHeader">Enter your prognose</h2>
-      <div className="prognoseWrapper">
-        <div className="prognoseTeamWrapper">
-          <h4 className="prognoseTeamName">{props.prognose.game.team1?.name}</h4>
-          <input
-            type="number"
-            className="prognoseResultInput"
-            value={currentScore.team1}
-            pattern="^(\d+$)"
-            onChange={(e) => onResultChange(e, 1)}
-          ></input>
-        </div>
-        <div className="prognoseTeamWrapper">
+      <div className="formHeaderWrapper">
+        <h2 className="formHeader">Enter your prognose</h2>
+      </div>
+      <div className="prognoses__prognose_wrapper">
+        <div className="prognoses__match-wrapper">
+          <div className="prognoses__team-wrapper prognoses__team-wrapper--left">
+            <div className="prognoses__team-name">{props.prognose.game.team1?.name}</div>
+            <div className="prognoses__team-logo">
+              <AvatarCircle
+                avatar={props.prognose.game.team1?.avatar}
+                alt={
+                  props.prognose.game.team1?.name
+                    ? `${props.prognose.game.team1.name} logo`
+                    : 'Team logo'
+                }
+                className="prognoses__team-logo-circle"
+              />
+            </div>
+          </div>
+          <div className="prognoses__score-block">
+            <input
+              type="number"
+              className="prognoseResultInput"
+              value={currentScore.team1}
+              pattern="^(\d+$)"
+              onChange={(e) => onResultChange(e, 1)}
+            ></input>
+          </div>
+          <span className="prognoses__separator">:</span>
           <input
             type="number"
             className="prognoseResultInput"
@@ -57,10 +74,25 @@ const UpdatePrognose = (props: {
             pattern="^(\d+$)"
             onChange={(e) => onResultChange(e, 2)}
           ></input>
-          <h5 className="prognoseTeamName">{props.prognose.game.team2?.name}</h5>
+
+          <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
+            <div className="prognoses__team-logo">
+              <AvatarCircle
+                avatar={props.prognose.game.team2?.avatar}
+                alt={
+                  props.prognose.game.team2?.name
+                    ? `${props.prognose.game.team2.name} logo`
+                    : 'Team logo'
+                }
+                className="prognoses__team-logo-circle"
+              />
+            </div>
+            <div className="prognoses__team-name">{props.prognose.game.team2?.name}</div>
+          </div>
         </div>
       </div>
-      <button className="submitFormButton" onClick={() => handleSubmitButton()}>
+
+      <button className="submitFormButton shortButton" onClick={() => handleSubmitButton()}>
         Submit
       </button>
     </div>
@@ -88,7 +120,14 @@ const UpdatePrognose = (props: {
 
     if (props.prognose.id != null) newPrognose.id = props.prognose.id;
 
-    const saved = await updatePrognoseHandle(newPrognose);
+    let saved: unknown;
+    try {
+      saved = await updatePrognoseHandle(newPrognose);
+    } catch {
+      // Ошибка уже показана через notifyError внутри updatePrognoseHandle.
+      // Не пробрасываем дальше, чтобы не ловить "красный" оверлей React (Unhandled promise rejection).
+      return;
+    }
     const merged: Prognose = {
       ...newPrognose,
       game: newPrognose.game,

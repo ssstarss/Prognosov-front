@@ -15,7 +15,7 @@
   background: white;
   border-radius: 20px;
   padding: 24px;
-  width: 400px;
+  width: 50%;
   border: solid 1px black;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .codeInputField {
-  width: 100%;
+  width: 40%;
   padding: 12px;
   font-size: 24px;
   letter-spacing: 8px;
@@ -46,6 +46,7 @@
   border: 2px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
+  align-self: center;
   margin-bottom: 8px;
 }
 

@@ -1,4 +1,4 @@
-import { User } from '../FillBase/types';
+import { UserProfile } from '../FillBase/types';
 import { updateData } from '../../../functions/updateData';
 
 export interface UpdateUserFormData {
@@ -10,36 +10,44 @@ export interface UpdateUserFormData {
   avatar?: string | null;
 }
 
-export interface UpdateUserCallbacks {
-  setUser: (user: User) => void;
-  onSuccess: () => void;
-}
-
 /**
  * Собирает данные формы в объект пользователя, отправляет на сервер,
  * при успехе обновляет состояние и вызывает onSuccess, при ошибке показывает alert.
  */
 export async function updateUser(
-  user: User,
+  user: UserProfile,
   formData: UpdateUserFormData,
-  callbacks: UpdateUserCallbacks
+  callbacks: {
+    setUser: (user: UserProfile) => void;
+    onSuccess: () => void;
+  }
 ): Promise<void> {
-  const updatedUser: User = {
+  const updatedUser: UserProfile = {
     ...user,
     name: formData.name,
     email: formData.email,
     cellphone: formData.cellphone,
     city: formData.city ?? user.city,
-    country: formData.country ?? user.country ,
+    country: formData.country ?? user.country,
     avatar: formData.avatar ?? user.avatar,
   };
-  const requestData: Partial<User> = { ...updatedUser };
+  const requestData: UpdateUserFormData = {
+    name: updatedUser.name,
+    email: updatedUser.email,
+    cellphone: updatedUser.cellphone,
+    city: updatedUser.city,
+    country: updatedUser.country,
+    avatar:
+      typeof updatedUser.avatar === 'string' || updatedUser.avatar === null
+        ? updatedUser.avatar
+        : undefined,
+  };
   if (formData.avatar === undefined) {
     delete requestData.avatar;
   }
 
   try {
-    const result = await updateData(`/users/${user.id}`, requestData as User);
+    const result = await updateData(`/users/${user.id}`, requestData);
     if (result === 200) {
       callbacks.setUser(updatedUser);
       callbacks.onSuccess();

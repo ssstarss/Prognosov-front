@@ -100,7 +100,6 @@ export default function ForgotPasswordFlowModal({
               autoFocus
             />
             {emailError && <span className="errorMessage">{emailError}</span>}
-            {forgotError && <span className="errorMessage">{forgotError}</span>}
             <div className="submitFormButtonsWrapper">
               <button
                 className="submitFormButton"

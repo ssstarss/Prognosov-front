@@ -1,5 +1,7 @@
 import { appState } from '../constants';
 import { SERVER } from '../constants';
+import { notifyError } from '../Components/common/notifications/notificationBus';
+import { readErrorMessage } from './errorMessage';
 
 const fetchData = async (host: string, setFunc?: Function) => {
   const myHeaders = {
@@ -15,14 +17,17 @@ const fetchData = async (host: string, setFunc?: Function) => {
 
   try {
     const response = await fetch(URL, request);
-    if (response.status === 401)
-      throw Error(`Error reading ${host} ${response.status} ${response.statusText} `);
+    if (!response.ok) {
+      const message = await readErrorMessage(response, `Ошибка загрузки данных: ${host}`);
+      throw Error(message);
+    }
 
     const res = await response.json();
 
     if (setFunc) {console.log('res in fetchData', setFunc.name, res); setFunc(res);}
     return res;
   } catch (e: any) {
+    notifyError(e?.message || `Ошибка загрузки данных: ${host}`);
     console.log(e.message);
   }
 };

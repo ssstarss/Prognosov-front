@@ -42,6 +42,7 @@ type Game = {
   team2?: Team;
   team1_result?: number;
   team2_result?: number;
+  cup?: boolean;
   prognoses?: Prognose[];
 };
 

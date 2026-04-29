@@ -1,46 +1,42 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import './addUser.scss';
 import { createData } from '../FillBase/fetchData';
-import { User } from '../FillBase/types';
+import { UserProfile } from '../FillBase/types';
 import fetchData from '../../../functions/fetchData';
+import UserForm from '../UserProfile/UserForm';
+import { RegisterFormData } from '../../../interfaces/interfaces';
 
 export default function AddUser(props: {
   onClose: () => void;
-  setUsers: Dispatch<SetStateAction<User[]>>;
+  setUsers: Dispatch<SetStateAction<UserProfile[]>>;
 }) {
+  const [submitError, setSubmitError] = useState('');
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [cellphone, setCellphone] = useState('');
-  const [city, setCity] = useState('');
-  const [country, setCountry] = useState('');
-  
+  const handleSubmit = async (formData: RegisterFormData) => {
+    setSubmitError('');
+    try {
+      const data = { ...formData, active: true };
+      await createData(`/users`, data);
+      await fetchData(`/users`, props.setUsers);
+      props.onClose();
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : 'Не удалось добавить пользователя';
+      setSubmitError(message);
+    }
+  };
+
   return (
-    <div className="addUserPageWrapper">
     <div className="addUserForm" onClick={(e) => e.stopPropagation()}>
-      <h2>Add User</h2>
-      <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}  />
-      <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}  />
-      <input type="text" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}  />
-      <input type="text" placeholder="Cellphone" value={cellphone} onChange={(e) => setCellphone(e.target.value)}  />
-      <input type="text" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)}  />
-      <input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)}  />
-      <button
-        type="button"
-        onClick={async () => {
-          props.onClose();
-          const data = { name, email, password, cellphone, city, country, active: true };
-          await createData(`/users`, {...data});
-          await fetchData(`/users`, props.setUsers);
-        }}
-      >
-        Add User
-      </button>
-      <button type="button" onClick={() => props.onClose()}>
-        Cancel
-      </button>   
-    </div>
+      <UserForm
+        mode="register"
+        initialData={{}}
+        onSubmit={handleSubmit}
+        submitButtonText="Add User"
+        title="Add User"
+        onClose={props.onClose}
+        useFormWrapper={false}
+      />
+      {submitError && <p className="addUserError">{submitError}</p>}
     </div>
   );
 }

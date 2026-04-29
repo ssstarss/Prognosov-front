@@ -1,5 +1,6 @@
 import { SERVER } from '../constants';
 import { RegisterFormData } from '../interfaces/interfaces';
+import { getErrorMessageFromData } from './errorMessage';
 
 export interface RegisterConfirmResult {
   success: boolean;
@@ -30,7 +31,7 @@ export async function registerConfirm(
       success: false,
       codeValid: data.codeValid === false ? false : undefined,
       attemptsLeft: data.attemptsLeft,
-      error: data.message || data.error,
+      error: getErrorMessageFromData(data, 'Ошибка подтверждения регистрации'),
     };
   } catch (e: unknown) {
     const msg = e instanceof Error ? e.message : 'Ошибка сети';

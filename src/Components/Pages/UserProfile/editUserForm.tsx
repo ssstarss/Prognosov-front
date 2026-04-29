@@ -1,11 +1,11 @@
 import './editUserForm.css';
-import { User } from '../FillBase/types';
+import { UserProfile } from '../FillBase/types';
 import { updateUser } from './updateUser';
 import UserForm, { UserFormData } from './UserForm';
 
 interface EditUserFormProps {
-  user: User;
-  setUser: (user: User) => void;
+  user: UserProfile;
+  setUser: (user: UserProfile) => void;
   onClose: () => void;
 }
 

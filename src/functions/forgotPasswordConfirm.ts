@@ -1,4 +1,5 @@
 import { SERVER } from '../constants';
+import { getErrorMessageFromData } from './errorMessage';
 
 export interface ForgotPasswordConfirmResult {
   success: boolean;
@@ -23,7 +24,7 @@ export async function forgotPasswordConfirm(
       return {
         success: false,
         attemptsLeft: data.attemptsLeft,
-        error: data.message || data.error || 'Ошибка подтверждения',
+        error: getErrorMessageFromData(data, 'Ошибка подтверждения'),
       };
     }
 

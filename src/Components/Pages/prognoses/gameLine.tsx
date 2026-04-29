@@ -16,13 +16,6 @@ export default function PrognoseLine(props: MyProps) {
   const [prognose, setPrognose] = useState<Prognose>(props.prognose);
   const [showModal, setShowModal] = useState(false);
 
-  const score = (
-    <div className="prognoses__score_wrapper">
-      <p className="prognoses__score">{prognose.team1_result}</p>
-      <p className="prognoses__score">{prognose.team2_result}</p>
-    </div>
-  );
-
   const nowMs = Date.now();
   const deadlineMs = nowMs + appState.deadlineMinutes * 60 * 1000; // сейчас + 15 минут (в UTC)
   const gameStartMs = new Date(props.prognose.game.starts_at).getTime();
@@ -32,13 +25,17 @@ export default function PrognoseLine(props: MyProps) {
     <li
       key={props.prognose.id}
       className="prognoses__prognose_wrapper"
+      /* временно не проверяем можно ли редактировать
       onClick={
         editable
           ? () => {
               setShowModal(true);
             }
           : undefined
-      }
+      }*/
+      onClick={() => {
+        setShowModal(true);
+      }}
     >
       {showModal &&
         createPortal(

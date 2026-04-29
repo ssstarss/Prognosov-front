@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactElement } from 'react';
 import './userProfile.scss';
 import fetchData from '../../../functions/fetchData';
-import { User } from '../FillBase/types';
+import { UserProfile } from '../FillBase/types';
 import { appState } from '../../../constants';
 import loginRefresh from '../../../functions/loginRefresh';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
@@ -9,7 +9,7 @@ import EditUserForm from './editUserForm';
 import AvatarCircle from '../../common/AvatarCircle';
 
 export default function UserProfile() {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<UserProfile>();
   const [popUp, setPopUp] = useState<ReactElement | null>(null);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ export default function UserProfile() {
 
       // Проверяем userID после refresh
       if (appState.userID) {
-        fetchData(`/users/${appState.userID}`, setUser);
+        fetchData(`/users/${appState.userID}/profile`, setUser);
       }
     };
 

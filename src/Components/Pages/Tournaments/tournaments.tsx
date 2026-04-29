@@ -28,7 +28,10 @@ function TournamentsPage() {
 
   const listTournaments = tournaments?.map((tournament) => {
     return (
-      <li className={`tournamentLine ${currentTournament.id === tournament.id ? 'currentTournament' : ''}`} key={tournament.id}>
+      <li
+        className={`tournamentLine ${currentTournament.id === tournament.id ? 'currentTournament' : ''}`}
+        key={tournament.id}
+      >
         <div className="iconsBlock">
           <button
             className="editIcon"
@@ -89,7 +92,7 @@ function TournamentsPage() {
         <h3 className="currentTournamentHeader">ROOMS:</h3>
         <ul className="tournamentList">{listTournaments}</ul>
         <button
-          className="addButton"
+          className="submitFormButton shortButton"
           onClick={() => {
             setCurrentTournament({} as Tournament);
             setAddNewTournament(true);
