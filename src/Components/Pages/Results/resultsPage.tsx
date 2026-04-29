@@ -53,6 +53,7 @@ export default function GamesPage() {
           </ModalWrapper>,
           document.body
         )}
+
       <div className="prognosesForm">
         <div className="formHeaderWrapper">
           <h2 className="formHeader">GAMES:</h2>
