@@ -10,9 +10,10 @@ import ModalWrapper from '../../ModalPortal/modalWrapper';
 interface MyProps {
   prognose: Prognose;
   onPrognoseSaved?: (p: Prognose) => void;
+  columnClassName?: string;
 }
 function GameCell(props: MyProps) {
-  const { prognose, onPrognoseSaved } = props;
+  const { prognose, onPrognoseSaved, columnClassName = '' } = props;
   const [showModal, setShowModal] = useState(false);
   const [chosenPrognose, setChosenPrognose] = useState<Prognose>(prognose);
 
@@ -36,7 +37,7 @@ function GameCell(props: MyProps) {
     isPrognoseDeadlineBypassRole() || (beforeDeadline && isOwn);
   return (
     <td
-      className="playerResultCell"
+      className={`playerResultCell ${columnClassName}`.trim()}
       key={shownPrognose.id}
       onClick={
         editable

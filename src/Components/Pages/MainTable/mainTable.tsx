@@ -57,6 +57,41 @@ export default function MainTable() {
     return Number.isNaN(d.getTime()) ? null : d;
   };
 
+  const localDateKey = (date: Date | null, fallback: string) => {
+    if (!date) return fallback;
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const gameColumnGroups = useMemo(() => {
+    let groupIndex = -1;
+    return games.map((game, index) => {
+      const start = gameStartsAt(game.starts_at);
+      const dateKey = localDateKey(start, `unknown-${index}`);
+      const prevStart = index > 0 ? gameStartsAt(games[index - 1].starts_at) : null;
+      const nextStart = index < games.length - 1 ? gameStartsAt(games[index + 1].starts_at) : null;
+      const prevDateKey = localDateKey(prevStart, `unknown-${index - 1}`);
+      const nextDateKey = localDateKey(nextStart, `unknown-${index + 1}`);
+      const isDateStart = index === 0 || prevDateKey !== dateKey;
+      const isDateEnd = index === games.length - 1 || nextDateKey !== dateKey;
+      if (isDateStart) groupIndex += 1;
+      const isOddGroup = groupIndex % 2 === 1;
+
+      const columnClassName = [
+        'dateGroupColumn',
+        isDateStart ? 'dateGroupStart' : '',
+        isDateEnd ? 'dateGroupEnd' : '',
+        isOddGroup ? 'dateGroupOdd' : 'dateGroupEven',
+      ]
+        .filter(Boolean)
+        .join(' ');
+
+      return { columnClassName };
+    });
+  }, [games]);
+
   const tableHeader = (
     <tr className="mainTableHeader">
       <th className="mainTableHeaderCell" key={0}>
@@ -64,8 +99,9 @@ export default function MainTable() {
       </th>
       {games.map((game, index) => {
         const start = gameStartsAt(game.starts_at);
+        const columnClassName = gameColumnGroups[index]?.columnClassName || '';
         return (
-          <th className="mainTableHeaderCell" key={game.id ?? index}>
+          <th className={`mainTableHeaderCell ${columnClassName}`.trim()} key={game.id ?? index}>
             <div className="gameCell">
               <div className="gameCellDateWrapper">
                 <a className="gameCellDate">
@@ -128,7 +164,7 @@ export default function MainTable() {
     return rows.map((user) => {
       const raw: ReactElement[] = [];
 
-      games.forEach((game) => {
+      games.forEach((game, gameIndex) => {
         const emtyPrognose: Prognose = {
           id: undefined,
           gameID: game.id,
@@ -152,6 +188,7 @@ export default function MainTable() {
           <GameCell
             prognose={prognose}
             onPrognoseSaved={updatePrognoseInUsers}
+            columnClassName={gameColumnGroups[gameIndex]?.columnClassName}
             key={`${user.userID}-${game.id}`}
           ></GameCell>
         );

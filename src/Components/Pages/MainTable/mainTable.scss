@@ -100,6 +100,22 @@
   color: $dark-blue;
 }
 
+.mainTableHeaderCell.dateGroupOdd {
+  background-color: $bg-color-odd;
+}
+
+.mainTableHeaderCell.dateGroupEven {
+  background-color: $bg-color-even;
+}
+
+.mainTableHeaderCell.dateGroupStart {
+  border-left: 1px solid $dark-blue;
+}
+
+.mainTableHeaderCell.dateGroupEnd {
+  border-right: 1px solid $dark-blue;
+}
+
 .gameCellDateWrapper {
   display: flex;
   flex-direction: column;
@@ -257,6 +273,21 @@
   border: $dark-blue solid;
   border-width: 0px 1px 2px 0px;
   border-right: 1px dotted;
+}
+
+.playerResultCell.dateGroupOdd {
+  background-color: $bg-color-odd;
+}
+.playerResultCell.dateGroupEven {
+  background-color: $bg-color-even;
+}
+
+.playerResultCell.dateGroupStart {
+  border-left: 1px solid $dark-blue;
+}
+
+.playerResultCell.dateGroupEnd {
+  border-right: 1px dotted $dark-blue;
 }
 
 .playerResultWrapper {
