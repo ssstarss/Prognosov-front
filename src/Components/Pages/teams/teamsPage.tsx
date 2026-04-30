@@ -1,4 +1,5 @@
 import './teams.css';
+import '../../common/ListRow.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { Team } from '../../../interfaces/interfaces';
@@ -10,6 +11,7 @@ import { appState } from '../../../constants';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import AvatarCircle from '../../common/AvatarCircle';
+import EntityPageLayout from '../../common/EntityPageLayout';
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
@@ -28,18 +30,22 @@ export default function TeamsPage() {
   }, []);
 
   const listTeams = teams?.map((team) => (
-    <div className="teamRaw" key={team.id}>
+    <li className="teamRaw listRow" key={team.id}>
       <div className="teamIdentity">
-        <AvatarCircle
-          avatar={team.avatar}
-          className="teamAvatar"
-          placeholderClassName="teamAvatarPlaceholder"
-          placeholderText=""
-        />
-        {team.name}
+        <div className="teamAvatarWrapper">
+          <AvatarCircle
+            avatar={team.avatar}
+            alt={team.name ? `${team.name} logo` : 'Team logo'}
+            className="teamAvatar"
+            placeholderClassName="teamAvatarPlaceholder"
+            placeholderText={team.name?.charAt(0).toUpperCase() || '?'}
+          />
+        </div>
+        <div className="teamName">{team.name}</div>
       </div>
-      <div className="teamButtonsWrapper">
+      <div className="teamButtonsWrapper listActions">
         <button
+          className="editIcon listIconButton"
           onClick={() => {
             setTeam(team);
             setShowModalEdit(true);
@@ -48,6 +54,7 @@ export default function TeamsPage() {
           E
         </button>
         <button
+          className="deleteIcon listIconButton"
           onClick={() => {
             setTeam(team);
             setShowModalDelete(true);
@@ -56,21 +63,19 @@ export default function TeamsPage() {
           D
         </button>
       </div>
-    </div>
+    </li>
   ));
   return (
-    <div className="pageWrapper" onClick={() => {
-     
-    }}>
-     {showModalEdit &&
+    <div className="pageWrapper" onClick={() => {}}>
+      {showModalEdit &&
         createPortal(
           <ModalWrapper showModal={showModalEdit} setShowModal={setShowModalEdit}>
-           <EditTeamPage
-            team={team}
-            setTeams={setTeams}
-            setShowModal={setShowModalEdit}
-            key={team.id}
-           />
+            <EditTeamPage
+              team={team}
+              setTeams={setTeams}
+              setShowModal={setShowModalEdit}
+              key={team.id}
+            />
           </ModalWrapper>,
           document.body
         )}
@@ -88,49 +93,55 @@ export default function TeamsPage() {
           </ModalWrapper>,
           document.body
         )}
-      <div className="teamsListWrapper">
-        <div className="selectTeamTypeWrapper">
-          <select
-            className="selectTeamType"
-            onChange={async (event) => {
-              let url = new URL(`${SERVER}/teams`);
-              url.searchParams.append('type', event.target.value);
 
-              const result = await fetchDataTeam(url.href);
+      <EntityPageLayout
+        title="Teams"
+        className="teamsForm"
+        controls={
+          <div className="selectTeamTypeWrapper">
+            <select
+              className="selectTeamType"
+              onChange={async (event) => {
+                let url = new URL(`${SERVER}/teams`);
+                url.searchParams.append('type', event.target.value);
 
-              setTeams(result);
+                const result = await fetchDataTeam(url.href);
+
+                setTeams(result);
+              }}
+            >
+              <option value="*">ALL</option>
+              <option value="Club">Club</option>
+              <option value="National">National</option>
+            </select>
+          </div>
+        }
+        action={
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              const emptyTeam = {
+                id: 0,
+                name: '',
+                country: '',
+                type: '',
+                avatar: null,
+              };
+              setTeam(emptyTeam);
+              setShowModalEdit(true);
+              setAddNewTeam(true);
             }}
           >
-            <option value="*">ALL</option>
-            <option value="Club">Club</option>
-            <option value="National">National</option>
-          </select>
-        </div>
-        <h2 className="teamsListHeader">Teams registered on Server:</h2>
+            ADD
+          </button>
+        }
+      >
         <div className="teamList">
-          <div> {listTeams}</div>
+          <ul className="teamListItems listScrollable">{listTeams}</ul>
         </div>
-        <button
-          className="submitFormButton"
-          onClick={() => {
-            const emptyTeam = {
-              id: 0,
-              name: '',
-              country: '',
-              type: '',
-              avatar: null,
-            };
-            setTeam(emptyTeam);
-            setShowModalEdit(true);
-            setAddNewTeam(true);
-          }}
-        >   
-          ADD
-        </button>
-      </div>
+      </EntityPageLayout>
     </div>
   );
-
 
   async function fetchDataTeam(host: string, setFunc?: Function) {
     const myHeaders = {

@@ -1,74 +1,62 @@
 import './editTeam.css';
-
+import '../../common/ModalEntityForm.scss';
 import { Team } from '../../../interfaces/interfaces';
 import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';
 import { useState } from 'react';
 import avatarToDataUrl from '../../../functions/avatarToDataUrl';
 
-export default function EditTeamPage(props: { team: Team, setTeams: Function, setShowModal: Function }) {
+export default function EditTeamPage(props: { team: Team; setTeams: Function; setShowModal: Function }) {
   const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(
     avatarToDataUrl(props.team.avatar) || null
   );
   const [avatarTouched, setAvatarTouched] = useState(false);
 
   return (
-    <div
-      className="editTeamPageWrapper"
-      id="editTeamPageWrapper"
-      onClick={(e) => e.stopPropagation()}
-    >
-      
-        <div className="closeCrossWrapper">
-          <div className="closeCross" onClick={() => props.setShowModal(false)}>
-            X
-          </div>
+    <div className="editTeamPageWrapper modalEntityForm" id="editTeamPageWrapper" onClick={(e) => e.stopPropagation()}>
+      <div className="closeCrossWrapper">
+        <div className="closeCross" onClick={() => props.setShowModal(false)}>
+          X
         </div>
-        <h3 className="popUpHeader">Введите данные команды</h3>
-        <div className="teamNameInputWrapper">
-          <h4>Название</h4>
-          <input
-            className="teamNameInput inputField"
-            id="teamNameInput"
-            type="text"
-            defaultValue={props.team.name}
-          ></input>
+      </div>
+      <div className="formHeaderWrapper">
+        <h2 className="formHeader">{props.team.id === 0 ? 'Add Team' : 'Edit Team'}</h2>
+      </div>
+      <div className="modalEntityFormBody">
+        <div className="modalEntityField">
+          <h4 className="modalEntityFieldLabel">Name</h4>
+          <input className="teamNameInput inputField" id="teamNameInput" type="text" defaultValue={props.team.name}></input>
         </div>
-        <div className="teamCountryInputWrapper">
-          <h4>Страна</h4>
-          <input
-            className="teamCountryInput inputField"
-            id="teamCountryInput"
-            type="text"
-            defaultValue={props.team.country}
-          ></input>
+        <div className="modalEntityField">
+          <h4 className="modalEntityFieldLabel">Country</h4>
+          <input className="teamCountryInput inputField" id="teamCountryInput" type="text" defaultValue={props.team.country}></input>
         </div>
-        <div className="typeTeamInputWrapper">
-          <h4>Тип</h4>
+        <div className="modalEntityField">
+          <h4 className="modalEntityFieldLabel">Type</h4>
           <select className="typeTeamInput inputField" id="typeTeamInput" defaultValue={props.team.type}>
             <option value="Club">Club</option>
             <option value="National">National</option>
           </select>
         </div>
-        <div className="teamAvatarInputWrapper">
-          <h4>Аватар</h4>
-          <input
-            className="inputField"
-            id="teamAvatarInput"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-          />
+        <div className="modalEntityFieldBlock">
+          <h4 className="modalEntityFieldLabel">Avatar</h4>
+          <input className="inputField" id="teamAvatarInput" type="file" accept="image/*" onChange={handleAvatarChange} />
           {avatarDataUrl && <img src={avatarDataUrl} className="teamAvatarPreview" alt="Team avatar preview" />}
         </div>
-        <button className="submitFormButton" onClick={submit}>
-          SUBMIT
-        </button>
+        <div className="submitFormButtonWrapper">
+          <button className="submitFormButton shortButton" onClick={submit}>
+            {props.team.id === 0 ? 'Add' : 'Save'}
+          </button>
+          <button className="submitFormButton shortButton" onClick={() => props.setShowModal(false)}>
+            Cancel
+          </button>
+        </div>
       </div>
-    
+    </div>
   );
 
   async function submit() {
+    const avatarBase64 = toBase64Payload(avatarDataUrl);
     const nameElement = document.getElementById('teamNameInput');
     const name = (nameElement as HTMLInputElement).value;
     const countryElement = document.getElementById('teamCountryInput');
@@ -80,7 +68,7 @@ export default function EditTeamPage(props: { team: Team, setTeams: Function, se
       name: name,
       country: country,
       type: type,
-      avatar: avatarDataUrl,
+      avatar: avatarBase64,
     };
     const requestTeam = avatarTouched
       ? newTeam
@@ -160,5 +148,13 @@ export default function EditTeamPage(props: { team: Team, setTeams: Function, se
     const dataUrl = await fileToDataUrl(file);
     const resizedDataUrl = await resizeAvatar(dataUrl);
     setAvatarDataUrl(resizedDataUrl);
+  }
+
+  function toBase64Payload(dataUrl: string | null): string | null {
+    if (!dataUrl) return null;
+    const marker = ';base64,';
+    const markerIndex = dataUrl.indexOf(marker);
+    if (markerIndex === -1) return dataUrl;
+    return dataUrl.slice(markerIndex + marker.length);
   }
 }

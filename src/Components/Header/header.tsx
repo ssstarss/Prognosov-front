@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import ChooseOption from '../chooseOption/chooseOption';
 import { Tournament } from '../Pages/FillBase/types';
 import { useTournamentContext } from '../../context/TournamentContext';
+import AvatarCircle from '../common/AvatarCircle';
 
 function Header() {
   const { currentTournament, setCurrentTournament, tournaments } = useTournamentContext();
@@ -22,12 +23,29 @@ function Header() {
       </div>
       <header className="header" id="header">
         <nav className="navigationMenu">
+          <button className="submitFormButton shortButton loginHeaderButton">
+            <NavLink to="/login" className={'headerLink'}>
+              Login
+            </NavLink>
+          </button>
           <NavLink to="/userprofile" className={'headerLink'}>
             Profile
           </NavLink>
-          <NavLink to="/login" className={'headerLink'}>
-            Login
-          </NavLink>
+
+          <div
+            className="headerCompetitionAvatar"
+            title={currentTournament?.competition?.name || 'Competition'}
+          >
+            <AvatarCircle
+              avatar={currentTournament?.competition?.avatar}
+              alt={currentTournament?.competition?.name || 'Competition avatar'}
+              className="headerCompetitionAvatarImage"
+              placeholderClassName="headerCompetitionAvatarPlaceholder"
+              placeholderText={(currentTournament?.competition?.name || 'C')
+                .charAt(0)
+                .toUpperCase()}
+            />
+          </div>
           <NavLink to="/users" className={'headerLink adminHeaderLink'}>
             Users
           </NavLink>
@@ -43,9 +61,7 @@ function Header() {
           <NavLink to="/tournaments" className={'headerLink adminHeaderLink'}>
             Tournaments
           </NavLink>
-          <NavLink to="/fillbase" className={'headerLink adminHeaderLink'}>
-            FillData
-          </NavLink>
+
           <NavLink to="/mainTable" className={'headerLink'}>
             Main Table
           </NavLink>

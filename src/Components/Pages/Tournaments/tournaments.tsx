@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './tournaments.css';
+import '../../common/ListRow.css';
 
 import { appState } from '../../../constants';
 import { Competition, Tournament, User } from '../FillBase/types';
@@ -9,6 +10,7 @@ import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';
 import EditTournamentForm from './editTournament';
 import fetchData from '../../../functions/fetchData';
+import EntityPageLayout from '../../common/EntityPageLayout';
 
 function TournamentsPage() {
   const [tournaments, setTournaments] = useState<Tournament[]>([] as Tournament[]);
@@ -29,12 +31,12 @@ function TournamentsPage() {
   const listTournaments = tournaments?.map((tournament) => {
     return (
       <li
-        className={`tournamentLine ${currentTournament.id === tournament.id ? 'currentTournament' : ''}`}
+        className={`tournamentLine listRow ${currentTournament.id === tournament.id ? 'currentTournament' : ''}`}
         key={tournament.id}
       >
-        <div className="iconsBlock">
+        <div className="iconsBlock listActions">
           <button
-            className="editIcon"
+            className="editIcon listIconButton"
             onClick={() => {
               setCurrentTournament(tournament);
               setShowModalEdit(true);
@@ -44,7 +46,7 @@ function TournamentsPage() {
             E
           </button>
           <button
-            className="deleteIcon"
+            className="deleteIcon listIconButton"
             onClick={() => {
               setCurrentTournament(tournament);
               setShowModalDelete(true);
@@ -54,7 +56,7 @@ function TournamentsPage() {
             D
           </button>
         </div>
-        <h4 className="tournamentName">{tournament.name} </h4>
+        <h4 className="tournamentName listName">{tournament.name} </h4>
       </li>
     );
   });
@@ -88,20 +90,24 @@ function TournamentsPage() {
           </ModalWrapper>,
           document.body
         )}
-      <div className="tournamentsForm">
-        <h3 className="currentTournamentHeader">ROOMS:</h3>
-        <ul className="tournamentList">{listTournaments}</ul>
-        <button
-          className="submitFormButton shortButton"
-          onClick={() => {
-            setCurrentTournament({} as Tournament);
-            setAddNewTournament(true);
-            setShowModalEdit(true);
-          }}
-        >
-          ADD
-        </button>
-      </div>
+      <EntityPageLayout
+        title="ROOMS"
+        className="tournamentsForm"
+        action={
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              setCurrentTournament({} as Tournament);
+              setAddNewTournament(true);
+              setShowModalEdit(true);
+            }}
+          >
+            ADD
+          </button>
+        }
+      >
+        <ul className="tournamentList listScrollable">{listTournaments}</ul>
+      </EntityPageLayout>
     </div>
   );
 }

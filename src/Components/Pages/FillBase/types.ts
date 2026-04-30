@@ -6,6 +6,7 @@ type Competition = {
   comments: string;
   games?: Game[];
   active: boolean;
+  avatar?: Uint8Array | string | null;
 };
 
 type Team = {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './usersOnTornament.scss';
+import '../../common/ListRow.css';
 import fetchData from '../../../functions/fetchData';
 import { Tournament, User, UserOnTournament } from '../FillBase/types';
 import { appState } from '../../../constants';
@@ -8,6 +9,7 @@ import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import AddUserOnTournament from './AddUserOnTournament/addUserOnTournament';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
+import EntityPageLayout from '../../common/EntityPageLayout';
 export default function UsersOnTournament() {
   const [currentTournament, setCurrentTournament] = useState<Tournament>(
     appState.currentTournament
@@ -28,9 +30,9 @@ export default function UsersOnTournament() {
   }, [currentTournament.id]);
   const listUsersOnTournament = usersOnTournament.map((user) => (
     <li key={user.userID}>
-      <div className="userLine">
+      <div className="userLine listRow">
         <button
-          className="deleteIcon"
+          className="deleteIcon listIconButton"
           onClick={() => {
             setUser(user);
             setShowModalDelete(true);
@@ -38,7 +40,7 @@ export default function UsersOnTournament() {
         >
           D
         </button>
-        <div className="userName">{user.user.name}</div>
+        <div className="userName listName">{user.user.name}</div>
       </div>
     </li>
   ));
@@ -46,7 +48,7 @@ export default function UsersOnTournament() {
     fetchData(`/tournaments`, setTournaments);
   }, []);
   return (
-    <div className="usersOnTornamentPageWrapper">
+    <div className="pageWrapper">
       {showModalDelete && (
         <ConfirmPopUp
           message={`It is strongly not recommended to delete a user from a tournament. he already has ${user.prognoses?.length} prognoses? Are you sure?`}
@@ -67,18 +69,24 @@ export default function UsersOnTournament() {
           />
         </ModalWrapper>
       )}
-      <div className="usersOnTornamentForm">
-        <h2 className="usersOnTornamentPageHeader">Users On Tournament</h2>
-        <ChooseOption<Tournament>
-          currentOption={currentTournament}
-          setChosenOption={setCurrentTournament}
-          options={tournaments}
-        />
-        <h4>{listUsersOnTournament}</h4>
-        <button className="submitFormButton" onClick={() => setShowModalAddUser(true)}>
-          Add User
-        </button>
-      </div>
+      <EntityPageLayout
+        title="Users On Tournament"
+        className="usersOnTornamentForm"
+        controls={
+          <ChooseOption<Tournament>
+            currentOption={currentTournament}
+            setChosenOption={setCurrentTournament}
+            options={tournaments}
+          />
+        }
+        action={
+          <button className="submitFormButton shortButton" onClick={() => setShowModalAddUser(true)}>
+            Add User
+          </button>
+        }
+      >
+        <ul className="usersOnTournamentList listScrollable">{listUsersOnTournament}</ul>
+      </EntityPageLayout>
     </div>
   );
   

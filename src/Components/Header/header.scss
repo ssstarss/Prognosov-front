@@ -22,21 +22,60 @@ a {
   display: flex;
   flex-direction: row;
   align-content: center;
+  align-items: center;
   width: 100%;
   gap: 2rem;
   margin-left: 5%;
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1rem;
   text-transform: uppercase;
 }
 .headerLink {
   color: $dark-blue;
   display: block;
 }
+
+.navigationMenu .loginHeaderButton {
+  width: 120px;
+}
+
+.loginHeaderButton .headerLink {
+  color: white;
+}
+.headerCompetitionAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.headerCompetitionAvatarImage {
+  width: 70px;
+  height: 55px;
+  padding: 5px;
+  margin-left: 100px;
+  margin-right: 100px;
+  min-width: 38px;
+  min-height: 38px;
+
+  background-color: white;
+  object-fit: contain;
+  object-position: center;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12);
+}
+
+.headerCompetitionAvatarPlaceholder {
+  background: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
 .adminHeaderLink {
   color: $dark-blue;
   display: none;
+}
+.adminHeaderLink {
+  font-size: 1.2rem;
 }
 
 .headerLink,

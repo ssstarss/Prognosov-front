@@ -1,0 +1,50 @@
+.listScrollable {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.listScrollable::-webkit-scrollbar {
+  display: none;
+}
+
+.listRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid #203b69;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.listRow:hover {
+  background-color: rgb(238, 237, 237);
+}
+
+.listName {
+  font-size: 1rem;
+  margin: 0;
+  color: #203b69;
+}
+
+.listActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.listIconButton {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  min-width: 32px;
+  height: 32px;
+}

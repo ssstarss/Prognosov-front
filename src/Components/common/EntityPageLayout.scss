@@ -1,0 +1,25 @@
+@use '../../variables.scss' as *;
+
+.entityPageForm {
+  height: 100%;
+}
+
+.entityPageControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.entityPageListWrapper {
+  width: 50%;
+  align-self: center;
+  flex: 1;
+  margin: auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid 1px $dark-blue;
+  border-radius: 20px;
+  padding: 10px;
+}

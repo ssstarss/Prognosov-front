@@ -17,26 +17,29 @@
   border-radius: 20px;
   align-items: center;
 }
-.teamRaw {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .teamIdentity {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  color: #203b69;
+}
+
+.teamAvatarWrapper {
+  display: flex;
+  align-items: center;
 }
 
 .teamAvatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: 50%;
+  display: block;
   object-fit: cover;
+  object-position: center;
   border: 1px solid #d9d9d9;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
   flex-shrink: 0;
 }
 
@@ -51,9 +54,29 @@
 }
 
 .teamList {
-  width: 50%;
+  width: 90%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.teamListItems {
+  width: 100%;
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.teamsForm {
+  width: 100%;
 }
 .teamButtonsWrapper {
-  width: 30%;
-  justify-items:stretch ;
+  order: 2;
 }
+
+.teamName {
+  font-size: 1rem;
+  color: #203b69;
+}
+

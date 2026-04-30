@@ -1,12 +1,6 @@
 
 .tournamentsForm {
-  width: 500px;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  border: solid 1px black;
-  border-radius: 20px;
-  align-items: center;
+  width: 100%;
 }
 .tournament {
   cursor: pointer;
@@ -21,19 +15,16 @@
   
 }
 .tournamentLine {
-  display: flex;
-
-  width: 80%;
-  padding: 5px;
   cursor: pointer;
 }
 .tournamentName {
-  align-self: center;
-  padding: 5px;
-  font-size: 18px;
-  margin-left: 20px;
+  order: 1;
 }
 .currentTournament {
   background-color: rgb(238, 237, 237);
+}
+
+.tournamentLine .iconsBlock {
+  order: 2;
 }
 

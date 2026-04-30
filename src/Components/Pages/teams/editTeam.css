@@ -1,33 +1,5 @@
 .editTeamPageWrapper {
-  position: absolute;
-  width: 400px;
-  max-height: 90vh;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 20px;
-  background-color: gray;
-  padding-bottom: 16px;
-  overflow-y: auto;
   box-sizing: border-box;
-}
-
-.closeCrossWrapper {
-  width: 100%;
-  display: flex;
-  justify-content: end;
-}
-.closeCross {
-  padding: 5px 10px 0 0;
-}
-
-.teamAvatarInputWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .teamAvatarPreview {
@@ -37,9 +9,4 @@
   object-fit: cover;
   margin-top: 8px;
   border: 1px solid #ccc;
-}
-
-.editTeamPageWrapper .submitFormButton {
-  margin-top: 16px;
-  flex-shrink: 0;
 }

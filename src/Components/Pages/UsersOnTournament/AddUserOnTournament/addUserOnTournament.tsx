@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Tournament, User, UserOnTournament } from '../../FillBase/types';
 import './addUserOnTournament.scss';
+import '../../../common/ModalEntityForm.scss';
 import { createData } from '../../FillBase/fetchData';
 import ConfirmPopUp from '../../../ConfirmPopUp/confirmPopup';
 import ChooseOptionWithFilter from '../../../../Components/chooseOption/withFilter/chooseOptionFilter';
@@ -36,15 +37,26 @@ export default function AddUserOnTournament(props: {
       )}
 
       <div className="addUserOnTournamentForm">
-        <h2 className="addUserOnTournamentHeader">Add User On Tournament</h2>
-        <ChooseOptionWithFilter<User>
-          currentOption={currentUser}
-          setChosenOption={setCurrentUser}
-          options={props.users}
-        />
-        <div className="buttonsWrapper">
+        <div className="closeCrossWrapper">
+          <div className="closeCross" onClick={() => props.onClose?.()}>
+            X
+          </div>
+        </div>
+        <div className="formHeaderWrapper">
+          <h2 className="formHeader">Add User On Tournament</h2>
+        </div>
+        <div className="modalEntityFormBody">
+          <div className="modalEntityFieldBlock">
+            <h3 className="modalEntityFieldLabel">User</h3>
+            <ChooseOptionWithFilter<User>
+              currentOption={currentUser}
+              setChosenOption={setCurrentUser}
+              options={props.users}
+            />
+          </div>
+        <div className="submitFormButtonWrapper">
           <button
-            className="submitFormButton"
+            className="submitFormButton shortButton"
             onClick={() => {
               if (currentUser.id && props.currentTournament.id) setShowModal(true);
             }}
@@ -52,11 +64,12 @@ export default function AddUserOnTournament(props: {
             Add User
           </button>
           <button
-            className="submitFormButton"
+            className="submitFormButton shortButton"
             onClick={() => props.onClose?.()}
           >
             CANCEL
           </button>
+        </div>
         </div>
       </div>
     </div>

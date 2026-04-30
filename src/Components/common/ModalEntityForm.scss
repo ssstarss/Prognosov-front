@@ -1,0 +1,62 @@
+.modalEntityForm {
+  width: min(560px, 92vw);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 20px;
+  border: 1px solid #203b69;
+  border-radius: 20px;
+  background-color: whitesmoke;
+  overflow-y: auto;
+}
+
+.modalEntityForm .closeCrossWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.modalEntityForm .closeCross {
+  padding: 5px 10px 0 0;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.modalEntityForm .closeCross:hover {
+  color: red;
+}
+
+.modalEntityFormBody {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalEntityField {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modalEntityFieldLabel {
+  min-width: 110px;
+  margin: 0;
+  color: #203b69;
+  font-size: 1rem;
+}
+
+.modalEntityField .inputField {
+  flex: 1;
+}
+
+.modalEntityFieldBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

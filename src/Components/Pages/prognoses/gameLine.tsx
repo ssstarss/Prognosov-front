@@ -20,7 +20,11 @@ export default function PrognoseLine(props: MyProps) {
   const deadlineMs = nowMs + appState.deadlineMinutes * 60 * 1000; // сейчас + 15 минут (в UTC)
   const gameStartMs = new Date(props.prognose.game.starts_at).getTime();
   const editable = isPrognoseDeadlineBypassRole() || gameStartMs > deadlineMs;
-
+  let color = 'score_black';
+  if (prognose.result === 2) color = 'score_blue';
+  if (prognose.result === 3) color = 'score_green';
+  if (prognose.result === 4) color = 'score_aqua';
+  if (prognose.result === 5) color = 'score_orange';
   return (
     <li
       key={props.prognose.id}
@@ -83,6 +87,7 @@ export default function PrognoseLine(props: MyProps) {
           </div>
           <div className="prognoses__team-name">{prognose.game.team2?.name}</div>
         </div>
+        <div className={`prognose__player-score ${color}`}>{prognose.result ?? '-'}</div>
       </div>
     </li>
   );

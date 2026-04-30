@@ -1,4 +1,5 @@
 import './competitions.css';
+import '../../common/ListRow.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
@@ -8,6 +9,7 @@ import ModalWrapper from '../../ModalPortal/modalWrapper';
 import { createPortal } from 'react-dom';
 import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
+import EntityPageLayout from '../../common/EntityPageLayout';
 
 function CompetitionsPage() {
   const [competitions, setCompetitions] = useState<Competition[]>([] as Competition[]);
@@ -25,12 +27,12 @@ function CompetitionsPage() {
   const listCompetitions = competitions?.map((competition) => {
     return (
       <li
-        className={`competitionLine ${currentCompetition.id === competition.id ? 'currentCompetition' : ''}`}
+        className={`competitionLine listRow ${currentCompetition.id === competition.id ? 'currentCompetition' : ''}`}
         key={competition.id}
       >
-        <div className="iconsBlock">
+        <div className="iconsBlock listActions">
           <div
-            className="editIcon"
+            className="editIcon listIconButton"
             onClick={() => {
               setCurrentCompetition(competition);
               setShowModalEdit(true);
@@ -40,7 +42,7 @@ function CompetitionsPage() {
             E
           </div>
           <div
-            className="deleteIcon"
+            className="deleteIcon listIconButton"
             onClick={() => {
               setCurrentCompetition(competition);
               setShowModalDelete(true);
@@ -49,7 +51,7 @@ function CompetitionsPage() {
             D
           </div>
         </div>
-        <h4 className="competitionName">{competition.name} </h4>
+        <h4 className="competitionName listName">{competition.name} </h4>
       </li>
     );
   });
@@ -84,20 +86,24 @@ function CompetitionsPage() {
           document.body
         )}
 
-      <div className="competitionsForm" id="competitionsForm">
-        <h2 className="competitionsPageHeader">COMPETITIONS:</h2>
-        <div className="competitionList"> {listCompetitions}</div>
-        <button
-          className="submitFormButton shortButton"
-          onClick={() => {
-            setCurrentCompetition({} as Competition);
-            setAddNewCompetition(true);
-            setShowModalEdit(true);
-          }}
-        >
-          ADD
-        </button>
-      </div>
+      <EntityPageLayout
+        title="COMPETITIONS"
+        className="competitionsForm"
+        action={
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              setCurrentCompetition({} as Competition);
+              setAddNewCompetition(true);
+              setShowModalEdit(true);
+            }}
+          >
+            ADD
+          </button>
+        }
+      >
+        <ul className="competitionList listScrollable">{listCompetitions}</ul>
+      </EntityPageLayout>
     </div>
   );
 }
