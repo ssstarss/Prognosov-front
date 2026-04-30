@@ -213,6 +213,13 @@
 .currentUserRaw {
   background-color: rgb(235, 235, 199);
 }
+
+.currentUserRaw .playerNameCell,
+.currentUserRaw .playerResultCell,
+.currentUserRaw .playerResultCell.dateGroupOdd,
+.currentUserRaw .playerResultCell.dateGroupEven {
+  background-color: rgb(235, 235, 199);
+}
 .playerWrapper {
   display: flex;
   justify-content: space-between;
@@ -319,7 +326,7 @@
   color: #fff;
   text-align: center;
   justify-content: center;
-  padding: 3px 9px;
+  padding: 2px 8px;
   cursor: default;
   font-weight: bold;
   box-shadow:

@@ -26,12 +26,24 @@ const UpdateResult = (props: {
   useEffect(() => {
     setCup(Boolean(props.game.cup));
   }, [props.game?.id, props.game.cup]);
+
+  const hasTeam1 = typeof currentScore.team1 === 'number' && Number.isFinite(currentScore.team1);
+  const hasTeam2 = typeof currentScore.team2 === 'number' && Number.isFinite(currentScore.team2);
+  const bothEmpty = !hasTeam1 && !hasTeam2;
+  const bothFilled = hasTeam1 && hasTeam2;
+  const nonNegative =
+    (!hasTeam1 || (currentScore.team1 as number) >= 0) &&
+    (!hasTeam2 || (currentScore.team2 as number) >= 0);
+  const canSubmit = (bothEmpty || bothFilled) && nonNegative;
   return (
     <div
       className="formWrapper updatePrognoseWrapper"
       onClick={(e) => e.stopPropagation()}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') handleSubmitButton();
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          if (canSubmit) handleSubmitButton();
+        }
       }}
     >
       <div className="formHeaderWrapper">
@@ -64,6 +76,7 @@ const UpdateResult = (props: {
           <div className="prognoses__score-block">
             <input
               type="number"
+              min={0}
               className="prognoseResultInput"
               value={currentScore.team1}
               pattern="^(\d+$)"
@@ -73,6 +86,7 @@ const UpdateResult = (props: {
           <span className="prognoses__separator">:</span>
           <input
             type="number"
+            min={0}
             className="prognoseResultInput"
             value={currentScore.team2}
             pattern="^(\d+$)"
@@ -91,18 +105,24 @@ const UpdateResult = (props: {
           </div>
         </div>
       </div>
-      <button className="submitFormButton shortButton" onClick={() => handleSubmitButton()}>
+      <button
+        className="submitFormButton shortButton"
+        onClick={() => handleSubmitButton()}
+        disabled={!canSubmit}
+      >
         Submit
       </button>
     </div>
   );
   function onResultChange(e: React.ChangeEvent<HTMLInputElement>, team: number) {
-    const result = Number(e.target.value);
+    const raw = e.target.value;
+    const result = raw === '' ? undefined : Number(raw);
     if (team === 1) setCurrentScore({ team1: result, team2: currentScore.team2 });
     else setCurrentScore({ team1: currentScore.team1, team2: result });
   }
 
   async function handleSubmitButton() {
+    if (!canSubmit) return;
     const newGame: Game = {
       id: props.game.id,
       starts_at: props.game.starts_at,
