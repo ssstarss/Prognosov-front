@@ -5,6 +5,7 @@ import validateEmail from '../../../functions/validateEmail';
 import { RegisterFormData } from '../../../interfaces/interfaces';
 import './UserForm.scss';
 import ForgotPasswordFlowModal from '../../common/ForgotPasswordFlowModal';
+import { cropAndResizeAvatar, fileToDataUrl } from '../../../functions/avatarProcessing';
 
 export type UserFormData = RegisterFormData;
 
@@ -37,45 +38,6 @@ export default function UserForm({
   const [avatarError, setAvatarError] = useState('');
   const [avatarTouched, setAvatarTouched] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
-
-  const fileToDataUrl = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(typeof reader.result === 'string' ? reader.result : '');
-      reader.onerror = () => reject(new Error('Не удалось прочитать файл'));
-      reader.readAsDataURL(file);
-    });
-
-  const resizeAvatar = (dataUrl: string): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => {
-        const maxSide = 1024;
-        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
-        const width = Math.max(1, Math.round(image.width * scale));
-        const height = Math.max(1, Math.round(image.height * scale));
-
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) {
-          reject(new Error('Не удалось обработать изображение'));
-          return;
-        }
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = 'high';
-        ctx.drawImage(image, 0, 0, width, height);
-
-        const mimeMatch = dataUrl.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,/);
-        const sourceMime = mimeMatch?.[1]?.toLowerCase() || 'image/jpeg';
-        const outputMime = sourceMime === 'image/png' ? 'image/png' : 'image/jpeg';
-        const quality = outputMime === 'image/jpeg' ? 0.95 : undefined;
-        resolve(canvas.toDataURL(outputMime, quality));
-      };
-      image.onerror = () => reject(new Error('Не удалось обработать изображение'));
-      image.src = dataUrl;
-    });
 
   const validateCellphone = (phoneValue: string): boolean => {
     const { valid, errorMessage } = validatePhone(phoneValue);
@@ -148,7 +110,11 @@ export default function UserForm({
     setAvatarError('');
     try {
       const dataUrl = await fileToDataUrl(file);
-      const resizedDataUrl = await resizeAvatar(dataUrl);
+      const resizedDataUrl = await cropAndResizeAvatar(dataUrl, {
+        maxSide: 256,
+        outputMime: 'image/jpeg',
+        quality: 0.85,
+      });
       setAvatarDataUrl(resizedDataUrl);
     } catch (error) {
       setAvatarError(error instanceof Error ? error.message : 'Не удалось обработать файл');

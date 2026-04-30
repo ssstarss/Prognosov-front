@@ -5,6 +5,7 @@ import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';
 import { useState } from 'react';
 import avatarToDataUrl from '../../../functions/avatarToDataUrl';
+import { cropAndResizeAvatar, fileToDataUrl, toBase64Payload } from '../../../functions/avatarProcessing';
 
 export default function EditTeamPage(props: { team: Team; setTeams: Function; setShowModal: Function }) {
   const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(
@@ -103,39 +104,6 @@ export default function EditTeamPage(props: { team: Team; setTeams: Function; se
       });
   }
 
-  function fileToDataUrl(file: File): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(typeof reader.result === 'string' ? reader.result : '');
-      reader.onerror = () => reject(new Error('Не удалось прочитать файл'));
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function resizeAvatar(dataUrl: string): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => {
-        const maxSide = 256;
-        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
-        const width = Math.max(1, Math.round(image.width * scale));
-        const height = Math.max(1, Math.round(image.height * scale));
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) {
-          reject(new Error('Не удалось обработать изображение'));
-          return;
-        }
-        ctx.drawImage(image, 0, 0, width, height);
-        resolve(canvas.toDataURL('image/jpeg', 0.8));
-      };
-      image.onerror = () => reject(new Error('Не удалось обработать изображение'));
-      image.src = dataUrl;
-    });
-  }
-
   async function handleAvatarChange(e: React.ChangeEvent<HTMLInputElement>) {
     setAvatarTouched(true);
     const file = e.target.files?.[0];
@@ -146,15 +114,7 @@ export default function EditTeamPage(props: { team: Team; setTeams: Function; se
     if (!file.type.startsWith('image/')) return;
 
     const dataUrl = await fileToDataUrl(file);
-    const resizedDataUrl = await resizeAvatar(dataUrl);
+    const resizedDataUrl = await cropAndResizeAvatar(dataUrl, { maxSide: 256, outputMime: 'image/png' });
     setAvatarDataUrl(resizedDataUrl);
-  }
-
-  function toBase64Payload(dataUrl: string | null): string | null {
-    if (!dataUrl) return null;
-    const marker = ';base64,';
-    const markerIndex = dataUrl.indexOf(marker);
-    if (markerIndex === -1) return dataUrl;
-    return dataUrl.slice(markerIndex + marker.length);
   }
 }

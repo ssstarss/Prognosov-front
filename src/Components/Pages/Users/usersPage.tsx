@@ -84,7 +84,12 @@ export default function UsersPage() {
       {showModalEdit &&
         createPortal(
           <ModalWrapper showModal={showModalEdit} setShowModal={setShowModalEdit}>
-            <EditUserForm user={user} setUser={setUser} onClose={() => setShowModalEdit(false)} />
+            <EditUserForm
+              user={user}
+              setUser={setUser}
+              setUsers={setUsers}
+              onClose={() => setShowModalEdit(false)}
+            />
           </ModalWrapper>,
           document.body
         )}

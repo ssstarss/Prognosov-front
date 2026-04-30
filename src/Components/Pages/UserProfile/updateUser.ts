@@ -20,6 +20,7 @@ export async function updateUser(
   callbacks: {
     setUser: (user: UserProfile) => void;
     onSuccess: () => void;
+    onUpdated?: (user: UserProfile) => void;
   }
 ): Promise<void> {
   const updatedUser: UserProfile = {
@@ -50,6 +51,7 @@ export async function updateUser(
     const result = await updateData(`/users/${user.id}`, requestData);
     if (result === 200) {
       callbacks.setUser(updatedUser);
+      callbacks.onUpdated?.(updatedUser);
       callbacks.onSuccess();
     } else if (result !== undefined) {
       alert(`Ошибка обновления данных. Статус: ${result}`);

@@ -2,14 +2,16 @@ import './editUserForm.css';
 import { UserProfile } from '../FillBase/types';
 import { updateUser } from './updateUser';
 import UserForm, { UserFormData } from './UserForm';
+import type React from 'react';
 
 interface EditUserFormProps {
   user: UserProfile;
   setUser: (user: UserProfile) => void;
+  setUsers?: React.Dispatch<React.SetStateAction<UserProfile[]>>;
   onClose: () => void;
 }
 
-export default function EditUserForm({ user, setUser, onClose }: EditUserFormProps) {
+export default function EditUserForm({ user, setUser, setUsers, onClose }: EditUserFormProps) {
   const handleSubmit = async (data: UserFormData) => {
     await updateUser(
       user,
@@ -21,7 +23,13 @@ export default function EditUserForm({ user, setUser, onClose }: EditUserFormPro
         country: data.country,
         avatar: data.avatar,
       },
-      { setUser, onSuccess: onClose }
+      {
+        setUser,
+        onUpdated: (updatedUser) => {
+          setUsers?.((prev) => prev.map((u) => (u.id === updatedUser.id ? updatedUser : u)));
+        },
+        onSuccess: onClose,
+      }
     );
   };
 
