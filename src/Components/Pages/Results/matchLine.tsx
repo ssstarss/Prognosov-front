@@ -1,74 +1,109 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Game } from '../../../interfaces/interfaces';
 import { Dispatch, SetStateAction } from 'react';
 import UpdateGame from './updateResult/UpdateResult';
-import formatDate, { formatDateString, formatTimeString } from '../../../functions/formatDate';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
-import AvatarCircle from '../../common/AvatarCircle';
+import MatchRowBase from '../prognoses/MatchRowBase';
+import NewGame from './newGame/newGame';
+import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
+import { deleteData } from '../../../functions/updateData';
+import { Competition } from '../FillBase/types';
 
 interface MyProps {
   game: Game;
   setChosenGame: Dispatch<SetStateAction<Game>>;
+  setGames: Dispatch<SetStateAction<Game[]>>;
+  competition: Competition;
 }
 export default function MatchLine(props: MyProps) {
   const [game, setGame] = useState<Game>(props.game);
-  const [showModal, setShowModal] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  useEffect(() => {
+    setGame(props.game);
+  }, [props.game]);
 
   return (
-    <div
-      key={props.game.id}
-      className="prognoses__prognose_wrapper"
-      onClick={() => {
-        props.setChosenGame(game);
-        setShowModal(true);
-      }}
-    >
-      {showModal &&
+    <>
+      {showResultModal &&
         createPortal(
-          <ModalWrapper showModal={showModal} setShowModal={setShowModal}>
+          <ModalWrapper showModal={showResultModal} setShowModal={setShowResultModal}>
             <UpdateGame
               game={game}
               updateLineGame={setGame}
-              setShowModal={setShowModal}
+              setShowModal={setShowResultModal}
             ></UpdateGame>
           </ModalWrapper>,
           document.body
         )}
-      <div className="prognose__date-wrapper">
-        <div className="prognoses__date">{formatDateString(new Date(game.starts_at), true)}</div>
-        <div className="prognoses__time">{formatTimeString(new Date(game.starts_at))}</div>
-      </div>
-
-      <div className="prognoses__match-wrapper">
-        <div className="prognoses__team-wrapper prognoses__team-wrapper--left">
-          <div className="prognoses__team-name">{game.team1?.name}</div>
-          <div className="prognoses__team-logo">
-            <AvatarCircle
-              avatar={game.team1?.avatar}
-              alt={game.team1?.name ? `${game.team1.name} logo` : 'Team logo'}
-              className="prognoses__team-logo-circle"
+      {showEditModal &&
+        createPortal(
+          <ModalWrapper showModal={showEditModal} setShowModal={setShowEditModal}>
+            <NewGame
+              setShowModal={setShowEditModal}
+              setGames={props.setGames}
+              competition={props.competition}
+              game={game}
             />
-          </div>
-        </div>
-
-        <div className="prognoses__score-block">
-          <span className="prognoses__team-score">{game.team1_result ?? '-'}</span>
-          <span className="prognoses__separator">:</span>
-          <span className="prognoses__team-score">{game.team2_result ?? '-'}</span>
-        </div>
-
-        <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
-          <div className="prognoses__team-logo">
-            <AvatarCircle
-              avatar={game.team2?.avatar}
-              alt={game.team2?.name ? `${game.team2.name} logo` : 'Team logo'}
-              className="prognoses__team-logo-circle"
+          </ModalWrapper>,
+          document.body
+        )}
+      {showDeleteModal &&
+        createPortal(
+          <ModalWrapper showModal={showDeleteModal} setShowModal={setShowDeleteModal}>
+            <ConfirmPopUp
+              message={`Delete game "${game.team1?.name} - ${game.team2?.name}"?`}
+              data={{ userID: 0, tournamentID: 0 }}
+              action={deleteData}
+              host={`/matches/${game.id}`}
+              skipFetchAfterAction={true}
+              setData={() => {
+                props.setGames((prev) => prev.filter((g) => g.id !== game.id));
+              }}
+              setShowModal={setShowDeleteModal}
             />
+          </ModalWrapper>,
+          document.body
+        )}
+      <MatchRowBase
+        as="li"
+        startsAt={game.starts_at}
+        team1Name={game.team1?.name}
+        team2Name={game.team2?.name}
+        team1Avatar={game.team1?.avatar}
+        team2Avatar={game.team2?.avatar}
+        team1Score={game.team1_result}
+        team2Score={game.team2_result}
+        extraRight={
+          <div className="resultsRowActions" onClick={(e) => e.stopPropagation()}>
+            <button
+              className="editIcon listIconButton"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowEditModal(true);
+              }}
+            >
+              E
+            </button>
+            <button
+              className="deleteIcon listIconButton"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowDeleteModal(true);
+              }}
+            >
+              D
+            </button>
           </div>
-          <div className="prognoses__team-name">{game.team2?.name}</div>
-        </div>
-      </div>
-    </div>
+        }
+        onClick={() => {
+          props.setChosenGame(game);
+          setShowResultModal(true);
+        }}
+      />
+    </>
   );
 }

@@ -1,0 +1,66 @@
+@use '../../../variables.scss' as *;
+
+.rulesPageWrapper {
+  width: min(980px, 95%);
+  height: 100%;
+  max-height: 85vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $dark-blue;
+  border-radius: 20px;
+  background: #fff;
+  padding: 20px 28px 24px;
+}
+
+.rulesContent {
+  overflow-y: auto;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding-right: 8px;
+}
+
+.rulesLead {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.rulesSection {
+  margin-bottom: 18px;
+}
+
+.rulesSectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $dark-blue;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.rulesList,
+.rulesOrderedList {
+  margin: 8px 0 8px 18px;
+}
+
+.rulesList li {
+  list-style: disc;
+  margin-bottom: 4px;
+}
+
+.rulesOrderedList li {
+  list-style: decimal;
+  margin-bottom: 4px;
+}
+
+.rulesSection a {
+  color: $light-blue;
+  text-decoration: none;
+}
+
+.rulesSection a:hover {
+  color: $dark-blue;
+  text-decoration: underline;
+}

@@ -1,11 +1,11 @@
 @use '../../../variables.scss' as *;
 
 .userDataWrapper {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-self: center;
+  align-items: stretch;
+  align-self: stretch;
 }
 
 .userProfileAvatarWrapper {
@@ -32,10 +32,11 @@
 .userProfileDataWrapper {
   display: flex;
   flex-direction: row;
-  align-items: space-between;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
   margin: 5px 0;
+  gap: 8px;
 }
 
 .userRegisterWrapper {
@@ -43,11 +44,13 @@
 }
 .userProfileDataLabel {
   font-family: 'Manrope', sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: $dark-blue;
-  text-align: right;
-  width: 40%;
+  text-align: left;
+  width: auto;
+  min-width: 110px;
+  margin: 0;
 }
 
 .userProfileDataValue {
@@ -63,9 +66,31 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 55%;
+  flex: 1;
+  width: auto;
 }
 
 .inputWthErrorWrapper .inputField {
   width: 100%;
+}
+
+.userProfileDataWrapper > .inputField {
+  flex: 1;
+}
+
+.userFormAvatarField {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.userFormAvatarField .userProfileDataLabel {
+  min-width: 0;
+}
+
+.userFormAvatarField .inputField {
+  width: 100%;
+}
+
+.userFormAvatarField .errorMessage {
+  align-self: flex-start;
 }

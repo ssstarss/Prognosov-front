@@ -201,11 +201,13 @@ export default function MainTable() {
           <td className="playerNameCell">
             <div className="playerWrapper">
               <div className="playerIdentity">
-                <AvatarCircle
-                  avatar={user.user.avatar}
-                  className="playerAvatar"
-                  placeholderClassName="playerAvatarPlaceholder"
-                />
+                <div className="playerAvatarZoom">
+                  <AvatarCircle
+                    avatar={user.user.avatar}
+                    className="playerAvatar"
+                    placeholderClassName="playerAvatarPlaceholder"
+                  />
+                </div>
                 <a className="playerName">{user.user.name}</a>
               </div>
               <a className="playerResult">{showCupResult ? user.resultCup : user.result}</a>

@@ -4,6 +4,7 @@ import { formatPhoneInput } from '../../../functions/formatPhoneInput';
 import validateEmail from '../../../functions/validateEmail';
 import { RegisterFormData } from '../../../interfaces/interfaces';
 import './UserForm.scss';
+import '../../common/ModalEntityForm.scss';
 import ForgotPasswordFlowModal from '../../common/ForgotPasswordFlowModal';
 import { cropAndResizeAvatar, fileToDataUrl } from '../../../functions/avatarProcessing';
 
@@ -129,7 +130,7 @@ export default function UserForm({
 
   return (
     <div
-      className={useFormWrapper ? 'formWrapper' : 'userFormRoot'}
+      className={useFormWrapper ? 'formWrapper' : 'userFormRoot modalEntityForm'}
       onClick={(e) => e.stopPropagation()}
     >
       {onClose && (
@@ -143,10 +144,10 @@ export default function UserForm({
         <h2 className="formHeader">{title}</h2>
       </div>
       <div
-        className={`userDataWrapper ${mode === 'edit' ? 'userDateEditWrapper' : 'userRegisterWrapper'}`}
+        className={`userDataWrapper modalEntityFormBody ${mode === 'edit' ? 'userDateEditWrapper' : 'userRegisterWrapper'}`}
       >
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">FIO:</h3>
+        <div className="userProfileDataWrapper modalEntityField">
+          <h3 className="userProfileDataLabel modalEntityFieldLabel">FIO:</h3>
           <input
             className="inputField"
             id="userFormFioInput"
@@ -154,8 +155,8 @@ export default function UserForm({
             defaultValue={initialData.name}
           />
         </div>
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">Email:</h3>
+        <div className="userProfileDataWrapper modalEntityField">
+          <h3 className="userProfileDataLabel modalEntityFieldLabel">Email:</h3>
           <div className="inputWthErrorWrapper">
             <input
               className={`inputField ${emailError ? 'inputError' : ''}`}
@@ -170,7 +171,7 @@ export default function UserForm({
         </div>
         {mode === 'register' && (
           <div className="userProfileDataWrapper">
-            <h3 className="userProfileDataLabel">Password:</h3>
+            <h3 className="userProfileDataLabel modalEntityFieldLabel">Password:</h3>
             <div className="inputWthErrorWrapper">
               <input
                 className={`inputField ${passwordError ? 'inputError' : ''}`}
@@ -187,8 +188,8 @@ export default function UserForm({
             </div>
           </div>
         )}
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">Cellphone:</h3>
+        <div className="userProfileDataWrapper modalEntityField">
+          <h3 className="userProfileDataLabel modalEntityFieldLabel">Cellphone:</h3>
           <div className="inputWthErrorWrapper">
             <input
               className={`inputField ${cellphoneError ? 'inputError' : ''}`}
@@ -202,8 +203,8 @@ export default function UserForm({
             {cellphoneError && <span className="errorMessage">{cellphoneError}</span>}
           </div>
         </div>
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">City:</h3>
+        <div className="userProfileDataWrapper modalEntityField">
+          <h3 className="userProfileDataLabel modalEntityFieldLabel">City:</h3>
           <input
             className="inputField"
             id="userFormCityInput"
@@ -211,8 +212,8 @@ export default function UserForm({
             defaultValue={initialData.city}
           />
         </div>
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">Country:</h3>
+        <div className="userProfileDataWrapper modalEntityField">
+          <h3 className="userProfileDataLabel modalEntityFieldLabel">Country:</h3>
           <input
             className="inputField"
             id="userFormCountryInput"
@@ -244,6 +245,11 @@ export default function UserForm({
               type="button"
             >
               Change Password
+            </button>
+          )}
+          {onClose && (
+            <button className="submitFormButton shortButton" onClick={onClose} type="button">
+              CANCEL
             </button>
           )}
         </div>

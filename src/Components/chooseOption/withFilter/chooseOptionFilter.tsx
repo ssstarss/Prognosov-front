@@ -19,6 +19,7 @@ export default function ChooseOptionFilter<T extends Options>(props: {
     <div>
       <input
         type="text"
+        className="inputField searchInput"
         placeholder="Search"
         value={search}
         onChange={(e) => {

@@ -1,14 +1,16 @@
 import './users.scss';
+import '../../common/ListRow.css';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import fetchData from '../../../functions/fetchData';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
-import AddUser from './addUser';
 import { UserProfile } from '../FillBase/types';
-import EditUserForm from '../UserProfile/editUserForm';
+import UserModalForm from '../UserProfile/UserModalForm';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';
 import AvatarCircle from '../../common/AvatarCircle';
+import EntityPageLayout from '../../common/EntityPageLayout';
+import EntityListRow from '../../common/EntityListRow';
 
 export default function UsersPage() {
   let [users, setUsers] = useState<UserProfile[]>([] as UserProfile[]);
@@ -22,8 +24,11 @@ export default function UsersPage() {
 
   const listUsers = users?.map((user) => {
     return (
-      <li className="userLine" key={user.id}>
-        <div className="userLine__wrapper">
+      <EntityListRow
+        key={user.id}
+        className="userLine"
+        name={user.name}
+        leading={
           <AvatarCircle
             avatar={user.avatar}
             alt={user.name}
@@ -31,60 +36,51 @@ export default function UsersPage() {
             placeholderClassName="userAvatarPlaceholder"
             placeholderText={user.name?.charAt(0).toUpperCase() || '?'}
           />
-          <h3 className="userLine__name">{user.name}</h3>
-        </div>
-        <div className="userLine__buttons">
-          <button
-            className="editIcon"
-            onClick={() => {
-              setUser(user);
-              setShowModalEdit(true);
-            }}
-          >
-            E
-          </button>
-          <button
-            className="deleteIcon"
-            onClick={() => {
-              setUser(user);
-              setShowModalDelete(true);
-            }}
-          >
-            D
-          </button>
-        </div>
-      </li>
+        }
+        onEdit={() => {
+          setUser(user);
+          setShowModalEdit(true);
+        }}
+        onDelete={() => {
+          setUser(user);
+          setShowModalDelete(true);
+        }}
+      />
     );
   });
   return (
     <div className="pageWrapper">
-      <div className="formWrapper usersForm">
-        <div className="formHeaderWrapper ">
-          <h2 className="formHeader">USERS </h2>
-        </div>
-        <div className="usersList__wrapper">
-          <ul className="usersList">{listUsers}</ul>
-        </div>
-        <button
-          className="submitFormButton shortButton"
-          onClick={() => {
-            setShowModalAddUser(true);
-          }}
-        >
-          ADD USER
-        </button>
-      </div>
+      <EntityPageLayout
+        title="USERS"
+        className="usersForm"
+        action={
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              setShowModalAddUser(true);
+            }}
+          >
+            ADD USER
+          </button>
+        }
+      >
+        <ul className="usersList listScrollable">{listUsers}</ul>
+      </EntityPageLayout>
       {showModalAddUser &&
         createPortal(
           <ModalWrapper showModal={showModalAddUser} setShowModal={setShowModalAddUser}>
-            <AddUser onClose={() => setShowModalAddUser(false)} setUsers={setUsers} />
+            <UserModalForm
+              mode="add"
+              setUsers={setUsers}
+              onClose={() => setShowModalAddUser(false)}
+            />
           </ModalWrapper>,
           document.body
         )}
       {showModalEdit &&
         createPortal(
           <ModalWrapper showModal={showModalEdit} setShowModal={setShowModalEdit}>
-            <EditUserForm
+            <UserModalForm
               user={user}
               setUser={setUser}
               setUsers={setUsers}

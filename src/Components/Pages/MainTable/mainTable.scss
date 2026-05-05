@@ -62,8 +62,9 @@
 }
 
 .selectItem {
+  width: 80%;
   height: 30px;
-  width: auto;
+
   padding: 5px;
   margin-left: 20px;
 }
@@ -203,8 +204,16 @@
   background-color: whitesmoke;
   height: 50px;
 }
+
+/* при увеличенном аватаре строка целиком выше соседних строк и угловой ячейки thead (z-index: 6) */
+.mainTable tbody tr.playerRaw:has(.playerAvatarZoom:hover),
+.mainTable tbody tr.playerRaw:has(.playerAvatarZoom:active) {
+  position: relative;
+  z-index: 50;
+}
 .playerNameCell {
   height: 50px;
+  overflow: visible;
 
   border: solid $dark-blue;
   border-width: 0 2px 2px 2px;
@@ -234,6 +243,28 @@
   padding-left: 8px;
 }
 
+.playerAvatarZoom {
+  position: relative;
+  z-index: 0;
+  flex-shrink: 0;
+  touch-action: manipulation;
+
+  &:hover,
+  &:active {
+    z-index: 40;
+  }
+
+  .avatarCircle {
+    transition: transform 1s ease;
+    transform-origin: left center;
+  }
+
+  &:hover .avatarCircle,
+  &:active .avatarCircle {
+    transform: scale(3);
+  }
+}
+
 .playerAvatar {
   width: 40px;
   height: 40px;
@@ -243,7 +274,8 @@
   object-fit: contain;
   object-position: center;
   background: #fff;
-  border: 1px solid #d9d9d9;
+
+  box-shadow: 0.4em 0.4em 11px rgba(122, 122, 122, 0.5);
   flex-shrink: 0;
 }
 

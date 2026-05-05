@@ -5,7 +5,7 @@ import { UserProfile } from '../FillBase/types';
 import { appState } from '../../../constants';
 import loginRefresh from '../../../functions/loginRefresh';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
-import EditUserForm from './editUserForm';
+import UserModalForm from './UserModalForm';
 import AvatarCircle from '../../common/AvatarCircle';
 
 export default function UserProfile() {
@@ -34,7 +34,7 @@ export default function UserProfile() {
 
   const handleEditClick = () => {
     if (user) {
-      setPopUp(<EditUserForm user={user} setUser={setUser} onClose={handleEditClose} />);
+      setPopUp(<UserModalForm user={user} setUser={setUser} onClose={handleEditClose} />);
     }
   };
   return (

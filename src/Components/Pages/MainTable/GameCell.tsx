@@ -33,8 +33,7 @@ function GameCell(props: MyProps) {
   const gameStartMs = new Date(shownPrognose.game.starts_at).getTime();
   const beforeDeadline = gameStartMs > deadlineMs;
   const isOwn = appState.userID === shownPrognose.userOnTournamentUserID;
-  const editable =
-    isPrognoseDeadlineBypassRole() || (beforeDeadline && isOwn);
+  const editable = isPrognoseDeadlineBypassRole() || (beforeDeadline && isOwn);
   return (
     <td
       className={`playerResultCell ${columnClassName}`.trim()}
@@ -63,7 +62,7 @@ function GameCell(props: MyProps) {
       <div className="playerResultWrapper">
         <p className="prognose">
           {typeof shownPrognose.team1_result === 'number' ? shownPrognose.team1_result : '-'} -{' '}
-          {typeof shownPrognose.team2_result === 'number' ? shownPrognose.team2_result : '_'}
+          {typeof shownPrognose.team2_result === 'number' ? shownPrognose.team2_result : '-'}
         </p>
         <div className={`score ${color}`}>
           {typeof shownPrognose.result === 'number' ? shownPrognose.result : '-'}

@@ -1,8 +1,8 @@
 import './updateResult.css';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import  { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Game } from '../../../../interfaces/interfaces';
 import updateResultHandle from './updateResultHandle';
-import AvatarCircle from '../../../common/AvatarCircle';
+import ScoreEditModalBase from '../../../common/ScoreEditModalBase';
 
 const UpdateResult = (props: {
   game: Game;
@@ -10,14 +10,14 @@ const UpdateResult = (props: {
   updateLineGame?: Dispatch<SetStateAction<Game>>;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [currentScore, setCurrentScore] = useState({
+  const [initialScore, setInitialScore] = useState({
     team1: typeof props.game.team1_result === 'number' ? props.game.team1_result : undefined,
     team2: typeof props.game.team2_result === 'number' ? props.game.team2_result : undefined,
   });
   const [cup, setCup] = useState<boolean>(Boolean(props.game.cup));
 
   useEffect(() => {
-    setCurrentScore({
+    setInitialScore({
       team1: typeof props.game.team1_result === 'number' ? props.game.team1_result : undefined,
       team2: typeof props.game.team2_result === 'number' ? props.game.team2_result : undefined,
     });
@@ -27,108 +27,40 @@ const UpdateResult = (props: {
     setCup(Boolean(props.game.cup));
   }, [props.game?.id, props.game.cup]);
 
-  const hasTeam1 = typeof currentScore.team1 === 'number' && Number.isFinite(currentScore.team1);
-  const hasTeam2 = typeof currentScore.team2 === 'number' && Number.isFinite(currentScore.team2);
-  const bothEmpty = !hasTeam1 && !hasTeam2;
-  const bothFilled = hasTeam1 && hasTeam2;
-  const nonNegative =
-    (!hasTeam1 || (currentScore.team1 as number) >= 0) &&
-    (!hasTeam2 || (currentScore.team2 as number) >= 0);
-  const canSubmit = (bothEmpty || bothFilled) && nonNegative;
   return (
-    <div
-      className="formWrapper updatePrognoseWrapper"
-      onClick={(e) => e.stopPropagation()}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          if (canSubmit) handleSubmitButton();
-        }
-      }}
-    >
-      <div className="formHeaderWrapper">
-        <h2 className="formHeader">Enter your result</h2>
-      </div>
-      <div className="updateResult__cupRow">
-        <input
-          id="updateResult-cup"
-          type="checkbox"
-          className="updateResult__cupCheckbox"
-          checked={cup}
-          onChange={(e) => setCup(e.target.checked)}
-        />
-        <label htmlFor="updateResult-cup" className="updateResult__cupLabel">
-          Cup
-        </label>
-      </div>
-      <div className="prognoses__prognose_wrapper">
-        <div className="prognoses__match-wrapper">
-          <div className="prognoses__team-wrapper prognoses__team-wrapper--left">
-            <div className="prognoses__team-name">{props.game.team1?.name}</div>
-            <div className="prognoses__team-logo">
-              <AvatarCircle
-                avatar={props.game.team1?.avatar}
-                alt={props.game.team1?.name ? `${props.game.team1.name} logo` : 'Team logo'}
-                className="prognoses__team-logo-circle"
-              />
-            </div>
-          </div>
-          <div className="prognoses__score-block">
-            <input
-              type="number"
-              min={0}
-              className="prognoseResultInput"
-              value={currentScore.team1}
-              pattern="^(\d+$)"
-              onChange={(e) => onResultChange(e, 1)}
-            ></input>
-          </div>
-          <span className="prognoses__separator">:</span>
+    <ScoreEditModalBase
+      title="Enter your result"
+      team1Name={props.game.team1?.name}
+      team2Name={props.game.team2?.name}
+      team1Avatar={props.game.team1?.avatar}
+      team2Avatar={props.game.team2?.avatar}
+      initialScore={initialScore}
+      resetKey={props.game?.id}
+      topContent={
+        <div className="updateResult__cupRow">
           <input
-            type="number"
-            min={0}
-            className="prognoseResultInput"
-            value={currentScore.team2}
-            pattern="^(\d+$)"
-            onChange={(e) => onResultChange(e, 2)}
-          ></input>
-
-          <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
-            <div className="prognoses__team-logo">
-              <AvatarCircle
-                avatar={props.game.team2?.avatar}
-                alt={props.game.team2?.name ? `${props.game.team2.name} logo` : 'Team logo'}
-                className="prognoses__team-logo-circle"
-              />
-            </div>
-            <div className="prognoses__team-name">{props.game.team2?.name}</div>
-          </div>
+            id="updateResult-cup"
+            type="checkbox"
+            className="updateResult__cupCheckbox"
+            checked={cup}
+            onChange={(e) => setCup(e.target.checked)}
+          />
+          <label htmlFor="updateResult-cup" className="updateResult__cupLabel">
+            Cup
+          </label>
         </div>
-      </div>
-      <button
-        className="submitFormButton shortButton"
-        onClick={() => handleSubmitButton()}
-        disabled={!canSubmit}
-      >
-        Submit
-      </button>
-    </div>
+      }
+      onSubmit={handleSubmitButton}
+    />
   );
-  function onResultChange(e: React.ChangeEvent<HTMLInputElement>, team: number) {
-    const raw = e.target.value;
-    const result = raw === '' ? undefined : Number(raw);
-    if (team === 1) setCurrentScore({ team1: result, team2: currentScore.team2 });
-    else setCurrentScore({ team1: currentScore.team1, team2: result });
-  }
 
-  async function handleSubmitButton() {
-    if (!canSubmit) return;
+  async function handleSubmitButton(score: { team1?: number; team2?: number }) {
     const newGame: Game = {
       id: props.game.id,
       starts_at: props.game.starts_at,
       competitionID: props.game.competitionID,
-      team1_result: currentScore.team1,
-      team2_result: currentScore.team2,
+      team1_result: score.team1,
+      team2_result: score.team2,
       cup,
     };
 

@@ -6,6 +6,7 @@ import fetchData from '../../../functions/fetchData';
 import { useState } from 'react';
 import avatarToDataUrl from '../../../functions/avatarToDataUrl';
 import { cropAndResizeAvatar, fileToDataUrl, toBase64Payload } from '../../../functions/avatarProcessing';
+import EntityModalForm from '../../common/EntityModalForm';
 
 export default function EditTeamPage(props: { team: Team; setTeams: Function; setShowModal: Function }) {
   const [avatarDataUrl, setAvatarDataUrl] = useState<string | null>(
@@ -14,16 +15,21 @@ export default function EditTeamPage(props: { team: Team; setTeams: Function; se
   const [avatarTouched, setAvatarTouched] = useState(false);
 
   return (
-    <div className="editTeamPageWrapper modalEntityForm" id="editTeamPageWrapper" onClick={(e) => e.stopPropagation()}>
-      <div className="closeCrossWrapper">
-        <div className="closeCross" onClick={() => props.setShowModal(false)}>
-          X
-        </div>
-      </div>
-      <div className="formHeaderWrapper">
-        <h2 className="formHeader">{props.team.id === 0 ? 'Add Team' : 'Edit Team'}</h2>
-      </div>
-      <div className="modalEntityFormBody">
+    <EntityModalForm
+      title={props.team.id === 0 ? 'Add Team' : 'Edit Team'}
+      onClose={() => props.setShowModal(false)}
+      className="editTeamPageWrapper"
+      actions={
+        <>
+          <button className="submitFormButton shortButton" onClick={submit}>
+            {props.team.id === 0 ? 'Add' : 'Save'}
+          </button>
+          <button className="submitFormButton shortButton" onClick={() => props.setShowModal(false)}>
+            Cancel
+          </button>
+        </>
+      }
+    >
         <div className="modalEntityField">
           <h4 className="modalEntityFieldLabel">Name</h4>
           <input className="teamNameInput inputField" id="teamNameInput" type="text" defaultValue={props.team.name}></input>
@@ -44,16 +50,7 @@ export default function EditTeamPage(props: { team: Team; setTeams: Function; se
           <input className="inputField" id="teamAvatarInput" type="file" accept="image/*" onChange={handleAvatarChange} />
           {avatarDataUrl && <img src={avatarDataUrl} className="teamAvatarPreview" alt="Team avatar preview" />}
         </div>
-        <div className="submitFormButtonWrapper">
-          <button className="submitFormButton shortButton" onClick={submit}>
-            {props.team.id === 0 ? 'Add' : 'Save'}
-          </button>
-          <button className="submitFormButton shortButton" onClick={() => props.setShowModal(false)}>
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
+    </EntityModalForm>
   );
 
   async function submit() {

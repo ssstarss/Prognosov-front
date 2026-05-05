@@ -12,6 +12,7 @@ import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import AvatarCircle from '../../common/AvatarCircle';
 import EntityPageLayout from '../../common/EntityPageLayout';
+import EntityListRow from '../../common/EntityListRow';
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
@@ -30,8 +31,11 @@ export default function TeamsPage() {
   }, []);
 
   const listTeams = teams?.map((team) => (
-    <li className="teamRaw listRow" key={team.id}>
-      <div className="teamIdentity">
+    <EntityListRow
+      key={team.id}
+      className="teamRaw"
+      name={team.name}
+      leading={
         <div className="teamAvatarWrapper">
           <AvatarCircle
             avatar={team.avatar}
@@ -41,29 +45,16 @@ export default function TeamsPage() {
             placeholderText={team.name?.charAt(0).toUpperCase() || '?'}
           />
         </div>
-        <div className="teamName">{team.name}</div>
-      </div>
-      <div className="teamButtonsWrapper listActions">
-        <button
-          className="editIcon listIconButton"
-          onClick={() => {
-            setTeam(team);
-            setShowModalEdit(true);
-          }}
-        >
-          E
-        </button>
-        <button
-          className="deleteIcon listIconButton"
-          onClick={() => {
-            setTeam(team);
-            setShowModalDelete(true);
-          }}
-        >
-          D
-        </button>
-      </div>
-    </li>
+      }
+      onEdit={() => {
+        setTeam(team);
+        setShowModalEdit(true);
+      }}
+      onDelete={() => {
+        setTeam(team);
+        setShowModalDelete(true);
+      }}
+    />
   ));
   return (
     <div className="pageWrapper" onClick={() => {}}>

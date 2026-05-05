@@ -5,6 +5,7 @@ import { appState } from '../../../constants';
 import { Prognose } from '../../../interfaces/interfaces';
 import MatchLine from './gameLine';
 import { useTournamentContext } from '../../../context/TournamentContext';
+import MatchListPageLayout from '../../common/MatchListPageLayout';
 
 export default function PrognosesPage() {
   const { currentTournament: tournament } = useTournamentContext();
@@ -22,15 +23,7 @@ export default function PrognosesPage() {
 
   return (
     <div className="pageWrapper">
-      <div className="prognosesForm">
-        <div className="formHeaderWrapper prognosesHeaderWrapper">
-          <h2 className="formHeader">Мои прогнозы:</h2>
-        </div>
-
-        
-
-        <ul className="prognoses__list">{listPrognoses}</ul>
-      </div>
+      <MatchListPageLayout title="Мои прогнозы:">{listPrognoses}</MatchListPageLayout>
     </div>
   );
 }

@@ -5,7 +5,8 @@ import { SetStateAction, Dispatch, useState } from 'react';
 import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';
 import avatarToDataUrl from '../../../functions/avatarToDataUrl';
-import { cropAndResizeAvatar, fileToDataUrl, toBase64Payload } from '../../../functions/avatarProcessing';
+import { fileToDataUrl, fitAndResizeAvatar, toBase64Payload } from '../../../functions/avatarProcessing';
+import EntityModalForm from '../../common/EntityModalForm';
 export default function EditCompetitionForm(props: {
   competition: Competition;
   setCompetitions: Dispatch<SetStateAction<Competition[]>>;
@@ -21,20 +22,26 @@ export default function EditCompetitionForm(props: {
   );
   const [avatarTouched, setAvatarTouched] = useState(false);
   return (
-    <div
-      className="editCompetitionForm modalEntityForm"
-      id="editCompetitionForm"
-      onClick={(e) => e.stopPropagation()}
+    <EntityModalForm
+      title={props.addNewCompetition ? 'Add Competition' : 'Edit Competition'}
+      onClose={closeForm}
+      className="editCompetitionForm"
+      actions={
+        <>
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              submitForm();
+            }}
+          >
+            {props.addNewCompetition ? 'Add' : 'Save'}
+          </button>
+          <button className="submitFormButton shortButton" onClick={() => closeForm()}>
+            Cancel
+          </button>
+        </>
+      }
     >
-      <div className="closeCrossWrapper">
-        <div className="closeCross" onClick={closeForm}>
-          X
-        </div>
-      </div>
-      <div className="formHeaderWrapper">
-        <h2 className="formHeader">{props.addNewCompetition ? 'Add Competition' : 'Edit Competition'}</h2>
-      </div>
-      <div className="modalEntityFormBody">
       <div className="modalEntityField">
         <h3 className="modalEntityFieldLabel">Name:</h3>
         <input
@@ -75,21 +82,7 @@ export default function EditCompetitionForm(props: {
           />
         )}
       </div>
-      <div className="submitFormButtonWrapper">
-        <button
-          className="submitFormButton shortButton"
-          onClick={() => {
-            submitForm();
-          }}
-        >
-          {props.addNewCompetition ? 'Add' : 'Save'}
-        </button>
-        <button className="submitFormButton shortButton" onClick={() => closeForm()}>
-          Cancel
-        </button>
-      </div>
-      </div>
-    </div>
+    </EntityModalForm>
   );
   async function submitForm() {
     const avatarBase64 = toBase64Payload(avatarDataUrl);
@@ -141,7 +134,12 @@ export default function EditCompetitionForm(props: {
     if (!file.type.startsWith('image/')) return;
 
     const dataUrl = await fileToDataUrl(file);
-    const resizedDataUrl = await cropAndResizeAvatar(dataUrl, { maxSide: 256, outputMime: 'image/png' });
+    const resizedDataUrl = await fitAndResizeAvatar(dataUrl, {
+      maxWidth: 256,
+      maxHeight: 256,
+      outputMime: 'image/png',
+      backgroundColor: '#ffffff',
+    });
     setAvatarDataUrl(resizedDataUrl);
   }
 }

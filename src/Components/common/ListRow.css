@@ -29,9 +29,20 @@
   background-color: rgb(238, 237, 237);
 }
 
+.listRowActive {
+  background-color: rgb(238, 237, 237);
+}
+
 .listName {
   font-size: 1rem;
   margin: 0;
+  color: #203b69;
+}
+
+.entityListIdentity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   color: #203b69;
 }
 

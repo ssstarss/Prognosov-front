@@ -63,16 +63,16 @@ function Header() {
           </NavLink>
 
           <NavLink to="/mainTable" className={'headerLink'}>
-            Main Table
+            Таблица
           </NavLink>
           <NavLink to="/games" className={'headerLink adminHeaderLink'}>
             Results{' '}
           </NavLink>
           <NavLink to="/prognoses" className={'headerLink'}>
-            Prognoses{' '}
+            Мои прогнозы{' '}
           </NavLink>
           <NavLink to="/rules" className={'headerLink'}>
-            Rules{' '}
+            Как играть{' '}
           </NavLink>
         </nav>
       </header>

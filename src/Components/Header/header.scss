@@ -47,19 +47,21 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: visible;
 }
 
 .headerCompetitionAvatarImage {
   width: 70px;
-  height: 55px;
+  height: 70px;
   padding: 5px;
   margin-left: 100px;
   margin-right: 100px;
   min-width: 38px;
-  min-height: 38px;
+  min-height: 70px;
 
   background-color: white;
-  object-fit: contain;
+  display: block;
+  object-fit: scale-down;
   object-position: center;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.12);
 }
@@ -70,6 +72,7 @@ a {
   font-size: 14px;
   font-weight: 600;
 }
+
 .adminHeaderLink {
   color: $dark-blue;
   display: none;

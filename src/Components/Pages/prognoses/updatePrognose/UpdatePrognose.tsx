@@ -4,7 +4,7 @@ import { Prognose } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 
 import updatePrognoseHandle from './updatePrognoseHandle';
-import AvatarCircle from '../../../common/AvatarCircle';
+import ScoreEditModalBase from '../../../common/ScoreEditModalBase';
 
 const UpdatePrognose = (props: {
   prognose: Prognose;
@@ -14,7 +14,7 @@ const UpdatePrognose = (props: {
   onPrognoseSaved?: (p: Prognose) => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [currentScore, setCurrentScore] = useState({
+  const [initialScore, setInitialScore] = useState({
     team1:
       typeof props.prognose.team1_result === 'number' ? props.prognose.team1_result : undefined,
     team2:
@@ -22,7 +22,7 @@ const UpdatePrognose = (props: {
   });
 
   useEffect(() => {
-    setCurrentScore({
+    setInitialScore({
       team1:
         typeof props.prognose.team1_result === 'number' ? props.prognose.team1_result : undefined,
       team2:
@@ -30,106 +30,26 @@ const UpdatePrognose = (props: {
     });
   }, [props.prognose.game?.id, props.prognose.team1_result, props.prognose.team2_result]);
 
-  const hasTeam1 = typeof currentScore.team1 === 'number' && Number.isFinite(currentScore.team1);
-  const hasTeam2 = typeof currentScore.team2 === 'number' && Number.isFinite(currentScore.team2);
-  const bothEmpty = !hasTeam1 && !hasTeam2;
-  const bothFilled = hasTeam1 && hasTeam2;
-  const nonNegative =
-    (!hasTeam1 || (currentScore.team1 as number) >= 0) &&
-    (!hasTeam2 || (currentScore.team2 as number) >= 0);
-  const canSubmit = (bothEmpty || bothFilled) && nonNegative;
-
   return (
-    <div
-      className="formWrapper updatePrognoseWrapper"
-      onClick={(e) => e.stopPropagation()}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          if (canSubmit) handleSubmitButton();
-        }
-      }}
-    >
-      <div className="formHeaderWrapper">
-        <h2 className="formHeader">Enter your prognose</h2>
-      </div>
-      <div className="prognoses__prognose_wrapper">
-        <div className="prognoses__match-wrapper">
-          <div className="prognoses__team-wrapper prognoses__team-wrapper--left">
-            <div className="prognoses__team-name">{props.prognose.game.team1?.name}</div>
-            <div className="prognoses__team-logo">
-              <AvatarCircle
-                avatar={props.prognose.game.team1?.avatar}
-                alt={
-                  props.prognose.game.team1?.name
-                    ? `${props.prognose.game.team1.name} logo`
-                    : 'Team logo'
-                }
-                className="prognoses__team-logo-circle"
-              />
-            </div>
-          </div>
-          <div className="prognoses__score-block">
-            <input
-              type="number"
-              min={0}
-              className="prognoseResultInput"
-              value={currentScore.team1}
-              pattern="^(\d+$)"
-              onChange={(e) => onResultChange(e, 1)}
-            ></input>
-          </div>
-          <span className="prognoses__separator">:</span>
-          <input
-            type="number"
-            min={0}
-            className="prognoseResultInput"
-            value={currentScore.team2}
-            pattern="^(\d+$)"
-            onChange={(e) => onResultChange(e, 2)}
-          ></input>
-
-          <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
-            <div className="prognoses__team-logo">
-              <AvatarCircle
-                avatar={props.prognose.game.team2?.avatar}
-                alt={
-                  props.prognose.game.team2?.name
-                    ? `${props.prognose.game.team2.name} logo`
-                    : 'Team logo'
-                }
-                className="prognoses__team-logo-circle"
-              />
-            </div>
-            <div className="prognoses__team-name">{props.prognose.game.team2?.name}</div>
-          </div>
-        </div>
-      </div>
-
-      <button
-        className="submitFormButton shortButton"
-        onClick={() => handleSubmitButton()}
-        disabled={!canSubmit}
-      >
-        Submit
-      </button>
-    </div>
+    <ScoreEditModalBase
+      title="Enter your prognose"
+      team1Name={props.prognose.game.team1?.name}
+      team2Name={props.prognose.game.team2?.name}
+      team1Avatar={props.prognose.game.team1?.avatar}
+      team2Avatar={props.prognose.game.team2?.avatar}
+      initialScore={initialScore}
+      resetKey={props.prognose.id ?? props.prognose.game?.id}
+      onSubmit={handleSubmitButton}
+    />
   );
-  function onResultChange(e: React.ChangeEvent<HTMLInputElement>, team: number) {
-    const raw = e.target.value;
-    const result = raw === '' ? undefined : Number(raw);
-    if (team === 1) setCurrentScore({ team1: result, team2: currentScore.team2 });
-    else setCurrentScore({ team1: currentScore.team1, team2: result });
-  }
 
-  async function handleSubmitButton() {
-    if (!canSubmit) return;
+  async function handleSubmitButton(score: { team1?: number; team2?: number }) {
     const newPrognose: Prognose = {
       id: undefined,
       gameID: props.prognose.game.id,
       game: props.prognose.game,
-      team1_result: currentScore.team1,
-      team2_result: currentScore.team2,
+      team1_result: score.team1,
+      team2_result: score.team2,
       userOnTournamentTournamentID:
         props.prognose.userOnTournamentTournamentID ??
         appState.currentTournamentID ??

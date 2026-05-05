@@ -1,6 +1,12 @@
 import fetchData from '../../functions/fetchData';
 import { Team } from '../../interfaces/interfaces';
-import { Competition, User, UserProfile, Tournament, UserOnTournament } from '../Pages/FillBase/types';
+import {
+  Competition,
+  User,
+  UserProfile,
+  Tournament,
+  UserOnTournament,
+} from '../Pages/FillBase/types';
 import './confirmPopUp.css';
 
 export default function ConfirmPopUp(props: {
@@ -20,13 +26,18 @@ export default function ConfirmPopUp(props: {
   skipFetchAfterAction?: boolean;
 }) {
   return (
-    <div className="confirmPopUpWrapper" onClick={(e) => e.stopPropagation()}>
+    <div className="formWrapper" onClick={(e) => e.stopPropagation()}>
       <div className="closeCrossWrapper">
         <div className="closeCross" onClick={() => props.setShowModal(false)}>
           X
         </div>
       </div>
-      <h3 className="popUpHeader">{props.message}</h3>
+      <div className="formHeaderWrapper">
+        <h3 className="formHeader">Удаление</h3>
+      </div>
+      <div className="formBody">
+        <h3 className="formBodyText">{props.message}</h3>
+      </div>
       <div className="buttonsWrapper">
         <button className="submitFormButton" onClick={submit}>
           SUBMIT
@@ -47,7 +58,9 @@ export default function ConfirmPopUp(props: {
             await props.setData();
           } else {
             const updatedData = await fetchData(props.host);
-            await props.setData(updatedData as Team[] | Competition[] | User[] | UserOnTournament[]);
+            await props.setData(
+              updatedData as Team[] | Competition[] | User[] | UserOnTournament[]
+            );
           }
         }
       }

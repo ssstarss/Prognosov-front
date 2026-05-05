@@ -11,6 +11,7 @@ import { deleteData } from '../../../functions/updateData';
 import EditTournamentForm from './editTournament';
 import fetchData from '../../../functions/fetchData';
 import EntityPageLayout from '../../common/EntityPageLayout';
+import EntityListRow from '../../common/EntityListRow';
 
 function TournamentsPage() {
   const [tournaments, setTournaments] = useState<Tournament[]>([] as Tournament[]);
@@ -30,34 +31,22 @@ function TournamentsPage() {
 
   const listTournaments = tournaments?.map((tournament) => {
     return (
-      <li
-        className={`tournamentLine listRow ${currentTournament.id === tournament.id ? 'currentTournament' : ''}`}
+      <EntityListRow
         key={tournament.id}
-      >
-        <div className="iconsBlock listActions">
-          <button
-            className="editIcon listIconButton"
-            onClick={() => {
-              setCurrentTournament(tournament);
-              setShowModalEdit(true);
-              setAddNewTournament(false);
-            }}
-          >
-            E
-          </button>
-          <button
-            className="deleteIcon listIconButton"
-            onClick={() => {
-              setCurrentTournament(tournament);
-              setShowModalDelete(true);
-              setAddNewTournament(false);
-            }}
-          >
-            D
-          </button>
-        </div>
-        <h4 className="tournamentName listName">{tournament.name} </h4>
-      </li>
+        className={`tournamentLine ${currentTournament.id === tournament.id ? 'currentTournament' : ''}`}
+        active={currentTournament.id === tournament.id}
+        name={tournament.name}
+        onEdit={() => {
+          setCurrentTournament(tournament);
+          setShowModalEdit(true);
+          setAddNewTournament(false);
+        }}
+        onDelete={() => {
+          setCurrentTournament(tournament);
+          setShowModalDelete(true);
+          setAddNewTournament(false);
+        }}
+      />
     );
   });
   return (

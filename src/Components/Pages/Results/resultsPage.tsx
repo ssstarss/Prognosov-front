@@ -10,6 +10,7 @@ import MatchLine from './matchLine';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import NewGame from './newGame/newGame';
+import MatchListPageLayout from '../../common/MatchListPageLayout';
 
 export default function GamesPage() {
   const [games, setGames] = useState<Game[]>([]);
@@ -37,7 +38,15 @@ export default function GamesPage() {
   }
 
   const listGames = games?.map((game) => {
-    return <MatchLine game={game} setChosenGame={setChosenGame} key={game.id}></MatchLine>;
+    return (
+      <MatchLine
+        game={game}
+        setChosenGame={setChosenGame}
+        setGames={setGames}
+        competition={competition}
+        key={game.id}
+      ></MatchLine>
+    );
   });
 
   return (
@@ -54,30 +63,28 @@ export default function GamesPage() {
           document.body
         )}
 
-      <div className="prognosesForm">
-        <div className="formHeaderWrapper">
-          <h2 className="formHeader">GAMES:</h2>
-        </div>
-        <div className="horisontalWrapper">
-          <ChooseOption<Competition>
-            currentOption={competition}
-            setChosenOption={setCompetition}
-            options={competitions as Competition[]}
-          ></ChooseOption>
-          <button
-            className="submitFormButton shortButton"
-            onClick={() => {
-              setShowModal(true);
-            }}
-          >
-            ADD GAME
-          </button>
-        </div>
-
-        <div className="games__list">
-          <div className="games__list_wrapper"> {listGames}</div>
-        </div>
-      </div>
+      <MatchListPageLayout
+        title="GAMES:"
+        controls={
+          <div className="horisontalWrapper">
+            <ChooseOption<Competition>
+              currentOption={competition}
+              setChosenOption={setCompetition}
+              options={competitions as Competition[]}
+            ></ChooseOption>
+            <button
+              className="submitFormButton shortButton"
+              onClick={() => {
+                setShowModal(true);
+              }}
+            >
+              ADD GAME
+            </button>
+          </div>
+        }
+      >
+        {listGames}
+      </MatchListPageLayout>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom';
 import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import EntityPageLayout from '../../common/EntityPageLayout';
+import EntityListRow from '../../common/EntityListRow';
 
 function CompetitionsPage() {
   const [competitions, setCompetitions] = useState<Competition[]>([] as Competition[]);
@@ -26,33 +27,21 @@ function CompetitionsPage() {
 
   const listCompetitions = competitions?.map((competition) => {
     return (
-      <li
-        className={`competitionLine listRow ${currentCompetition.id === competition.id ? 'currentCompetition' : ''}`}
+      <EntityListRow
         key={competition.id}
-      >
-        <div className="iconsBlock listActions">
-          <div
-            className="editIcon listIconButton"
-            onClick={() => {
-              setCurrentCompetition(competition);
-              setShowModalEdit(true);
-              setAddNewCompetition(false);
-            }}
-          >
-            E
-          </div>
-          <div
-            className="deleteIcon listIconButton"
-            onClick={() => {
-              setCurrentCompetition(competition);
-              setShowModalDelete(true);
-            }}
-          >
-            D
-          </div>
-        </div>
-        <h4 className="competitionName listName">{competition.name} </h4>
-      </li>
+        className={`competitionLine ${currentCompetition.id === competition.id ? 'currentCompetition' : ''}`}
+        active={currentCompetition.id === competition.id}
+        name={competition.name}
+        onEdit={() => {
+          setCurrentCompetition(competition);
+          setShowModalEdit(true);
+          setAddNewCompetition(false);
+        }}
+        onDelete={() => {
+          setCurrentCompetition(competition);
+          setShowModalDelete(true);
+        }}
+      />
     );
   });
   return (

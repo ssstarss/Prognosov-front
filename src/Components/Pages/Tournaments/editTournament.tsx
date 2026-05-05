@@ -6,6 +6,7 @@ import { addData, updateData } from '../../../functions/updateData';
 import ChooseOption from '../../chooseOption/chooseOption';
 import fetchData from '../../../functions/fetchData';
 import ChooseOptionWithFilter from '../../chooseOption/withFilter/chooseOptionFilter';
+import EntityModalForm from '../../common/EntityModalForm';
 
 export default function EditTournamentForm(props: {
   tournament: Tournament;
@@ -37,17 +38,26 @@ export default function EditTournamentForm(props: {
   }, [props.tournament, props.competitions, props.users, props.addNewTournament]);
 
   return (
-    <div className="editTournamentForm modalEntityForm" onClick={(e) => e.stopPropagation()}>
-      <div className="closeCrossWrapper">
-        <div className="closeCross" onClick={() => props.setShowModal(false)}>
-          X
-        </div>
-      </div>
-      <div className="formHeaderWrapper">
-        <h2 className="formHeader">{props.addNewTournament ? 'Add Room' : 'Edit Room'}</h2>
-      </div>
-      <div className="modalEntityFormBody">
-
+    <EntityModalForm
+      title={props.addNewTournament ? 'Add Room' : 'Edit Room'}
+      onClose={() => props.setShowModal(false)}
+      className="editTournamentForm"
+      actions={
+        <>
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => {
+              submitForm();
+            }}
+          >
+            {props.addNewTournament ? 'Add' : 'Save'}
+          </button>
+          <button className="submitFormButton shortButton" onClick={() => closeForm()}>
+            Cancel
+          </button>
+        </>
+      }
+    >
       <div className="modalEntityField">
         <h3 className="modalEntityFieldLabel">Name:</h3>
         <input
@@ -92,21 +102,7 @@ export default function EditTournamentForm(props: {
           options={props.users as User[]}
         />
       </div>
-      <div className="submitFormButtonWrapper">
-        <button
-          className="submitFormButton shortButton"
-          onClick={() => {
-            submitForm();
-          }}
-        >
-          {props.addNewTournament ? 'Add' : 'Save'}
-        </button>
-        <button className="submitFormButton shortButton" onClick={() => closeForm()}>
-          Cancel
-        </button>
-      </div>
-      </div>
-    </div>
+    </EntityModalForm>
   );
   async function submitForm() {
     const updatedTournament: Tournament = {

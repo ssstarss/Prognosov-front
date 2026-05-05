@@ -10,6 +10,7 @@ import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import AddUserOnTournament from './AddUserOnTournament/addUserOnTournament';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import EntityPageLayout from '../../common/EntityPageLayout';
+import EntityListRow from '../../common/EntityListRow';
 export default function UsersOnTournament() {
   const [currentTournament, setCurrentTournament] = useState<Tournament>(
     appState.currentTournament
@@ -29,20 +30,15 @@ export default function UsersOnTournament() {
     fetchData(`/usersOnTournament/${currentTournament.id}`, setUsersOnTournament);
   }, [currentTournament.id]);
   const listUsersOnTournament = usersOnTournament.map((user) => (
-    <li key={user.userID}>
-      <div className="userLine listRow">
-        <button
-          className="deleteIcon listIconButton"
-          onClick={() => {
-            setUser(user);
-            setShowModalDelete(true);
-          }}
-        >
-          D
-        </button>
-        <div className="userName listName">{user.user.name}</div>
-      </div>
-    </li>
+    <EntityListRow
+      key={user.userID}
+      className="userLine"
+      name={user.user.name}
+      onDelete={() => {
+        setUser(user);
+        setShowModalDelete(true);
+      }}
+    />
   ));
   useEffect(() => {
     fetchData(`/tournaments`, setTournaments);

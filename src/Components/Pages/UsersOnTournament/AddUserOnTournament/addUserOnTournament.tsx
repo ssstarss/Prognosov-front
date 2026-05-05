@@ -6,6 +6,7 @@ import '../../../common/ModalEntityForm.scss';
 import { createData } from '../../FillBase/fetchData';
 import ConfirmPopUp from '../../../ConfirmPopUp/confirmPopup';
 import ChooseOptionWithFilter from '../../../../Components/chooseOption/withFilter/chooseOptionFilter';
+import EntityModalForm from '../../../common/EntityModalForm';
 
 export default function AddUserOnTournament(props: {
   currentTournament: Tournament;
@@ -17,7 +18,7 @@ export default function AddUserOnTournament(props: {
   const [showModal, setShowModal] = useState(false);
   const listHost = `/usersOnTournament/${props.currentTournament.id}`;
   return (
-    <div className="addUserOnTournamentPageWrapper">
+    <div className="addUserOnTournamentPageWrapper modalEntityFormWrapper">
       {showModal && (
         <ConfirmPopUp
           message="Are you sure you want to add this user to the tournament?"
@@ -36,16 +37,26 @@ export default function AddUserOnTournament(props: {
         />
       )}
 
-      <div className="addUserOnTournamentForm">
-        <div className="closeCrossWrapper">
-          <div className="closeCross" onClick={() => props.onClose?.()}>
-            X
-          </div>
-        </div>
-        <div className="formHeaderWrapper">
-          <h2 className="formHeader">Add User On Tournament</h2>
-        </div>
-        <div className="modalEntityFormBody">
+      <EntityModalForm
+        title="Add User On Tournament"
+        onClose={() => props.onClose?.()}
+        className="addUserOnTournamentForm"
+        actions={
+          <>
+            <button
+              className="submitFormButton shortButton"
+              onClick={() => {
+                if (currentUser.id && props.currentTournament.id) setShowModal(true);
+              }}
+            >
+              Add User
+            </button>
+            <button className="submitFormButton shortButton" onClick={() => props.onClose?.()}>
+              CANCEL
+            </button>
+          </>
+        }
+      >
           <div className="modalEntityFieldBlock">
             <h3 className="modalEntityFieldLabel">User</h3>
             <ChooseOptionWithFilter<User>
@@ -54,24 +65,7 @@ export default function AddUserOnTournament(props: {
               options={props.users}
             />
           </div>
-        <div className="submitFormButtonWrapper">
-          <button
-            className="submitFormButton shortButton"
-            onClick={() => {
-              if (currentUser.id && props.currentTournament.id) setShowModal(true);
-            }}
-          >
-            Add User
-          </button>
-          <button
-            className="submitFormButton shortButton"
-            onClick={() => props.onClose?.()}
-          >
-            CANCEL
-          </button>
-        </div>
-        </div>
-      </div>
+      </EntityModalForm>
     </div>
   );
 }
