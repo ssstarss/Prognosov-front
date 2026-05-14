@@ -151,6 +151,17 @@ export default function MainTable() {
     });
   }, []);
 
+  const renderPlayerName = (fullName?: string) => {
+    const name = (fullName || '').trim();
+    if (!name) return null;
+    const parts = name.split(/\s+/).filter(Boolean);
+    return parts.map((part, index) => (
+      <span className="playerNamePart" key={`${part}-${index}`}>
+        {part}
+      </span>
+    ));
+  };
+
   const Raws = () => {
     if (rows.length === 0) {
       return (
@@ -208,7 +219,7 @@ export default function MainTable() {
                     placeholderClassName="playerAvatarPlaceholder"
                   />
                 </div>
-                <a className="playerName">{user.user.name}</a>
+                <a className="playerName">{renderPlayerName(user.user.name)}</a>
               </div>
               <a className="playerResult">{showCupResult ? user.resultCup : user.result}</a>
             </div>
@@ -223,7 +234,7 @@ export default function MainTable() {
   return (
     <div className="pageWrapper">
       <div className="mainTablePageWrapper">
-        <div className="formHeaderWrapper">
+        <div className="formHeaderWrapper ">
           <h2 className="formHeader">Таблица результатов</h2>
           <div className="mainTableHeaderControls">
             <input

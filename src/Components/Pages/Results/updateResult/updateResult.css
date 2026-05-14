@@ -49,3 +49,26 @@
 .gameResultInput{
   text-align: center;
 }
+
+@media (max-width: 767px) {
+  .updateResultWrapper {
+    width: min(92vw, 340px);
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .resultWrapper {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .resultTeamWrapper {
+    width: 50%;
+  }
+
+  .gameResultInput {
+    width: 40px;
+    height: 32px;
+    font-size: 16px;
+  }
+}

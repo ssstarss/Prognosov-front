@@ -5,7 +5,11 @@ import { SetStateAction, Dispatch, useState } from 'react';
 import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';
 import avatarToDataUrl from '../../../functions/avatarToDataUrl';
-import { fileToDataUrl, fitAndResizeAvatar, toBase64Payload } from '../../../functions/avatarProcessing';
+import {
+  fileToDataUrl,
+  fitAndResizeAvatar,
+  toBase64Payload,
+} from '../../../functions/avatarProcessing';
 import EntityModalForm from '../../common/EntityModalForm';
 export default function EditCompetitionForm(props: {
   competition: Competition;
@@ -25,7 +29,7 @@ export default function EditCompetitionForm(props: {
     <EntityModalForm
       title={props.addNewCompetition ? 'Add Competition' : 'Edit Competition'}
       onClose={closeForm}
-      className="editCompetitionForm"
+      className="editEntityForm"
       actions={
         <>
           <button
@@ -71,17 +75,13 @@ export default function EditCompetitionForm(props: {
           onChange={(e) => setCompetitionActive(e.target.checked)}
         />
       </div>
-      <div className="modalEntityFieldBlock">
+      <div className="modalEntityField">
         <h3 className="modalEntityFieldLabel">Avatar:</h3>
         <input className="inputField" type="file" accept="image/*" onChange={handleAvatarChange} />
-        {avatarDataUrl && (
-          <img
-            src={avatarDataUrl}
-            className="competitionAvatarPreview"
-            alt="Competition avatar preview"
-          />
-        )}
       </div>
+      {avatarDataUrl && (
+        <img src={avatarDataUrl} className="avatarPreview" alt="Competition avatar preview" />
+      )}
     </EntityModalForm>
   );
   async function submitForm() {
@@ -110,7 +110,7 @@ export default function EditCompetitionForm(props: {
           await fetchData(`/competitions`, props.setCompetitions);
           closeForm();
         }
-        });
+      });
     } else {
       await updateData(`/competitions`, requestCompetition).then(async (result: any) => {
         if (result === 200) {

@@ -1,4 +1,4 @@
-import './editTeam.css';
+import './editTeam.scss';
 import '../../common/ModalEntityForm.scss';
 import { Team } from '../../../interfaces/interfaces';
 import { addData, updateData } from '../../../functions/updateData';
@@ -18,7 +18,7 @@ export default function EditTeamPage(props: { team: Team; setTeams: Function; se
     <EntityModalForm
       title={props.team.id === 0 ? 'Add Team' : 'Edit Team'}
       onClose={() => props.setShowModal(false)}
-      className="editTeamPageWrapper"
+      className="editEntityForm"
       actions={
         <>
           <button className="submitFormButton shortButton" onClick={submit}>
@@ -48,7 +48,7 @@ export default function EditTeamPage(props: { team: Team; setTeams: Function; se
         <div className="modalEntityFieldBlock">
           <h4 className="modalEntityFieldLabel">Avatar</h4>
           <input className="inputField" id="teamAvatarInput" type="file" accept="image/*" onChange={handleAvatarChange} />
-          {avatarDataUrl && <img src={avatarDataUrl} className="teamAvatarPreview" alt="Team avatar preview" />}
+          {avatarDataUrl && <img src={avatarDataUrl} className="avatarPreview" alt="Team avatar preview" />}
         </div>
     </EntityModalForm>
   );

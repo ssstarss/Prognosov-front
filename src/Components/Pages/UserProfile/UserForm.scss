@@ -1,7 +1,9 @@
 @use '../../../variables.scss' as *;
+@use '../../../styles/form.scss' as *;
 
 .userFormRoot {
   width: 100%;
+  justify-self: center;
 }
 
 .closeCrossWrapper {
@@ -74,11 +76,19 @@
   background-color: #45a049;
 }
 
-.userAvatarPreview {
-  width: 96px;
-  height: 96px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 1px solid #ccc;
-  margin-top: 8px;
+@media (max-width: 767px) {
+  .userFormField {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .userFormField .inputField {
+    width: 100%;
+  }
+
+  .avatarPreview--lg {
+    width: 72px;
+    height: 72px;
+  }
 }

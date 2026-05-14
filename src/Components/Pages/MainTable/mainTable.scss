@@ -134,7 +134,7 @@
 }
 .gameCellDate {
   font-family: 'Manrope', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   line-height: 1;
   color: $dark-blue;
 }
@@ -294,6 +294,10 @@
   font-size: 1rem;
   white-space: nowrap;
 }
+
+.playerNamePart {
+  display: inline;
+}
 .playerResult {
   width: 30px;
   font-family: 'Manrope', sans-serif;
@@ -388,4 +392,108 @@
 .score_aqua {
   background: linear-gradient(145deg, rgb(1, 182, 248), rgb(2, 154, 210));
   border: 1px solid rgb(3, 143, 194);
+}
+
+@media (max-width: 1024px) {
+  .mainTablePageWrapper {
+    max-width: 100%;
+  }
+
+  .mainTablePageWrapper .formHeaderWrapper {
+    padding: 12px 16px 0;
+  }
+
+  .mainTableHeaderText {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .mainTableWrapper {
+    padding-bottom: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mainTablePageWrapper .formHeader {
+    display: none;
+  }
+
+  .mainTablePageWrapper .formHeaderWrapper {
+    padding: 6px 8px 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    border: none;
+  }
+
+  .mainTableHeaderControls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .formHeaderWrapper {
+    padding-bottom: 0;
+  }
+  formHeader .mainTableHeader {
+    height: 42px;
+  }
+
+  .mainTableHeaderCell {
+    font-size: 0.68rem;
+  }
+
+  .gameCellDate {
+    font-size: 0.72rem;
+  }
+
+  .gameResultWrapper {
+    width: 3.2rem;
+    height: 108px;
+  }
+
+  .teamName {
+    font-size: 0.72rem;
+    margin-bottom: 2px;
+  }
+
+  .gameCellScore {
+    font-size: 0.78rem;
+    margin-top: 1px;
+  }
+
+  .playerName {
+    font-size: 0.74rem;
+    max-width: 78px;
+    white-space: normal;
+    line-height: 1.05;
+  }
+
+  .playerNamePart {
+    display: block;
+  }
+
+  .playerResult {
+    width: 24px;
+    font-size: 0.72rem;
+  }
+
+  .playerAvatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .playerIdentity {
+    gap: 4px;
+    padding-left: 4px;
+  }
+
+  .playerResultCell {
+    min-width: 34px;
+  }
+
+  .score,
+  .prognose {
+    font-size: 0.78rem;
+  }
 }

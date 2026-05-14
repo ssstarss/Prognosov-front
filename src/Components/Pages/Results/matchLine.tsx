@@ -78,9 +78,9 @@ export default function MatchLine(props: MyProps) {
         team1Score={game.team1_result}
         team2Score={game.team2_result}
         extraRight={
-          <div className="resultsRowActions" onClick={(e) => e.stopPropagation()}>
+          <div className="listActions listActions--compact" onClick={(e) => e.stopPropagation()}>
             <button
-              className="editIcon listIconButton"
+              className="editIcon listIconButton listIconButton--sm"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowEditModal(true);
@@ -89,7 +89,7 @@ export default function MatchLine(props: MyProps) {
               E
             </button>
             <button
-              className="deleteIcon listIconButton"
+              className="deleteIcon listIconButton listIconButton--sm"
               onClick={(e) => {
                 e.stopPropagation();
                 setShowDeleteModal(true);

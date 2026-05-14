@@ -44,7 +44,7 @@
 }
 
 .modalEntityFieldLabel {
-  min-width: 110px;
+  min-width: 130px;
   margin: 0;
   color: #203b69;
   font-size: 1rem;
@@ -59,4 +59,10 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+}
+
+@media (max-width: 1024px) {
+  .modalEntityForm {
+    width: 95%;
+  }
 }

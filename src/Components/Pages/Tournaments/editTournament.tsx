@@ -41,7 +41,7 @@ export default function EditTournamentForm(props: {
     <EntityModalForm
       title={props.addNewTournament ? 'Add Room' : 'Edit Room'}
       onClose={() => props.setShowModal(false)}
-      className="editTournamentForm"
+      className="editEntityForm"
       actions={
         <>
           <button

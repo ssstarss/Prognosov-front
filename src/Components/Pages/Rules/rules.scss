@@ -1,17 +1,6 @@
 @use '../../../variables.scss' as *;
-
-.rulesPageWrapper {
-  width: min(980px, 95%);
-  height: 100%;
-  max-height: 85vh;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid $dark-blue;
-  border-radius: 20px;
-  background: #fff;
-  padding: 20px 28px 24px;
-}
+@use '../../../styles/layout.scss' as *;
+@use '../../../styles/form.scss' as *;
 
 .rulesContent {
   overflow-y: auto;
@@ -63,4 +52,22 @@
 .rulesSection a:hover {
   color: $dark-blue;
   text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .rulesContent {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .rulesContent {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .rulesLead {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
 }

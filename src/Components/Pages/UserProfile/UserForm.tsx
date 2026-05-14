@@ -146,8 +146,8 @@ export default function UserForm({
       <div
         className={`userDataWrapper modalEntityFormBody ${mode === 'edit' ? 'userDateEditWrapper' : 'userRegisterWrapper'}`}
       >
-        <div className="userProfileDataWrapper modalEntityField">
-          <h3 className="userProfileDataLabel modalEntityFieldLabel">FIO:</h3>
+        <div className=" modalEntityField">
+          <h3 className="modalEntityFieldLabel">Name:</h3>
           <input
             className="inputField"
             id="userFormFioInput"
@@ -155,8 +155,8 @@ export default function UserForm({
             defaultValue={initialData.name}
           />
         </div>
-        <div className="userProfileDataWrapper modalEntityField">
-          <h3 className="userProfileDataLabel modalEntityFieldLabel">Email:</h3>
+        <div className=" modalEntityField">
+          <h3 className="modalEntityFieldLabel">Email:</h3>
           <div className="inputWthErrorWrapper">
             <input
               className={`inputField ${emailError ? 'inputError' : ''}`}
@@ -170,8 +170,8 @@ export default function UserForm({
           </div>
         </div>
         {mode === 'register' && (
-          <div className="userProfileDataWrapper">
-            <h3 className="userProfileDataLabel modalEntityFieldLabel">Password:</h3>
+          <div className="modalEntityField">
+            <h3 className="modalEntityFieldLabel">Password:</h3>
             <div className="inputWthErrorWrapper">
               <input
                 className={`inputField ${passwordError ? 'inputError' : ''}`}
@@ -188,8 +188,8 @@ export default function UserForm({
             </div>
           </div>
         )}
-        <div className="userProfileDataWrapper modalEntityField">
-          <h3 className="userProfileDataLabel modalEntityFieldLabel">Cellphone:</h3>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Cellphone:</h3>
           <div className="inputWthErrorWrapper">
             <input
               className={`inputField ${cellphoneError ? 'inputError' : ''}`}
@@ -203,8 +203,8 @@ export default function UserForm({
             {cellphoneError && <span className="errorMessage">{cellphoneError}</span>}
           </div>
         </div>
-        <div className="userProfileDataWrapper modalEntityField">
-          <h3 className="userProfileDataLabel modalEntityFieldLabel">City:</h3>
+        <div className=" modalEntityField">
+          <h3 className="modalEntityFieldLabel">City:</h3>
           <input
             className="inputField"
             id="userFormCityInput"
@@ -212,8 +212,8 @@ export default function UserForm({
             defaultValue={initialData.city}
           />
         </div>
-        <div className="userProfileDataWrapper modalEntityField">
-          <h3 className="userProfileDataLabel modalEntityFieldLabel">Country:</h3>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Country:</h3>
           <input
             className="inputField"
             id="userFormCountryInput"
@@ -221,18 +221,24 @@ export default function UserForm({
             defaultValue={initialData.country}
           />
         </div>
-        <div className="userProfileDataWrapper userFormAvatarField">
-          <h3 className="userProfileDataLabel">Avatar:</h3>
-          <input
-            className="inputField"
-            type="file"
-            accept="image/*"
-            onChange={handleAvatarChange}
-          />
-          {avatarDataUrl && (
-            <img className="userAvatarPreview" src={avatarDataUrl} alt="Avatar preview" />
-          )}
-          {avatarError && <span className="errorMessage">{avatarError}</span>}
+        <div className=" userFormAvatarField">
+          <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">Avatar:</h3>
+            <input
+              className="inputField"
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+            />
+            {avatarDataUrl && (
+              <img
+                className="avatarPreview avatarPreview--lg"
+                src={avatarDataUrl}
+                alt="Avatar preview"
+              />
+            )}
+            {avatarError && <span className="errorMessage">{avatarError}</span>}
+          </div>
         </div>
         <div className="submitFormButtonWrapper">
           <button className="submitFormButton shortButton" onClick={submit}>

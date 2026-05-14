@@ -31,14 +31,14 @@
   align-items: center;
   flex: 1;
   gap: 20px;
-  margin-right: 120px;
+  margin-right: 60px;
 }
 
 .prognoses__team-wrapper {
   display: flex;
   align-items: center;
   flex: 1;
-  gap: 50px;
+  gap: 30px;
   min-width: 0;
 }
 
@@ -73,9 +73,13 @@
   font-family: 'Manrope', sans-serif;
   font-size: 1.8rem;
   color: $dark-blue;
-  white-space: nowrap;
+  white-space: normal;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .prognoses__score-block {
@@ -125,4 +129,105 @@
   font-size: 1.2rem;
   font-weight: 600;
   color: $dark-blue;
+}
+
+@media (max-width: 1024px) {
+  .prognose__date-wrapper {
+    min-width: 78px;
+  }
+
+  .prognoses__match-wrapper {
+    gap: 12px;
+    margin-right: 0;
+  }
+
+  .prognoses__team-wrapper {
+    gap: 12px;
+  }
+
+  .prognoses__team-wrapper--left {
+    padding-right: 0;
+  }
+
+  .prognoses__team-wrapper--right {
+    padding-left: 0;
+  }
+
+  .prognoses__team-name {
+    font-size: 1.1rem;
+  }
+
+  .prognoses__team-score {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .prognoses__prognose_wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .prognose__date-wrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .prognoses__match-wrapper {
+    gap: 10px;
+  }
+
+  .prognoses__team-logo,
+  .prognoses__team-logo-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .prognoses__team-name {
+    font-size: 0.95rem;
+  }
+
+  .prognoses__score-block {
+    min-width: 72px;
+    gap: 6px;
+  }
+
+  .prognoses__team-score {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .prognoses__match-wrapper {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    gap: 8px;
+  }
+
+  .prognoses__team-wrapper--left,
+  .prognoses__team-wrapper--right {
+    padding-left: 0;
+    padding-right: 0;
+    width: auto;
+  }
+
+  .prognoses__team-name {
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .prognoses__score-block {
+    order: 0;
+    flex: 0 0 auto;
+    min-width: 64px;
+    margin-top: 0;
+  }
 }

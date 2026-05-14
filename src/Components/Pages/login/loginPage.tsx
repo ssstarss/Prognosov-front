@@ -31,8 +31,8 @@ export default function LoginPage() {
   const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value);
-      if (value) validateEmail(value, setEmailError);
-     else setEmailError('Неверный email');
+    if (value) validateEmail(value, setEmailError);
+    else setEmailError('Неверный email');
   };
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
@@ -106,7 +106,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="pageWrapper">
+    <div className="pageWrapper pageWrapper--auth">
       <div className="formWrapper">
         <div className="loginTabs">
           <div
@@ -175,7 +175,7 @@ export default function LoginPage() {
         )}
 
         {activeTab === 'register' && (
-          <div style={{ width: '100%' }}>
+          <div className="loginRegisterRoot">
             <UserForm
               key={JSON.stringify(registerData)}
               mode="register"

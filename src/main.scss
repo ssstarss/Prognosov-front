@@ -1,4 +1,7 @@
 @use './variables.scss' as *;
+@use './styles/form.scss' as *;
+@use './styles/layout.scss' as *;
+@use './styles/mobile-density.scss' as *;
 
 @font-face {
   font-family: 'Druk Wide Medium Desktop';
@@ -78,54 +81,6 @@ li {
   background-color: #999;
 }
 
-.pageWrapper {
-  display: flex;
-  margin: auto;
-  width: 100%;
-  height: 85vh;
-
-  justify-content: center;
-  align-items: center;
-  padding-top: 20px;
-  background-color: $body-bg-color;
-}
-
-.formWrapper {
-  width: 50%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  border: solid 1px white;
-  border-radius: 1.5rem;
-  align-items: start;
-  box-sizing: border-box;
-  background-color: white;
-  padding: 1.875rem;
-  box-shadow:
-    rgba(0, 0, 0, 0.05) 0px 8px 28px 0px,
-    rgba(0, 0, 0, 0.04) 0px 4px 16px 0px,
-    rgba(0, 0, 0, 0.03) 0px 2px 8px 0px;
-}
-.formHeaderWrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: start;
-  margin-bottom: 1.25rem;
-  border-bottom: 1px solid $transparent-blue;
-}
-
-.formHeader {
-  margin: 10px 0;
-  font-family: 'Druk Wide Medium Desktop', sans-serif;
-  font-size: 1.625rem;
-  font-weight: 500;
-
-  text-transform: uppercase;
-  color: $dark-blue;
-}
-
 .userDataInputWrapper {
   width: 60%;
   display: flex;
@@ -145,14 +100,14 @@ li {
 
 .inputHint {
   margin: 5px;
-
-  font-size: 1rem;
-  font-weight: 100;
+  font-size: 0.875rem;
+  font-weight: 400;
   color: $dark-blue;
+  font-family: manrope, 'Courier New', Courier, monospace;
 }
 
 .inputField {
-  width: 55%;
+  width: 70%;
   height: 3rem;
   border: $input-border-width solid $transparent-blue;
   border-radius: $input-border-radius;
@@ -210,9 +165,13 @@ li {
     transform: rotate(360deg);
   }
 }
+
+.newGameWrapper .searchInput {
+  width: 100%;
+}
 .searchInput {
   height: 2rem;
-  width: 100%;
+  width: 80%;
   border: 1px solid $transparent-blue;
   border-radius: $input-border-radius;
   padding: $input-padding-y $input-padding-x;
@@ -223,4 +182,68 @@ li {
   font-size: $input-font-size;
   color: $input-color !important;
   box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .formHeader {
+    font-size: 1.25rem;
+  }
+
+  .userDataInputWrapper {
+    width: 100%;
+  }
+
+  .inputField {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .submitFormButton {
+    min-height: 44px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .formHeaderWrapper {
+    margin-bottom: 0.5rem;
+  }
+
+  .formHeader {
+    font-size: 0.95rem;
+    margin: 6px 0;
+  }
+
+  .submitFormButtonsWrapper {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .inputHint {
+    font-size: 0.85rem;
+    margin: 3px 0;
+  }
+
+  .inputField,
+  .searchInput {
+    min-height: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    padding: 6px 10px;
+  }
+
+  .submitFormButton {
+    min-height: 36px;
+    height: 36px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+  }
+
+  .shortButton {
+    width: 50%;
+  }
 }

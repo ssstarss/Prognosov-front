@@ -27,14 +27,14 @@ export default function EntityListRow({
         <h4 className="listName">{name}</h4>
       </div>
       {actions ?? (
-        <div className="listActions">
+        <div className="listActions listActions--compact">
           {onEdit && (
-            <button className="editIcon listIconButton" onClick={onEdit}>
+            <button className="editIcon listIconButton listIconButton--sm" onClick={onEdit}>
               E
             </button>
           )}
           {onDelete && (
-            <button className="deleteIcon listIconButton" onClick={onDelete}>
+            <button className="deleteIcon listIconButton listIconButton--sm" onClick={onDelete}>
               D
             </button>
           )}

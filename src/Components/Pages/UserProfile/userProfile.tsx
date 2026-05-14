@@ -7,6 +7,7 @@ import loginRefresh from '../../../functions/loginRefresh';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
 import UserModalForm from './UserModalForm';
 import AvatarCircle from '../../common/AvatarCircle';
+import EntityPageLayout from '../../common/EntityPageLayout';
 
 export default function UserProfile() {
   const [user, setUser] = useState<UserProfile>();
@@ -40,47 +41,48 @@ export default function UserProfile() {
   return (
     <div className="pageWrapper">
       <PopUpCanvas PopUp={popUp} onClose={handleEditClose}></PopUpCanvas>
-      <div className="formWrapper">
-        <div className="formHeaderWrapper">
-          <h2 className="formHeader">User Profile</h2>
-        </div>
-        <div className="userDataWrapper">
-          <div className="userProfileAvatarWrapper">
-            <AvatarCircle
-              avatar={user?.avatar}
-              className="userProfileAvatar"
-              placeholderClassName="userProfileAvatarPlaceholder"
-            />
-          </div>
-          <div className="userProfileDataWrapper">
-            <h3 className="userProfileDataLabel">FIO:</h3>
-            <h3 className="userProfileDataValue">{user?.name}</h3>
-          </div>
-          <div className="userProfileDataWrapper">
-            <h3 className="userProfileDataLabel">EMAIL:</h3>
-            <h3 className="userProfileDataValue">{user?.email}</h3>
-          </div>
+      <EntityPageLayout
+        title="User Profile"
+        action={
+          <button className="submitFormButton shortButton" onClick={handleEditClick}>
+            EDIT
+          </button>
+        }
+      >
+        <div className="userProfileAvatarWrapper">
+          <AvatarCircle
+            avatar={user?.avatar}
+            className="userProfileAvatar"
+            placeholderClassName="userProfileAvatarPlaceholder"
+          />
         </div>
         <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">CELLPHONE:</h3>
-          <h3 className="userProfileDataValue">{user?.cellphone}</h3>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Cellphone:</h3>
+          <h4 className="listName">{user?.cellphone ?? '-'}</h4>
         </div>
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">ROLE:</h3>
-          <h3 className="userProfileDataValue">{user?.role}</h3>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Role:</h3>
+          <h4 className="listName">{user?.role ?? '-'}</h4>
         </div>
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">CITY:</h3>
-          <h3 className="userProfileDataValue">{user?.city}</h3>
+        <div className=" modalEntityField">
+          <h3 className="modalEntityFieldLabel">City:</h3>
+          <h4 className="listName">{user?.city ?? '-'}</h4>
         </div>
-        <div className="userProfileDataWrapper">
-          <h3 className="userProfileDataLabel">COUNTRY:</h3>
-          <h3 className="userProfileDataValue">{user?.country}</h3>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Country:</h3>
+          <h4 className="listName">{user?.country ?? '-'}</h4>
         </div>
-        <button className="submitFormButton shortButton" onClick={handleEditClick}>
-          EDIT
-        </button>
-      </div>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Name:</h3>
+          <h4 className="listName">{user?.name ?? '-'}</h4>
+        </div>
+        <div className=" modalEntityField">
+          <h3 className=" modalEntityFieldLabel">Email:</h3>
+          <h4 className="listName">{user?.email ?? '-'}</h4>
+        </div>
+        </div>
+      </EntityPageLayout>
     </div>
   );
 }

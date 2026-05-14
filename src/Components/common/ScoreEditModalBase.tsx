@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AvatarCircle from './AvatarCircle';
+import './ScoreEditModalBase.scss';
 
 type ScoreState = {
   team1?: number;

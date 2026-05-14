@@ -1,13 +1,5 @@
 @use '../../../variables.scss' as *;
 
-.userDataWrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  align-self: stretch;
-}
-
 .userProfileAvatarWrapper {
   margin: 8px 0 12px;
 }
@@ -20,46 +12,29 @@
   border: 1px solid #d9d9d9;
 }
 
+.userProfileDataWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  padding-top: 40px;
+  max-height: 400px;
+  box-sizing: border-box;
+  border-top: 1px solid $dark-blue;
+}
 .userProfileAvatarPlaceholder {
   display: flex;
-  align-items: center;
-  justify-content: center;
+
   background: #f2f2f2;
   color: #666;
   font-size: 36px;
 }
 
-.userProfileDataWrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 5px 0;
-  gap: 8px;
-}
-
 .userRegisterWrapper {
   width: 100%;
-}
-.userProfileDataLabel {
-  font-family: 'Manrope', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  color: $dark-blue;
-  text-align: left;
-  width: auto;
-  min-width: 110px;
-  margin: 0;
-}
-
-.userProfileDataValue {
-  font-family: 'Manrope', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: $dark-blue;
-  width: 50%;
-  text-align: left;
 }
 
 .inputWthErrorWrapper {
@@ -68,14 +43,12 @@
   align-items: flex-start;
   flex: 1;
   width: auto;
+  height: 3rem;
 }
 
 .inputWthErrorWrapper .inputField {
   width: 100%;
-}
-
-.userProfileDataWrapper > .inputField {
-  flex: 1;
+  margin-bottom: 0;
 }
 
 .userFormAvatarField {

@@ -1,0 +1,64 @@
+@use '../variables.scss' as *;
+
+.formHeaderRow,
+.formHeaderWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid $transparent-blue;
+}
+
+.formHeaderTitle,
+.formHeader {
+  margin: 10px 0;
+  font-family: 'Druk Wide Medium Desktop', sans-serif;
+  font-size: 1.625rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: $dark-blue;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editEntityForm {
+  box-sizing: border-box;
+  width: min(720px, 94vw);
+}
+
+.avatarPreview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+}
+
+.avatarPreview--lg {
+  width: 96px;
+  height: 96px;
+}
+
+@media (max-width: 767px) {
+  .editEntityForm {
+    width: min(96vw, 560px);
+  }
+
+  .formHeaderRow,
+  .formHeaderWrapper {
+    margin-bottom: 0.5rem;
+  }
+
+  .formHeaderTitle,
+  .formHeader {
+    font-size: 0.95rem;
+    margin: 6px 0;
+  }
+}

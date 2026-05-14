@@ -1,12 +1,1 @@
-.editCompetitionForm {
-  box-sizing: border-box;
-}
-
-.competitionAvatarPreview {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-top: 8px;
-  border: 1px solid #ccc;
-}
+@use '../../../styles/form.scss' as *;

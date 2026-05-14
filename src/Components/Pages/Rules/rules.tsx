@@ -3,9 +3,9 @@ import './rules.scss';
 export default function RulesPage() {
   return (
     <div className="pageWrapper">
-      <div className="rulesPageWrapper">
-        <div className="formHeaderWrapper">
-          <h2 className="formHeader">Rules</h2>
+      <div className="pageCard pageCard--scrollBody">
+        <div className="formHeaderRow">
+          <h2 className="formHeaderTitle">ПРАВИЛА КОНКУРСА</h2>
         </div>
         <div className="rulesContent">
           <p className="rulesLead">Регламент конкурса прогнозов ЧМ 2026 по футболу.</p>

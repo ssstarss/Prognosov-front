@@ -50,7 +50,7 @@ export default function GamesPage() {
   });
 
   return (
-    <div className="pageWrapper">
+    <div className="pageWrapper pageWrapper--matchList">
       {showModal &&
         createPortal(
           <ModalWrapper showModal={showModal} setShowModal={setShowModal}>

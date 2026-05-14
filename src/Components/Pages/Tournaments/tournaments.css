@@ -1,30 +1,27 @@
-
 .tournamentsForm {
   width: 100%;
 }
-.tournament {
-  cursor: pointer;
-}
-
-.tournamentsPageHeader{
-  margin: 5px;
-}
-.currentTournamentHeader {
-  color: blue;
-  margin-top: 10px;
-  
-}
 .tournamentLine {
   cursor: pointer;
-}
-.tournamentName {
-  order: 1;
 }
 .currentTournament {
   background-color: rgb(238, 237, 237);
 }
 
-.tournamentLine .iconsBlock {
-  order: 2;
+@media (max-width: 1024px) {
+  .tournamentsForm .entityPageListWrapper {
+    width: 100%;
+  }
 }
 
+@media (max-width: 767px) {
+  .tournamentsForm .formHeaderWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .tournamentsForm .submitFormButton.shortButton {
+    width: 100%;
+  }
+}

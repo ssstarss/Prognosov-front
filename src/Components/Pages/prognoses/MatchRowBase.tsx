@@ -67,8 +67,9 @@ export default function MatchRowBase({
           </div>
           <div className="prognoses__team-name">{team2Name}</div>
         </div>
-        {extraRight}
+        
       </div>
+      {extraRight}
     </WrapperTag>
   );
 }

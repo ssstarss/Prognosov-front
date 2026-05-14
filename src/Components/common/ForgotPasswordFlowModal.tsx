@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { forgotPasswordConfirm } from '../../functions/forgotPasswordConfirm';
 import { forgotPasswordRequest } from '../../functions/forgotPasswordRequest';
 import validateEmail from '../../functions/validateEmail';
+import CodeInputModal from '../Pages/login/CodeInputModal';
 
 interface ForgotPasswordFlowModalProps {
   isOpen: boolean;
@@ -18,7 +19,6 @@ export default function ForgotPasswordFlowModal({
 }: ForgotPasswordFlowModalProps) {
   const [step, setStep] = useState<Step>('email');
   const [forgotEmail, setForgotEmail] = useState(initialEmail);
-  const [forgotCode, setForgotCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [forgotError, setForgotError] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -29,7 +29,6 @@ export default function ForgotPasswordFlowModal({
     if (!isOpen) return;
     setStep('email');
     setForgotEmail(initialEmail);
-    setForgotCode('');
     setNewPassword('');
     setForgotError('');
     setEmailError('');
@@ -47,23 +46,18 @@ export default function ForgotPasswordFlowModal({
       return;
     }
     setForgotAttemptsLeft(5);
-    setForgotCode('');
     setNewPassword('');
     setStep('confirm');
   };
 
-  const handleForgotConfirmSubmit = async () => {
-    if (forgotCode.length !== 5) {
-      setForgotError('Введите 5-значный код');
-      return;
-    }
+  const handleForgotConfirmSubmit = async (code: string) => {
     if (!newPassword) {
       setForgotError('Введите новый пароль');
       return;
     }
 
     setForgotError('');
-    const result = await forgotPasswordConfirm(forgotEmail, forgotCode, newPassword);
+    const result = await forgotPasswordConfirm(forgotEmail, code, newPassword);
     if (result.success) {
       setStep('success');
       return;
@@ -117,23 +111,13 @@ export default function ForgotPasswordFlowModal({
       )}
 
       {step === 'confirm' && (
-        <div className="formWrapper" onClick={(e) => e.stopPropagation()}>
-          <div className="formHeaderWrapper">
-            <h2 className="formHeader">Подтверждение смены пароля</h2>
-          </div>
-          <div className="userDataInputWrapper">
-            <p className="inputHint">Введите код, который был отправлен на {forgotEmail}</p>
-            <p className="inputHint">Осталось попыток: {forgotAttemptsLeft}</p>
-            <input
-              className="codeInputField"
-              type="text"
-              inputMode="numeric"
-              maxLength={5}
-              value={forgotCode}
-              onChange={(e) => setForgotCode(e.target.value.replace(/\D/g, ''))}
-              placeholder="12345"
-              autoFocus
-            />
+        <CodeInputModal
+          title="Подтверждение смены пароля"
+          email={forgotEmail}
+          attemptsLeft={forgotAttemptsLeft}
+          error={forgotError}
+          submitLabel="Сменить пароль"
+          extraContent={
             <input
               className="inputField"
               type="password"
@@ -142,17 +126,10 @@ export default function ForgotPasswordFlowModal({
               placeholder="Новый пароль"
               autoComplete="off"
             />
-            {forgotError && <span className="errorMessage">{forgotError}</span>}
-            <div className="submitFormButtonsWrapper">
-              <button className="submitFormButton" onClick={handleForgotConfirmSubmit}>
-                Сменить пароль
-              </button>
-              <button className="submitFormButton" onClick={onClose}>
-                Отмена
-              </button>
-            </div>
-          </div>
-        </div>
+          }
+          onSubmit={handleForgotConfirmSubmit}
+          onCancel={onClose}
+        />
       )}
 
       {step === 'success' && (

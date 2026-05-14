@@ -13,12 +13,20 @@
 .loginTab {
   cursor: pointer;
   font-family: 'Manrope', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
 }
 
 .loginTabActive {
   display: none;
+}
+
+// Регистрация: `modalEntityForm` уже ограничен по ширине, внутри широкой колонки прижимается влево
+.loginRegisterRoot {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .userDataInputWrapper {
@@ -95,4 +103,38 @@ input {
 .forgotPasswordInput {
   width: 100%;
   box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .loginTabs {
+    margin-bottom: 1rem;
+  }
+  .loginTab {
+    font-size: 0.85rem;
+  }
+}
+
+// 767px + landscape: высоты часто не хватает из-за vh и фикс. шапки,
+// поэтому даём прокрутку внутри формы, не затрагивая остальные страницы.
+@media (max-width: 767px) and (orientation: landscape) {
+  .pageWrapper--auth {
+    height: calc(100dvh - 5vh);
+    height: calc(100vh - 5vh);
+    min-height: 0;
+    align-items: stretch;
+    padding-top: 0;
+    padding: 4px;
+    overflow: hidden;
+  }
+
+  .pageWrapper--auth .formWrapper {
+    max-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pageWrapper--auth .submitFormButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }

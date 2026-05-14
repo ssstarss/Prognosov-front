@@ -11,6 +11,7 @@ import AddUserOnTournament from './AddUserOnTournament/addUserOnTournament';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import EntityPageLayout from '../../common/EntityPageLayout';
 import EntityListRow from '../../common/EntityListRow';
+import { createPortal } from 'react-dom';
 export default function UsersOnTournament() {
   const [currentTournament, setCurrentTournament] = useState<Tournament>(
     appState.currentTournament
@@ -45,16 +46,22 @@ export default function UsersOnTournament() {
   }, []);
   return (
     <div className="pageWrapper">
-      {showModalDelete && (
-        <ConfirmPopUp
-          message={`It is strongly not recommended to delete a user from a tournament. he already has ${user.prognoses?.length} prognoses? Are you sure?`}
-          data={user}
-          action={deleteData}
-          host={`/userOnTournament?tournamentID=${currentTournament.id}&userID=${user.userID}`}
-          setData={() => fetchData(`/usersOnTournament/${currentTournament.id}`, setUsersOnTournament)}
-          setShowModal={setShowModalDelete}
-        />
-      )}
+      {showModalDelete &&
+        createPortal(
+          <ModalWrapper showModal={showModalDelete} setShowModal={setShowModalDelete}>
+            <ConfirmPopUp
+              message={`It is strongly not recommended to delete a user from a tournament. he already has ${user.prognoses?.length} prognoses? Are you sure?`}
+              data={user}
+              action={deleteData}
+              host={`/userOnTournament?tournamentID=${currentTournament.id}&userID=${user.userID}`}
+              setData={() =>
+                fetchData(`/usersOnTournament/${currentTournament.id}`, setUsersOnTournament)
+              }
+              setShowModal={setShowModalDelete}
+            />
+          </ModalWrapper>,
+          document.body
+        )}
       {showModalAddUser && (
         <ModalWrapper showModal={showModalAddUser} setShowModal={setShowModalAddUser}>
           <AddUserOnTournament

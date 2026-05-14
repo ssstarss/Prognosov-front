@@ -22,7 +22,7 @@ export default function PrognosesPage() {
   });
 
   return (
-    <div className="pageWrapper">
+    <div className="pageWrapper pageWrapper--matchList">
       <MatchListPageLayout title="Мои прогнозы:">{listPrognoses}</MatchListPageLayout>
     </div>
   );
