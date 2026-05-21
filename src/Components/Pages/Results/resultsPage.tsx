@@ -4,7 +4,7 @@ import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
 import { Game } from '../../../interfaces/interfaces';
 import { Competition } from '../FillBase/types';
-import ChooseOption from '../../chooseOption/chooseOption';
+import { useTournamentContext } from '../../../context/TournamentContext';
 
 import MatchLine from './matchLine';
 import { createPortal } from 'react-dom';
@@ -13,6 +13,7 @@ import NewGame from './newGame/newGame';
 import MatchListPageLayout from '../../common/MatchListPageLayout';
 
 export default function GamesPage() {
+  const { currentTournament } = useTournamentContext();
   const [games, setGames] = useState<Game[]>([]);
   const [competition, setCompetition] = useState<Competition>(appState.currentCompetition);
   const [chosenGame, setChosenGame] = useState<Game>({} as Game);
@@ -23,14 +24,18 @@ export default function GamesPage() {
   }, []);
 
   useEffect(() => {
-    if (competition?.id) return;
-    if (competitions?.length) setCompetition(competitions[0]);
-  }, [competitions, competition?.id]);
+    if (!currentTournament?.id) return;
+    const fromTournament =
+      currentTournament.competition?.id != null
+        ? currentTournament.competition
+        : competitions.find((c) => c.id === currentTournament.competitionID);
+    if (fromTournament?.id) setCompetition(fromTournament);
+  }, [currentTournament, competitions]);
 
   useEffect(() => {
-    if (!competition?.id) return;
-    fetchData(`/matches/${competition.id}`, setGames);
-  }, [competition?.id]);
+    if (!currentTournament?.id) return;
+    fetchData(`/matches/${currentTournament.id}`, setGames);
+  }, [currentTournament?.id]);
 
   if (competition?.id) {
     appState.currentCompetition = competition;
@@ -67,11 +72,7 @@ export default function GamesPage() {
         title="GAMES:"
         controls={
           <div className="horisontalWrapper">
-            <ChooseOption<Competition>
-              currentOption={competition}
-              setChosenOption={setCompetition}
-              options={competitions as Competition[]}
-            ></ChooseOption>
+            {competition?.name ? <span className="selectItem">{competition.name}</span> : null}
             <button
               className="submitFormButton shortButton"
               onClick={() => {

@@ -35,6 +35,7 @@ export default function ModalWrapper(props: {
       }
 
       if (event.key !== 'Enter') return;
+      if (event.defaultPrevented) return;
       const target = event.target as HTMLElement | null;
       if (target?.tagName === 'TEXTAREA') return;
 

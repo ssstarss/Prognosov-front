@@ -82,7 +82,7 @@ const NewGame = (props: {
             value={startsDate}
             onChange={(e) => setStartsDate(e.target.value)}
           />
-          
+
           <input
             className="inputField"
             type="time"

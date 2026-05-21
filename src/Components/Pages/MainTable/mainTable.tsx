@@ -9,6 +9,11 @@ import GameCell from './GameCell';
 import { formatDateString } from '../../../functions/formatDate';
 import AvatarCircle from '../../common/AvatarCircle';
 import { useTournamentContext } from '../../../context/TournamentContext';
+import { isGamePrognoseEditable } from '../../../functions/prognoseEditPolicy';
+
+function formatOfficialGameScore(value: unknown): string | number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : '-';
+}
 
 export default function MainTable() {
   const { currentTournament } = useTournamentContext();
@@ -27,16 +32,11 @@ export default function MainTable() {
 
   useEffect(() => {
     if (!currentTournament?.competitionID) return;
-
-    if (currentTournament.competition?.id === currentTournament.competitionID) {
-      setCurrentCompetition(currentTournament.competition);
-      return;
-    }
-
+    // Всегда с сервера: вложенный `competition` из списка турниров часто без `games` или устаревает при смене турнира.
     fetchData(`/competitions/${currentTournament.competitionID}`, (competition: Competition) => {
       setCurrentCompetition(competition);
     });
-  }, [currentTournament?.id, currentTournament?.competitionID, currentTournament?.competition]);
+  }, [currentTournament?.id, currentTournament?.competitionID]);
 
   const games = useMemo((): Game[] => {
     const allGames = currentCompetition?.games ?? [];
@@ -100,11 +100,12 @@ export default function MainTable() {
       {games.map((game, index) => {
         const start = gameStartsAt(game.starts_at);
         const columnClassName = gameColumnGroups[index]?.columnClassName || '';
+        const gameEditable = isGamePrognoseEditable(game.starts_at);
         return (
           <th className={`mainTableHeaderCell ${columnClassName}`.trim()} key={game.id ?? index}>
             <div className="gameCell">
               <div className="gameCellDateWrapper">
-                <a className="gameCellDate">
+                <a className={`gameCellDate ${gameEditable ? '' : 'gameCellDate--muted'}`.trim()}>
                   {start ? formatDateString(start as Date, false) : ''}
                 </a>
               </div>
@@ -117,7 +118,7 @@ export default function MainTable() {
                     placeholderClassName="teamAvatarInHeaderPlaceholder"
                     placeholderText=""
                   />
-                  <a className="gameCellScore">{game.team1_result}</a>
+                  <a className="gameCellScore">{formatOfficialGameScore(game.team1_result)}</a>
                 </div>
                 <div className="teamCell">
                   <a className="vertical-text teamName">{game.team2 ? game.team2.name : ''}</a>
@@ -127,7 +128,7 @@ export default function MainTable() {
                     placeholderClassName="teamAvatarInHeaderPlaceholder"
                     placeholderText=""
                   />
-                  <a className="gameCellScore">{game.team2_result}</a>
+                  <a className="gameCellScore">{formatOfficialGameScore(game.team2_result)}</a>
                 </div>
               </div>
             </div>

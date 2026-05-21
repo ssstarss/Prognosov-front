@@ -3,7 +3,11 @@ import { Prognose } from '../../../interfaces/interfaces';
 
 import UpdatePrognose from '../prognoses/updatePrognose/UpdatePrognose';
 import { appState } from '../../../constants';
-import { isPrognoseDeadlineBypassRole } from '../../../functions/prognoseEditPolicy';
+import {
+  isGameBeforePrognoseDeadline,
+  isPrognoseDeadlineBypassRole,
+} from '../../../functions/prognoseEditPolicy';
+import { getPrognoseScoreCircleClass } from '../../../functions/prognoseScoreCircleClass';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 
@@ -21,22 +25,15 @@ function GameCell(props: MyProps) {
     if (!showModal) setChosenPrognose(prognose);
   }, [prognose, showModal]);
 
-  let color = 'score_black';
   const shownPrognose = chosenPrognose;
-  const result = shownPrognose.result;
-  if (result === 2) color = 'score_blue';
-  if (result === 3) color = 'score_green';
-  if (result === 4) color = 'score_aqua';
-  if (result === 5) color = 'score_orange';
-  const nowMs = Date.now();
-  const deadlineMs = nowMs + appState.deadlineMinutes * 60 * 1000; // сейчас + 15 минут (в UTC)
-  const gameStartMs = new Date(shownPrognose.game.starts_at).getTime();
-  const beforeDeadline = gameStartMs > deadlineMs;
+  const color = getPrognoseScoreCircleClass(shownPrognose);
   const isOwn = appState.userID === shownPrognose.userOnTournamentUserID;
-  const editable = isPrognoseDeadlineBypassRole() || (beforeDeadline && isOwn);
+  const editable =
+    isPrognoseDeadlineBypassRole() ||
+    (isGameBeforePrognoseDeadline(shownPrognose.game.starts_at) && isOwn);
   return (
     <td
-      className={`playerResultCell ${columnClassName}`.trim()}
+      className={`playerResultCell ${columnClassName} ${editable ? 'playerResultCell--editable' : 'playerResultCell--readonly'}`.trim()}
       key={shownPrognose.id}
       onClick={
         editable

@@ -50,10 +50,12 @@ export default function ScoreEditModalBase({
       className="formWrapper updatePrognoseWrapper"
       onClick={(e) => e.stopPropagation()}
       onKeyDown={(e) => {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          if (canSubmit) void onSubmit(currentScore);
-        }
+        if (e.key !== 'Enter') return;
+        // Иначе сработает и этот обработчик, и `ModalWrapper` (programmatic click по Submit) — два POST.
+        if ((e.target as HTMLElement).closest('button')) return;
+        e.preventDefault();
+        e.stopPropagation();
+        if (canSubmit) void onSubmit(currentScore);
       }}
     >
       <div className="formHeaderWrapper">
@@ -113,6 +115,7 @@ export default function ScoreEditModalBase({
         </div>
       </div>
       <button
+        type="button"
         className="submitFormButton shortButton"
         onClick={() => void onSubmit(currentScore)}
         disabled={!canSubmit}

@@ -2,7 +2,7 @@ import './prognoses.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
-import { Prognose } from '../../../interfaces/interfaces';
+import { Game, Prognose } from '../../../interfaces/interfaces';
 import MatchLine from './gameLine';
 import { useTournamentContext } from '../../../context/TournamentContext';
 import MatchListPageLayout from '../../common/MatchListPageLayout';
@@ -10,15 +10,39 @@ import MatchListPageLayout from '../../common/MatchListPageLayout';
 export default function PrognosesPage() {
   const { currentTournament: tournament } = useTournamentContext();
   const [prognoses, setPrognoses] = useState<Prognose[]>();
+  const [games, setGames] = useState<Game[]>();
   useEffect(() => {
     if (!tournament?.id) return;
     fetchData(`/prognoses/${tournament.id}`, setPrognoses);
+    fetchData(`/matches/${tournament.id}`, setGames);
   }, [tournament?.id]);
   appState.currentTournament = tournament;
   if (tournament?.id) localStorage.setItem('currentTournamentID', tournament.id.toString());
 
-  const listPrognoses = prognoses?.map((prognose) => {
-    return <MatchLine prognose={prognose} key={prognose.id}></MatchLine>;
+  const listPrognoses = games?.map((game) => {
+    const emtyPrognose: Prognose = {
+      id: undefined,
+      gameID: game.id,
+      game: game,
+      team1_result: undefined,
+      team2_result: undefined,
+      result: undefined,
+      userOnTournamentUserID: appState.userID,
+      userOnTournamentTournamentID: tournament.id,
+    };
+    const found = prognoses?.find((prognose) => prognose.gameID === game.id);
+    if (found) {
+      const prognose: Prognose = {
+        ...found,
+        game: game,
+      };
+      return <MatchLine prognose={prognose} key={found.id}></MatchLine>;
+    }
+    const prognose: Prognose = {
+      ...emtyPrognose,
+      game: game,
+    };
+    return <MatchLine prognose={prognose} key={game.id}></MatchLine>;
   });
 
   return (

@@ -25,6 +25,12 @@
   opacity: 0.7;
 }
 
+.prognoses__prognose_wrapper--readonly .prognoses__date,
+.prognoses__prognose_wrapper--readonly .prognoses__time {
+  color: #b8c0cc;
+  opacity: 1;
+}
+
 .prognoses__match-wrapper {
   display: flex;
   justify-content: space-between;
@@ -122,6 +128,12 @@
   box-shadow:
     0 4px 8px rgba(0, 0, 0, 0.3),
     inset 0 2px 2px rgba(255, 255, 255, 0.3);
+}
+
+.prognose__player-score.score_brown {
+  background: linear-gradient(145deg, #a0522d, #6b3410);
+  border: 1px solid #4a2409;
+  color: #fff;
 }
 
 .prognoses__separator {

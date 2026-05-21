@@ -138,6 +138,10 @@
   line-height: 1;
   color: $dark-blue;
 }
+
+.gameCellDate--muted {
+  color: #b8c0cc;
+}
 .teamCell {
   display: flex;
   flex-direction: column;
@@ -316,6 +320,14 @@
   border-right: 1px dotted;
 }
 
+.playerResultCell--editable {
+  cursor: pointer;
+}
+
+.playerResultCell--readonly {
+  cursor: default;
+}
+
 .playerResultCell.dateGroupOdd {
   background-color: $bg-color-odd;
 }
@@ -392,6 +404,12 @@
 .score_aqua {
   background: linear-gradient(145deg, rgb(1, 182, 248), rgb(2, 154, 210));
   border: 1px solid rgb(3, 143, 194);
+}
+
+.score_brown {
+  background: linear-gradient(145deg, #a0522d, #6b3410);
+  border: 1px solid #4a2409;
+  color: #fff;
 }
 
 @media (max-width: 1024px) {
