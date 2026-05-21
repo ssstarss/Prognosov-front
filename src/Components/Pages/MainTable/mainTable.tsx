@@ -10,6 +10,10 @@ import { formatDateString } from '../../../functions/formatDate';
 import AvatarCircle from '../../common/AvatarCircle';
 import { useTournamentContext } from '../../../context/TournamentContext';
 import { isGamePrognoseEditable } from '../../../functions/prognoseEditPolicy';
+import {
+  canViewerSeeForeignPrognose,
+  gameByIdFromCompetition,
+} from '../../../functions/competitionGameTiming';
 
 function formatOfficialGameScore(value: unknown): string | number {
   return typeof value === 'number' && Number.isFinite(value) ? value : '-';
@@ -43,6 +47,8 @@ export default function MainTable() {
     if (!showCupResult) return allGames;
     return allGames.filter((game) => game.cup === true);
   }, [currentCompetition, showCupResult]);
+
+  const gameById = useMemo(() => gameByIdFromCompetition(games), [games]);
 
   const rows = useMemo(() => {
     const source = Array.isArray(usersOnTournaments) ? usersOnTournaments : [];
@@ -145,12 +151,19 @@ export default function MainTable() {
         if (u.userID !== updatedPrognose.userOnTournamentUserID) return u;
         const existing = u.prognoses ?? [];
         const prognoses = existing.some((p) => p.gameID === updatedPrognose.gameID)
-          ? existing.map((p) => (p.gameID === updatedPrognose.gameID ? { ...updatedPrognose } : p))
+          ? existing.map((p) =>
+              p.gameID === updatedPrognose.gameID
+                ? {
+                    ...updatedPrognose,
+                    game: updatedPrognose.game ?? gameById.get(updatedPrognose.gameID)!,
+                  }
+                : p
+            )
           : [...existing, updatedPrognose];
         return { ...u, prognoses };
       });
     });
-  }, []);
+  }, [gameById]);
 
   const renderPlayerName = (fullName?: string) => {
     const name = (fullName || '').trim();
@@ -187,15 +200,17 @@ export default function MainTable() {
           userOnTournamentUserID: user.userID,
           userOnTournamentTournamentID: currentTournament.id,
         };
-        const found = user.prognoses?.find((p) => p.game.id === game.id);
-        const prognose: Prognose = found
-          ? {
-              ...found,
-              userOnTournamentUserID: found.userOnTournamentUserID ?? user.userID,
-              userOnTournamentTournamentID:
-                found.userOnTournamentTournamentID ?? currentTournament.id,
-            }
-          : emtyPrognose;
+        const found = user.prognoses?.find((p) => p.gameID === game.id);
+        const prognose: Prognose =
+          found && canViewerSeeForeignPrognose(user.userID, game.starts_at)
+            ? {
+                ...found,
+                game,
+                userOnTournamentUserID: found.userOnTournamentUserID ?? user.userID,
+                userOnTournamentTournamentID:
+                  found.userOnTournamentTournamentID ?? currentTournament.id,
+              }
+            : emtyPrognose;
         raw.push(
           <GameCell
             prognose={prognose}
