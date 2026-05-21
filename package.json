@@ -14,8 +14,8 @@
   },
   "homepage": "https://github.com/ssstarss/Prognosov-front#readme",
   "scripts": {
-    "build": "webpack",
-    "start": "webpack-dev-server",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint --ext .ts --fix",
     "format": "prettier **/*.{ts,css} --write"

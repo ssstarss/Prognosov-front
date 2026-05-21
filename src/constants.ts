@@ -11,4 +11,4 @@ export const appState = {
   deadlineMinutes: 60,
 };
 
-export const SERVER = 'http://localhost:5000';
+export const SERVER = process.env.SERVER_URL;

@@ -1,16 +1,30 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
-module.exports = {
+
+const SERVER_BY_MODE = {
+  development: 'http://localhost:5000',
+  production: 'https://api.prognosov.ru',
+};
+
+module.exports = (_env, argv) => {
+  const mode = argv.mode || 'development';
+  const serverUrl = SERVER_BY_MODE[mode] ?? SERVER_BY_MODE.development;
+
+  return {
   entry: './src/index.tsx',
   devtool: 'source-map',
-  mode: 'development',
+  mode,
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/',
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.SERVER_URL': JSON.stringify(serverUrl),
+    }),
     new HtmlWebpackPlugin({
       template: './src/index.html',
       hash: true, // Cache busting
@@ -62,4 +76,5 @@ module.exports = {
     static: false,
     historyApiFallback: true,
   },
+};
 };
