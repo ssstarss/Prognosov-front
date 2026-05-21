@@ -18,6 +18,10 @@ interface UserFormProps {
   title?: string;
   onClose?: () => void;
   useFormWrapper?: boolean;
+  /** Сообщение под кнопками внутри userDataWrapper (например, ошибка смены email). */
+  footerError?: string;
+  /** Подсказка под кнопками внутри userDataWrapper. */
+  footerHint?: string;
 }
 
 export default function UserForm({
@@ -28,6 +32,8 @@ export default function UserForm({
   title = mode === 'edit' ? 'Редактирование профиля' : 'Регистрация',
   onClose,
   useFormWrapper = true,
+  footerError,
+  footerHint,
 }: UserFormProps) {
   const [email, setEmail] = useState(initialData.email || '');
   const [cellphone, setCellphone] = useState(initialData.cellphone || '');
@@ -259,6 +265,12 @@ export default function UserForm({
             </button>
           )}
         </div>
+        {(footerError || footerHint) && (
+          <div className="userFormFooterMessages">
+            {footerError ? <p className="userFormFooterError">{footerError}</p> : null}
+            {footerHint ? <p className="userFormFooterHint">{footerHint}</p> : null}
+          </div>
+        )}
       </div>
       <ForgotPasswordFlowModal
         isOpen={showForgotPasswordModal}

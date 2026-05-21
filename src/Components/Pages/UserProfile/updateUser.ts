@@ -21,20 +21,21 @@ export async function updateUser(
     setUser: (user: UserProfile) => void;
     onSuccess: () => void;
     onUpdated?: (user: UserProfile) => void;
-  }
-): Promise<void> {
+  },
+  options?: { skipEmail?: boolean }
+): Promise<boolean> {
+  const email = options?.skipEmail ? user.email : formData.email;
   const updatedUser: UserProfile = {
     ...user,
     name: formData.name,
-    email: formData.email,
+    email,
     cellphone: formData.cellphone,
     city: formData.city ?? user.city,
     country: formData.country ?? user.country,
     avatar: formData.avatar ?? user.avatar,
   };
-  const requestData: UpdateUserFormData = {
+  const requestData: Partial<UpdateUserFormData> & Pick<UpdateUserFormData, 'name' | 'cellphone'> = {
     name: updatedUser.name,
-    email: updatedUser.email,
     cellphone: updatedUser.cellphone,
     city: updatedUser.city,
     country: updatedUser.country,
@@ -43,6 +44,9 @@ export async function updateUser(
         ? updatedUser.avatar
         : undefined,
   };
+  if (!options?.skipEmail) {
+    requestData.email = updatedUser.email;
+  }
   if (formData.avatar === undefined) {
     delete requestData.avatar;
   }
@@ -53,11 +57,15 @@ export async function updateUser(
       callbacks.setUser(updatedUser);
       callbacks.onUpdated?.(updatedUser);
       callbacks.onSuccess();
-    } else if (result !== undefined) {
+      return true;
+    }
+    if (result !== undefined) {
       alert(`Ошибка обновления данных. Статус: ${result}`);
     }
+    return false;
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
     alert(`Ошибка при обновлении данных: ${message}`);
+    return false;
   }
 }
