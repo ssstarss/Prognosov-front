@@ -1,10 +1,18 @@
-// Телефон в landscape (низкий viewport): компактная шапка + контент от верха до низа
+// Телефон в landscape (низкий viewport): на устройстве ширина часто >767px — правила только по высоте.
 @media (orientation: landscape) and (max-height: 520px) {
+  html,
+  body {
+    height: 100%;
+    height: 100dvh;
+    height: 100svh;
+  }
+
   #root {
     display: flex;
     flex-direction: column;
+    height: 100%;
     height: 100dvh;
-    height: 100vh;
+    height: 100svh;
     min-height: 0;
     overflow: hidden;
   }
@@ -12,20 +20,30 @@
   .appShell {
     flex: 1 1 auto;
     min-height: 0;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .appMain {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
   }
 
   .headerWrapper {
     flex: 0 0 auto;
-    height: auto;
+    height: auto !important;
     min-height: 0;
+    max-height: none;
     justify-content: flex-start;
   }
 
   .bottomBar {
-    height: auto;
+    height: auto !important;
     min-height: 0;
     flex: 0 0 auto;
     padding: 4px 8px;
+    padding-bottom: max(4px, env(safe-area-inset-bottom, 0px));
     gap: 8px;
     font-size: 0.85rem;
   }
@@ -38,14 +56,17 @@
   }
 
   .pageWrapper {
+    display: flex !important;
+    flex-direction: column !important;
     flex: 1 1 auto;
     min-height: 0;
     height: auto !important;
-    max-height: none;
+    max-height: 100%;
     margin: 0;
-    padding: 0 4px 4px !important;
+    padding: 0 4px max(4px, env(safe-area-inset-bottom, 0px)) !important;
     justify-content: flex-start !important;
     align-items: stretch !important;
+    overflow: hidden;
   }
 
   .pageWrapper.pageWrapper--matchList {
@@ -53,12 +74,18 @@
   }
 
   .mainTablePageWrapper {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
     min-height: 0;
-    height: 100%;
+    max-height: 100%;
+    height: auto;
+    width: 100%;
     max-width: 100%;
     margin: 0;
     border-radius: 12px;
+    overflow: hidden;
+    box-sizing: border-box;
   }
 
   .mainTablePageWrapper .formHeader {
@@ -94,7 +121,9 @@
     flex: 1 1 auto;
     min-height: 0;
     margin-top: 0;
-    padding: 0;
+    padding: 0 0 4px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .mainTable thead tr.mainTableHeader {
@@ -105,5 +134,14 @@
   .mainTableHeader {
     margin-top: 0 !important;
     height: auto;
+  }
+
+  .mainTable .gameResultWrapper {
+    height: 82px;
+    width: 2.4rem;
+  }
+
+  .mainTable .mainTableHeader {
+    margin-top: 0 !important;
   }
 }

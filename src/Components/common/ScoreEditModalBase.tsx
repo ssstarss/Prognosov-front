@@ -63,16 +63,14 @@ export default function ScoreEditModalBase({
       </div>
       {topContent}
       <div className="prognoses__prognose_wrapper">
-        <div className="prognoses__match-wrapper">
-          <div className="prognoses__team-wrapper prognoses__team-wrapper--left">
-            <div className="prognoses__team-name">{team1Name}</div>
-            <div className="prognoses__team-logo">
-              <AvatarCircle
-                avatar={team1Avatar}
-                alt={team1Name ? `${team1Name} logo` : 'Team logo'}
-                className="prognoses__team-logo-circle"
-              />
-            </div>
+        <div className="prognoses__match-wrapper prognoses__match-wrapper--edit">
+          <div className="prognoses__team-name prognoses__team-name--edit-left">{team1Name}</div>
+          <div className="prognoses__team-logo prognoses__team-logo--edit-left">
+            <AvatarCircle
+              avatar={team1Avatar}
+              alt={team1Name ? `${team1Name} logo` : 'Team logo'}
+              className="prognoses__team-logo-circle"
+            />
           </div>
           <div className="prognoses__score-block">
             <input
@@ -92,7 +90,7 @@ export default function ScoreEditModalBase({
           <input
             type="number"
             min={0}
-            className="prognoseResultInput"
+            className="prognoseResultInput prognoseResultInput--team2"
             value={currentScore.team2}
             pattern="^(\\d+$)"
             onChange={(e) => {
@@ -101,17 +99,14 @@ export default function ScoreEditModalBase({
               setCurrentScore({ team1: currentScore.team1, team2: result });
             }}
           ></input>
-
-          <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
-            <div className="prognoses__team-logo">
-              <AvatarCircle
-                avatar={team2Avatar}
-                alt={team2Name ? `${team2Name} logo` : 'Team logo'}
-                className="prognoses__team-logo-circle"
-              />
-            </div>
-            <div className="prognoses__team-name">{team2Name}</div>
+          <div className="prognoses__team-logo prognoses__team-logo--edit-right">
+            <AvatarCircle
+              avatar={team2Avatar}
+              alt={team2Name ? `${team2Name} logo` : 'Team logo'}
+              className="prognoses__team-logo-circle"
+            />
           </div>
+          <div className="prognoses__team-name prognoses__team-name--edit-right">{team2Name}</div>
         </div>
       </div>
       <button

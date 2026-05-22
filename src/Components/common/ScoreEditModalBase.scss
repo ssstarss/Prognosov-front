@@ -8,14 +8,16 @@
   justify-content: center;
 }
 
-.updatePrognoseWrapper .prognoses__match-wrapper {
-  margin-right: 0;
-  margin-left: 0;
+/* row1: | имя L (×2) | лого L | — | лого R | имя R (×2) |
+   row2: |           | счёт 1 | : | счёт 2 |           | */
+.updatePrognoseWrapper .prognoses__match-wrapper--edit {
+  margin: 0;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto 1fr;
-  row-gap: 10px;
-  column-gap: 8px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto auto minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  row-gap: 12px;
+  column-gap: 12px;
   align-items: center;
 }
 
@@ -34,26 +36,56 @@
   border-bottom: 1px solid $dark-blue;
 }
 
-.updatePrognoseWrapper .prognoses__team-wrapper--left {
-  grid-column: 1 / 4;
-  grid-row: 1;
-  width: 100%;
-  justify-content: flex-end;
-  padding-right: 0;
+.updatePrognoseWrapper .prognoses__team-name--edit-left,
+.updatePrognoseWrapper .prognoses__team-name--edit-right {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.1rem;
+  color: $dark-blue;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.updatePrognoseWrapper .prognoses__team-wrapper--right {
-  grid-column: 4 / 7;
+.updatePrognoseWrapper .prognoses__team-name--edit-left {
+  grid-column: 1 / 3;
   grid-row: 1;
-  width: 100%;
-  justify-content: flex-start;
-  padding-left: 0;
+  min-width: 0;
+  text-align: right;
+}
+
+.updatePrognoseWrapper .prognoses__team-logo--edit-left {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: center;
+}
+
+.updatePrognoseWrapper .prognoses__team-logo--edit-right {
+  grid-column: 5;
+  grid-row: 1;
+  justify-self: center;
+}
+
+.updatePrognoseWrapper .prognoses__team-name--edit-right {
+  grid-column: 6 / 8;
+  grid-row: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.updatePrognoseWrapper .prognoses__team-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
 }
 
 .updatePrognoseWrapper .prognoses__score-block {
   grid-column: 3;
   grid-row: 2;
-  justify-self: end;
+  justify-self: center;
+  min-width: 0;
 }
 
 .updatePrognoseWrapper .prognoses__separator {
@@ -62,10 +94,15 @@
   justify-self: center;
 }
 
-/* второй инпут (team2) – прямой child match-wrapper */
-.updatePrognoseWrapper .prognoses__match-wrapper > .prognoseResultInput {
+.updatePrognoseWrapper .prognoseResultInput--team2 {
   grid-column: 5;
   grid-row: 2;
-  justify-self: start;
+  justify-self: center;
 }
 
+@media (max-width: 767px) {
+  .updatePrognoseWrapper .prognoseResultInput {
+    font-size: 1.5rem;
+    width: 32px;
+  }
+}

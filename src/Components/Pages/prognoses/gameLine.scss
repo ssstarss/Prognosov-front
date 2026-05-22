@@ -36,8 +36,9 @@
   justify-content: space-between;
   align-items: center;
   flex: 1;
-  gap: 20px;
+  gap: 24px;
   margin-right: 60px;
+  min-width: 0;
 }
 
 .prognoses__team-wrapper {
@@ -53,9 +54,17 @@
   padding-right: 40px;
 }
 
+.prognoses__team-wrapper--left .prognoses__team-name {
+  text-align: right;
+}
+
 .prognoses__team-wrapper--right {
-  justify-content: flex-start;
+  justify-content: flex-end;
   padding-left: 40px;
+}
+
+.prognoses__team-wrapper--right .prognoses__team-name {
+  text-align: left;
 }
 
 .prognoses__team-logo {

@@ -321,6 +321,17 @@ a {
   }
 }
 
+/* Landscape на телефоне: ширина >767, но высота мала — убираем 15vh + 40% bottomBar */
+@media (orientation: landscape) and (max-height: 520px) {
+  .headerWrapper {
+    height: auto !important;
+  }
+
+  .bottomBar {
+    height: auto !important;
+  }
+}
+
 @media (min-width: 1025px) {
   .mobileMenuOverlay,
   .mobileMenuDrawer {
