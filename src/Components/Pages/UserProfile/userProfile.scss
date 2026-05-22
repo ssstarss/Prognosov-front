@@ -2,6 +2,18 @@
 
 .userProfileAvatarWrapper {
   margin: 8px 0 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $dark-blue;
+  margin-left: 10px;
+  text-align: right;
 }
 
 .userProfileAvatar {
@@ -66,4 +78,10 @@
 
 .userFormAvatarField .errorMessage {
   align-self: flex-start;
+}
+
+@media (max-width: 767px) {
+  .userName {
+    font-size: 1rem;
+  }
 }

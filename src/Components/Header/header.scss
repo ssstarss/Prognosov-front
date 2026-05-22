@@ -123,8 +123,8 @@ a {
 
 .bottomBarControls .selectItem {
   margin-left: 0;
-  min-width: 180px;
-  max-width: 260px;
+  min-width: 360px;
+
   height: 34px;
 }
 
@@ -231,11 +231,23 @@ a {
   .bottomBarControls {
     flex: 1;
     min-width: 0;
+    max-width: 350px;
+  }
+
+  .bottomBarLabel {
+    flex-shrink: 0;
+  }
+
+  .bottomBarControls .chooseOption {
+    flex: 1;
+    min-width: 0;
+    display: block;
   }
 
   .bottomBarControls .selectItem {
-    min-width: 140px;
-    max-width: 100%;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
   }
 
   #header {
@@ -268,14 +280,23 @@ a {
   }
 
   .bottomBarControls {
+    flex: 1;
+    min-width: 0;
     gap: 6px;
   }
 
+  .bottomBarControls .chooseOption {
+    flex: 1;
+    min-width: 0;
+    display: block;
+  }
+
   .bottomBarControls .selectItem {
-    min-width: 110px;
-    max-width: 220px;
-    height: 5vh;
-    font-size: 0.7rem;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 4vh;
+    font-size: 0.9rem;
     padding: 1px;
   }
 

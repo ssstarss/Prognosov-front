@@ -1,7 +1,7 @@
 /* Shared layout for MatchListPageLayout (desktop defaults) */
 .prognosesForm {
   width: min(1120px, 96%);
-  max-height: 90vh;
+  max-height: 100%;
   align-items: center;
   overflow: hidden;
   min-height: 0;
@@ -44,6 +44,23 @@
 
 .prognoses__list::-webkit-scrollbar {
   display: none;
+}
+
+@media (min-width: 1025px) {
+  .prognoses__list {
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+  }
+
+  .prognoses__list::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+  }
+
+  .prognoses__list::-webkit-scrollbar-thumb {
+    background: rgba(12, 83, 158, 0.35);
+    border-radius: 4px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -93,7 +110,7 @@
   .prognoses__prognose_wrapper {
     gap: 10px;
     padding: 10px 12px;
-    min-height: 64px;
+    min-height: 72px;
   }
 
   /* list action sizing moved to common ListRow.css modifiers */

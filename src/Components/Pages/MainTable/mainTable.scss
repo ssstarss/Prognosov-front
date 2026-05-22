@@ -515,3 +515,118 @@
     font-size: 0.78rem;
   }
 }
+
+/* Телефон landscape: общая вёрстка — styles/landscape-phone.scss */
+@media (orientation: landscape) and (max-height: 520px) {
+  .mainTablePageWrapper .formHeader {
+    display: none;
+  }
+
+  .mainTableHeaderCell {
+    font-size: 0.62rem;
+  }
+
+  .gameResultWrapper {
+    width: 2.6rem;
+    height: 90px;
+  }
+
+  .gameCellDate {
+    font-size: 0.62rem;
+  }
+
+  .teamName {
+    font-size: 0.62rem;
+    margin-bottom: 1px;
+  }
+
+  .teamAvatarInHeader {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+  }
+
+  .gameCellScore {
+    font-size: 0.68rem;
+    margin-top: 0;
+  }
+
+  .playerRaw {
+    height: auto;
+    min-height: 40px;
+  }
+
+  .playerNameCell {
+    position: relative;
+    height: 1px;
+    min-height: 40px;
+    vertical-align: middle;
+    overflow: visible;
+    padding: 0;
+  }
+
+  /* Линия на всю высоту ячейки (flex border-left у очков не тянется) */
+  .playerNameCell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -2px;
+    right: 22px;
+    width: 2px;
+    background-color: $dark-blue;
+    pointer-events: none;
+  }
+
+  .playerWrapper {
+    align-items: center;
+    min-height: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .playerIdentity {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-items: center;
+    gap: 4px;
+    padding-left: 4px;
+  }
+
+  .playerAvatar {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .playerName {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 72px;
+    font-size: 0.68rem;
+    white-space: normal;
+    line-height: 1.1;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .playerNamePart {
+    display: block;
+  }
+
+  .playerResult {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    font-size: 0.65rem;
+    border-left: none;
+  }
+
+  .score,
+  .prognose {
+    font-size: 0.68rem;
+  }
+}

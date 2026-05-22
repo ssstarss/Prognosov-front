@@ -11,6 +11,15 @@
 
 .usersOnTornamentForm {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.usersOnTournamentList {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .userLine {

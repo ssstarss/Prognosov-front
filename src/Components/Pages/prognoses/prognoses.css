@@ -1,6 +1,6 @@
 .prognosesForm {
   width: min(1120px, 96%);
-  max-height: 90vh;
+  max-height: 100%;
 
   align-items: center;
   overflow: hidden;
@@ -41,6 +41,23 @@
   padding: 0 4px 8px;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
+}
+
+@media (min-width: 1025px) {
+  .prognoses__list {
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+  }
+
+  .prognoses__list::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+  }
+
+  .prognoses__list::-webkit-scrollbar-thumb {
+    background: rgba(12, 83, 158, 0.35);
+    border-radius: 4px;
+  }
 }
 
 .prognoses__prognose_wrapper {

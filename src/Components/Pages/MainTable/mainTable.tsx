@@ -179,6 +179,7 @@ export default function MainTable() {
     const parts = name.split(/\s+/).filter(Boolean);
     return parts.map((part, index) => (
       <span className="playerNamePart" key={`${part}-${index}`}>
+        {index > 0 ? ' ' : null}
         {part}
       </span>
     ));

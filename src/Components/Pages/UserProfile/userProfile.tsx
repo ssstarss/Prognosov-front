@@ -55,6 +55,9 @@ export default function UserProfile() {
             className="userProfileAvatar"
             placeholderClassName="userProfileAvatarPlaceholder"
           />
+          <div className="userName">
+            <h1>{user?.name ?? '-'}</h1>
+          </div>
         </div>
         <div className="userProfileDataWrapper">
           <div className=" modalEntityField">

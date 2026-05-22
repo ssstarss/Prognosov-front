@@ -1,6 +1,109 @@
-.option,
-.selectItem {
+@use '../../variables.scss' as *;
+
+.chooseOption {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.chooseOption__trigger {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 6px 28px 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  background: #fff;
+  color: $dark-blue;
   font-size: 16px;
   font-weight: bold;
-  // margin-bottom: 10px;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid $dark-blue;
+    transform: translateY(-25%);
+    pointer-events: none;
+  }
+}
+
+.chooseOption__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chooseOption__list {
+  position: absolute;
+  z-index: 1300;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  background: #fff;
+  border: 1px solid $dark-blue;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 24px rgba(9, 20, 43, 0.18),
+    0 2px 8px rgba(9, 20, 43, 0.1);
+  max-height: min(280px, 45dvh);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chooseOption__option {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: $dark-blue;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: left;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chooseOption__option:hover,
+.chooseOption__option:focus-visible {
+  background: $light-blue;
+  outline: none;
+}
+
+.chooseOption__option--selected {
+  background: rgba(176, 207, 248, 0.45);
+}
+
+/* В формах на белом фоне — та же рамка, что у input */
+.formWrapper .chooseOption__trigger,
+.modalEntityForm .chooseOption__trigger,
+.entityPageForm .chooseOption__trigger {
+  border-color: $transparent-blue;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $dark-blue;
+    outline: none;
+  }
 }

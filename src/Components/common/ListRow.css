@@ -18,6 +18,9 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
   min-height: 52px;
   border: 1px solid #203b69;
   border-radius: 8px;
@@ -34,9 +37,14 @@
 }
 
 .listName {
-  font-size: 1rem;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.2rem;
   margin: 0;
   color: #203b69;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .entityListIdentity {
@@ -44,12 +52,16 @@
   align-items: center;
   gap: 12px;
   color: #203b69;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .listActions {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .listActions--compact {
@@ -81,7 +93,7 @@
   }
 
   .listName {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
 
   .entityListIdentity {

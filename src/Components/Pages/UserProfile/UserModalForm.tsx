@@ -3,7 +3,6 @@ import { UserProfile } from '../../../interfaces/types';
 import { updateUser } from './updateUser';
 import UserForm, { UserFormData } from './UserForm';
 import type React from 'react';
-import { createData } from '../FillBase/fetchData';
 import fetchData from '../../../functions/fetchData';
 import { useState } from 'react';
 import { appState } from '../../../constants';

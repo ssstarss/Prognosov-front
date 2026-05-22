@@ -1,0 +1,109 @@
+// Телефон в landscape (низкий viewport): компактная шапка + контент от верха до низа
+@media (orientation: landscape) and (max-height: 520px) {
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .appShell {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .headerWrapper {
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    justify-content: flex-start;
+  }
+
+  .bottomBar {
+    height: auto;
+    min-height: 0;
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    gap: 8px;
+    font-size: 0.85rem;
+  }
+
+  .bottomBarControls .chooseOption__trigger {
+    height: 32px;
+    min-height: 32px;
+    padding: 4px 24px 4px 8px;
+    font-size: 1rem;
+  }
+
+  .pageWrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: auto !important;
+    max-height: none;
+    margin: 0;
+    padding: 0 4px 4px !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+  }
+
+  .pageWrapper.pageWrapper--matchList {
+    padding: 0 4px 4px !important;
+  }
+
+  .mainTablePageWrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 12px;
+  }
+
+  .mainTablePageWrapper .formHeader {
+    display: none;
+  }
+
+  .mainTablePageWrapper .formHeaderWrapper {
+    padding: 4px 6px 0 !important;
+    margin: 0 !important;
+    min-height: 0;
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
+  .mainTableHeaderControls {
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    gap: 4px;
+
+    label {
+      margin: 0;
+      line-height: 1;
+    }
+
+    input[type='checkbox'] {
+      margin: 0;
+    }
+  }
+
+  .mainTableWrapper {
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .mainTable thead tr.mainTableHeader {
+    margin-top: 0 !important;
+    height: auto;
+  }
+
+  .mainTableHeader {
+    margin-top: 0 !important;
+    height: auto;
+  }
+}

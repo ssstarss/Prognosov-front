@@ -2,7 +2,7 @@
 // Конфликтующие правила страниц можно по-прежнему переопределять ниже по коду.
 @media (max-width: 767px) {
   html {
-    font-size: 93.75%;
+    font-size: 100%;
   }
 
   h3,
@@ -33,6 +33,6 @@
 
   .modalEntityFieldLabel {
     min-width: 96px;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
 }

@@ -1,9 +1,7 @@
 import { useState } from 'react';
-
 import { Tournament, User, UserOnTournament } from '../../../../interfaces/types';
 import './addUserOnTournament.scss';
 import '../../../common/ModalEntityForm.scss';
-import { createData } from '../../FillBase/fetchData';
 import ConfirmPopUp from '../../../ConfirmPopUp/confirmPopup';
 import ChooseOptionWithFilter from '../../../../Components/chooseOption/withFilter/chooseOptionFilter';
 import EntityModalForm from '../../../common/EntityModalForm';
