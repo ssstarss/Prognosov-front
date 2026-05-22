@@ -3,8 +3,9 @@ import { SetStateAction, Dispatch, useEffect, useState } from 'react';
 import { Game, Team } from '../../../../interfaces/interfaces';
 import ChooseOptionFilter from '../../../chooseOption/withFilter/chooseOptionFilter';
 import fetchData from '../../../../functions/fetchData';
+import { fetchGamesWithTeams } from '../../../../functions/fetchCompetitionGames';
 import { addData, updateData } from '../../../../functions/updateData';
-import { Competition } from '../../FillBase/types';
+import { Competition } from '../../../../interfaces/types';
 
 type TeamOption = { id: number; name: string };
 const pad2 = (value: number) => String(value).padStart(2, '0');
@@ -145,7 +146,7 @@ const NewGame = (props: {
         const { id, ...createPayload } = newGame;
         await addData('/matches', createPayload as any);
       }
-      const updatedGames = await fetchData(`/matches/${competition.id}`, setGames);
+      const updatedGames = await fetchGamesWithTeams(competition.id);
       setGames(updatedGames);
       setShowModal(false);
     } catch (error) {

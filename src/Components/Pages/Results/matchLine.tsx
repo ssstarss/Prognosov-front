@@ -8,7 +8,7 @@ import MatchRowBase from '../prognoses/MatchRowBase';
 import NewGame from './newGame/newGame';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';
-import { Competition } from '../FillBase/types';
+import { Competition } from '../../../interfaces/types';
 
 interface MyProps {
   game: Game;

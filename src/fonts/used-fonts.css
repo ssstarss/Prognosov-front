@@ -1,0 +1,65 @@
+/* Druk Cyr — веса из стилей: 400 (body/login), 500, 700 (bold), 800/900 (Druk Text) */
+@font-face {
+  font-family: 'Druk Cyr';
+  src: url('./DrukCur/DrukCyr-Super.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Druk Cyr';
+  src: url('./DrukCur/DrukCyr-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Druk Cyr';
+  src: url('./DrukCur/DrukCyr-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Druk Cyr';
+  src: url('./DrukCur/DrukCyr-Heavy.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Druk Cyr';
+  src: url('./DrukCur/DrukCyr-Heavy.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Druk Wide Medium Desktop';
+  src: url('./DrukCur/Druk-Wide-Medium-Desktop.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* gameLine, ScoreEditModal — семейство «Druk Text» */
+@font-face {
+  font-family: 'Druk Text';
+  src: url('./DrukCur/DrukCyr-Heavy.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Druk Text';
+  src: url('./DrukCur/DrukCyr-Heavy.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}

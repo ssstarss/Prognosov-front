@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
 import { appState } from '../../../constants';
 import EditCompetitionForm from './editCompetitionForm';
-import { Competition } from '../FillBase/types';
+import { Competition } from '../../../interfaces/types';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import { createPortal } from 'react-dom';
 import { deleteData } from '../../../functions/updateData';

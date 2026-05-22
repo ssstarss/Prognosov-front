@@ -1,7 +1,7 @@
 import { appState, SERVER } from '../../../constants';
-import { User, Tournament, Competition, Team } from './types';
+import { User, Tournament, Competition, Team } from '../../../interfaces/types';
 import { Game, Prognose } from '../../../interfaces/interfaces';
-import { UserOnTournament } from './types';
+import { UserOnTournament } from '../../../interfaces/types';
 
 const deleteData = async (host: string) => {
   const myHeaders = {
@@ -27,15 +27,7 @@ const deleteData = async (host: string) => {
 };
 const createData = async (
   host: string,
-  data:
-    | Game[]
-    | User[]
-    | Tournament[]
-    | Competition[]
-    | Team[]
-    | UserOnTournament
-    | Prognose[]
-    | {}
+  data: Game[] | User[] | Tournament[] | Competition[] | Team[] | UserOnTournament | Prognose[] | {}
 ) => {
   const myHeaders = {
     Accept: 'application/json',

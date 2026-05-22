@@ -1,6 +1,6 @@
 import './editCompetitionForm.scss';
 import '../../common/ModalEntityForm.scss';
-import { Competition } from '../FillBase/types';
+import { Competition } from '../../../interfaces/types';
 import { SetStateAction, Dispatch, useState } from 'react';
 import { addData, updateData } from '../../../functions/updateData';
 import fetchData from '../../../functions/fetchData';

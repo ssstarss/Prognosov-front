@@ -1,4 +1,4 @@
-import { Competition, Tournament, UserOnTournament } from './Components/Pages/FillBase/types';
+import { Competition, Tournament, UserOnTournament } from './interfaces/types';
 export const appState = {
   accessToken: '',
   userID: 0,

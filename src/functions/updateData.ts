@@ -1,12 +1,6 @@
 import { appState } from '../constants';
-import { Team } from '../interfaces/interfaces';
-import {
-  Competition,
-  User,
-  UserProfile,
-  Tournament,
-  UserOnTournament,
-} from '../Components/Pages/FillBase/types';
+import { RegisterFormData, Team } from '../interfaces/interfaces';
+import { Competition, User, UserProfile, Tournament, UserOnTournament } from '../interfaces/types';
 import { SERVER } from '../constants';
 import { notifyError } from '../Components/common/notifications/notificationBus';
 import { readErrorMessage } from './errorMessage';
@@ -75,13 +69,19 @@ export const deleteData = async (host: string, data: UserOnTournament) => {
 
 export const addData = async (
   host: string,
-  data: Team | Omit<Competition, 'id'> | Omit<Tournament, 'id'> | {
-      
-    team1_id: number,
-    team2_id: number,
-    starts_at: Date,
-    competitionID: number,
-  }
+  data:
+    | Team
+    | Omit<Competition, 'id'>
+    | Omit<Tournament, 'id'>
+    | {
+        team1_id: number;
+        team2_id: number;
+        starts_at: Date;
+        competitionID: number;
+      }
+    | UserOnTournament
+    | { data: RegisterFormData & { active: boolean; id: number; role?: string } }
+    | { data: UserOnTournament  }
 ) => {
   const myHeaders = {
     Accept: 'application/json',
@@ -90,6 +90,7 @@ export const addData = async (
   };
 
   const body = JSON.stringify(data);
+  console.log('body in addData', body);
   const request = {
     method: 'POST',
     headers: myHeaders,

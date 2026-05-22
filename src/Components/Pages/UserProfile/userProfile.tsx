@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, type ReactElement } from 'react';
 import './userProfile.scss';
 import fetchData from '../../../functions/fetchData';
-import { UserProfile } from '../FillBase/types';
+import { UserProfile } from '../../../interfaces/types';
 import { appState } from '../../../constants';
 import loginRefresh from '../../../functions/loginRefresh';
 import { PopUpCanvas } from '../../PopUpCanvas/popUpCanvas';
@@ -57,30 +57,30 @@ export default function UserProfile() {
           />
         </div>
         <div className="userProfileDataWrapper">
-        <div className=" modalEntityField">
-          <h3 className=" modalEntityFieldLabel">Cellphone:</h3>
-          <h4 className="listName">{user?.cellphone ?? '-'}</h4>
-        </div>
-        <div className=" modalEntityField">
-          <h3 className=" modalEntityFieldLabel">Role:</h3>
-          <h4 className="listName">{user?.role ?? '-'}</h4>
-        </div>
-        <div className=" modalEntityField">
-          <h3 className="modalEntityFieldLabel">City:</h3>
-          <h4 className="listName">{user?.city ?? '-'}</h4>
-        </div>
-        <div className=" modalEntityField">
-          <h3 className=" modalEntityFieldLabel">Country:</h3>
-          <h4 className="listName">{user?.country ?? '-'}</h4>
-        </div>
-        <div className=" modalEntityField">
-          <h3 className=" modalEntityFieldLabel">Name:</h3>
-          <h4 className="listName">{user?.name ?? '-'}</h4>
-        </div>
-        <div className=" modalEntityField">
-          <h3 className=" modalEntityFieldLabel">Email:</h3>
-          <h4 className="listName">{user?.email ?? '-'}</h4>
-        </div>
+          <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">Cellphone:</h3>
+            <h4 className="listName">{user?.cellphone ?? '-'}</h4>
+          </div>
+          <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">Role:</h3>
+            <h4 className="listName">{user?.role ?? '-'}</h4>
+          </div>
+          <div className=" modalEntityField">
+            <h3 className="modalEntityFieldLabel">City:</h3>
+            <h4 className="listName">{user?.city ?? '-'}</h4>
+          </div>
+          <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">Country:</h3>
+            <h4 className="listName">{user?.country ?? '-'}</h4>
+          </div>
+          <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">Name:</h3>
+            <h4 className="listName">{user?.name ?? '-'}</h4>
+          </div>
+          <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">Email:</h3>
+            <h4 className="listName">{user?.email ?? '-'}</h4>
+          </div>
         </div>
       </EntityPageLayout>
     </div>

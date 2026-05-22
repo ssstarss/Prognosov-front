@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './usersOnTornament.scss';
 import '../../common/ListRow.css';
 import fetchData from '../../../functions/fetchData';
-import { Tournament, User, UserOnTournament } from '../FillBase/types';
+import { Tournament, User, UserOnTournament } from '../../../interfaces/types';
 import { appState } from '../../../constants';
 import ChooseOption from '../../chooseOption/chooseOption';
 import { deleteData } from '../../../functions/updateData';
@@ -83,7 +83,10 @@ export default function UsersOnTournament() {
           />
         }
         action={
-          <button className="submitFormButton shortButton" onClick={() => setShowModalAddUser(true)}>
+          <button
+            className="submitFormButton shortButton"
+            onClick={() => setShowModalAddUser(true)}
+          >
             Add User
           </button>
         }
@@ -92,5 +95,4 @@ export default function UsersOnTournament() {
       </EntityPageLayout>
     </div>
   );
-  
 }

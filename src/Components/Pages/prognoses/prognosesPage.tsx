@@ -1,6 +1,7 @@
 import './prognoses.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
+import { fetchGamesWithTeams } from '../../../functions/fetchCompetitionGames';
 import { appState } from '../../../constants';
 import { Game, Prognose } from '../../../interfaces/interfaces';
 import MatchLine from './gameLine';
@@ -12,10 +13,16 @@ export default function PrognosesPage() {
   const [prognoses, setPrognoses] = useState<Prognose[]>();
   const [games, setGames] = useState<Game[]>();
   useEffect(() => {
-    if (!tournament?.id) return;
+    if (!tournament?.id || !tournament.competitionID) return;
     fetchData(`/prognoses/${tournament.id}`, setPrognoses);
-    fetchData(`/matches/${tournament.id}`, setGames);
-  }, [tournament?.id]);
+    let cancelled = false;
+    fetchGamesWithTeams(tournament.competitionID).then((loaded) => {
+      if (!cancelled) setGames(loaded);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [tournament?.id, tournament.competitionID]);
   appState.currentTournament = tournament;
   if (tournament?.id) localStorage.setItem('currentTournamentID', tournament.id.toString());
 

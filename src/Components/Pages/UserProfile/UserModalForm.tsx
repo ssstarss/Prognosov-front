@@ -1,5 +1,5 @@
 import './editUserForm.css';
-import { UserProfile } from '../FillBase/types';
+import { UserProfile } from '../../../interfaces/types';
 import { updateUser } from './updateUser';
 import UserForm, { UserFormData } from './UserForm';
 import type React from 'react';
@@ -10,6 +10,7 @@ import { appState } from '../../../constants';
 import { changeEmailRequest } from '../../../functions/changeEmailRequest';
 import { changeEmailConfirm } from '../../../functions/changeEmailConfirm';
 import CodeInputModal from '../login/CodeInputModal';
+import { addData } from '../../../functions/updateData';
 
 interface EditUserFormProps {
   mode?: 'edit' | 'add';
@@ -104,8 +105,8 @@ export default function UserModalForm({
 
     try {
       if (!setUsers) return;
-      const payload = { ...data, active: true };
-      await createData('/users', payload);
+      const payload = { data: { ...data, active: true, id: 0 } };
+      await addData('/users', payload);
       await fetchData('/users', setUsers);
       onClose();
     } catch (error: unknown) {

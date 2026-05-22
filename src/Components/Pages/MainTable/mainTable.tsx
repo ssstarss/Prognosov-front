@@ -1,8 +1,9 @@
 import './mainTable.scss';
 import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
 import { appState } from '../../../constants';
-import { Competition, UserOnTournament } from '../FillBase/types';
+import { Competition, UserOnTournament } from '../../../interfaces/types';
 import fetchData from '../../../functions/fetchData';
+import { fetchCompetitionWithGamesAndTeams } from '../../../functions/fetchCompetitionGames';
 import { Game, Prognose } from '../../../interfaces/interfaces';
 
 import GameCell from './GameCell';
@@ -36,10 +37,14 @@ export default function MainTable() {
 
   useEffect(() => {
     if (!currentTournament?.competitionID) return;
-    // Всегда с сервера: вложенный `competition` из списка турниров часто без `games` или устаревает при смене турнира.
-    fetchData(`/competitions/${currentTournament.competitionID}`, (competition: Competition) => {
-      setCurrentCompetition(competition);
+    let cancelled = false;
+    // games без teams в JSON; команды — один раз GET /teams/by-competition/:id
+    fetchCompetitionWithGamesAndTeams(currentTournament.competitionID).then((competition) => {
+      if (!cancelled && competition) setCurrentCompetition(competition);
     });
+    return () => {
+      cancelled = true;
+    };
   }, [currentTournament?.id, currentTournament?.competitionID]);
 
   const games = useMemo((): Game[] => {
@@ -144,26 +149,29 @@ export default function MainTable() {
     </tr>
   );
 
-  const updatePrognoseInUsers = useCallback((updatedPrognose: Prognose) => {
-    setUsersOnTournametns((prev) => {
-      const list = Array.isArray(prev) ? prev : [];
-      return list.map((u) => {
-        if (u.userID !== updatedPrognose.userOnTournamentUserID) return u;
-        const existing = u.prognoses ?? [];
-        const prognoses = existing.some((p) => p.gameID === updatedPrognose.gameID)
-          ? existing.map((p) =>
-              p.gameID === updatedPrognose.gameID
-                ? {
-                    ...updatedPrognose,
-                    game: updatedPrognose.game ?? gameById.get(updatedPrognose.gameID)!,
-                  }
-                : p
-            )
-          : [...existing, updatedPrognose];
-        return { ...u, prognoses };
+  const updatePrognoseInUsers = useCallback(
+    (updatedPrognose: Prognose) => {
+      setUsersOnTournametns((prev) => {
+        const list = Array.isArray(prev) ? prev : [];
+        return list.map((u) => {
+          if (u.userID !== updatedPrognose.userOnTournamentUserID) return u;
+          const existing = u.prognoses ?? [];
+          const prognoses = existing.some((p) => p.gameID === updatedPrognose.gameID)
+            ? existing.map((p) =>
+                p.gameID === updatedPrognose.gameID
+                  ? {
+                      ...updatedPrognose,
+                      game: updatedPrognose.game ?? gameById.get(updatedPrognose.gameID)!,
+                    }
+                  : p
+              )
+            : [...existing, updatedPrognose];
+          return { ...u, prognoses };
+        });
       });
-    });
-  }, [gameById]);
+    },
+    [gameById]
+  );
 
   const renderPlayerName = (fullName?: string) => {
     const name = (fullName || '').trim();

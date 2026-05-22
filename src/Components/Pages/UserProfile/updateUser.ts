@@ -1,4 +1,4 @@
-import { UserProfile } from '../FillBase/types';
+import { UserProfile } from '../../../interfaces/types';
 import { updateData } from '../../../functions/updateData';
 
 export interface UpdateUserFormData {
@@ -34,16 +34,17 @@ export async function updateUser(
     country: formData.country ?? user.country,
     avatar: formData.avatar ?? user.avatar,
   };
-  const requestData: Partial<UpdateUserFormData> & Pick<UpdateUserFormData, 'name' | 'cellphone'> = {
-    name: updatedUser.name,
-    cellphone: updatedUser.cellphone,
-    city: updatedUser.city,
-    country: updatedUser.country,
-    avatar:
-      typeof updatedUser.avatar === 'string' || updatedUser.avatar === null
-        ? updatedUser.avatar
-        : undefined,
-  };
+  const requestData: Partial<UpdateUserFormData> & Pick<UpdateUserFormData, 'name' | 'cellphone'> =
+    {
+      name: updatedUser.name,
+      cellphone: updatedUser.cellphone,
+      city: updatedUser.city,
+      country: updatedUser.country,
+      avatar:
+        typeof updatedUser.avatar === 'string' || updatedUser.avatar === null
+          ? updatedUser.avatar
+          : undefined,
+    };
   if (!options?.skipEmail) {
     requestData.email = updatedUser.email;
   }

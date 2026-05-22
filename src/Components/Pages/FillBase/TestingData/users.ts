@@ -1,4 +1,4 @@
-import { User } from '../types';
+import { User } from '../../../../interfaces/types';
 
 const users: User[] = [
   {
@@ -33,7 +33,7 @@ const users: User[] = [
     role: 'user',
     city: 'Novosibirsk',
     country: 'Luxemburg',
-    active: true, 
+    active: true,
   },
   {
     id: 0,
@@ -45,7 +45,7 @@ const users: User[] = [
     city: 'Novosibirsk',
     country: 'Russia',
     active: true,
-    },
+  },
   {
     id: 0,
     name: 'a',
@@ -56,8 +56,7 @@ const users: User[] = [
     city: 'Moscow',
     country: 'Russia',
     active: true,
-    },
-  
+  },
 ];
 
 export default users;

@@ -7,8 +7,9 @@ import users from './TestingData/users';
 import tournaments from './TestingData/tournaments';
 import { Prognose } from '../../../interfaces/interfaces';
 import fetchData from '../../../functions/fetchData';
-import { Competition, Tournament, User } from './types';
-import { UserOnTournament } from './types';
+import { fetchCompetitionWithGamesAndTeams } from '../../../functions/fetchCompetitionGames';
+import { Competition, Tournament, User } from '../../../interfaces/types';
+import { UserOnTournament } from '../../../interfaces/types';
 
 async function fillData() {
   await deleteData('/fillCompetitions');
@@ -35,7 +36,10 @@ async function fillData() {
   const tournamentOnServer: Tournament[] = await fetchData('/tournaments');
   await deleteData('/fillUsersOnTournament');
   for (const tournament of tournamentOnServer) {
-    const competition: Competition = await fetchData(`/competitions/${tournament.competitionID}`);
+    const competition: Competition | undefined = await fetchCompetitionWithGamesAndTeams(
+      tournament.competitionID
+    );
+    if (!competition) continue;
 
     for (const user of usersOnServer) {
       if (user.role === 'admin' || user.role === 'superadmin') continue;
@@ -86,7 +90,7 @@ async function fillData() {
         tournament,
       };
 
-      usersOnTournament.push(userOnTournament);
+    //  usersOnTournament.push(userOnTournament);
       await createData('/fillUsersOnTournament', userOnTournament);
     }
   }

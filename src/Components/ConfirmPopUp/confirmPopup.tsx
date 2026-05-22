@@ -6,7 +6,7 @@ import {
   UserProfile,
   Tournament,
   UserOnTournament,
-} from '../Pages/FillBase/types';
+} from '../../interfaces/types';
 import './confirmPopUp.css';
 
 export default function ConfirmPopUp(props: {

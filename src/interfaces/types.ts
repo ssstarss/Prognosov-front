@@ -1,4 +1,4 @@
-import { Game, Prognose } from '../../../interfaces/interfaces';
+import { Game, Prognose } from './interfaces';
 
 type Competition = {
   id: number;
@@ -54,6 +54,7 @@ interface UserProfile {
 }
 
 interface UserOnTournament {
+  id?: number;
   result: number;
   resultCup: number;
   prognoses?: Prognose[];

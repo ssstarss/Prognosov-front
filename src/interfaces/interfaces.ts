@@ -1,4 +1,4 @@
-import { Tournament, User } from '../Components/Pages/FillBase/types';
+import { Tournament, User } from './types';
 
 type Credetials = {
   email: string;
@@ -39,6 +39,8 @@ type Game = {
   id: number;
   starts_at: Date;
   competitionID: number;
+  team1_id?: number;
+  team2_id?: number;
   team1?: Team;
   team2?: Team;
   team1_result?: number;

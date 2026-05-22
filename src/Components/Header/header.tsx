@@ -2,7 +2,7 @@ import './header.scss';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import ChooseOption from '../chooseOption/chooseOption';
-import { Tournament } from '../Pages/FillBase/types';
+import { Tournament } from '../../interfaces/types';
 import { useTournamentContext } from '../../context/TournamentContext';
 import AvatarCircle from '../common/AvatarCircle';
 

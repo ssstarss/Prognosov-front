@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import fetchData from '../../../functions/fetchData';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
-import { UserProfile } from '../FillBase/types';
+import { UserProfile } from '../../../interfaces/types';
 import UserModalForm from '../UserProfile/UserModalForm';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';

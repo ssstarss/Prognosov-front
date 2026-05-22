@@ -1,6 +1,6 @@
 import './editTournament.scss';
 import '../../common/ModalEntityForm.scss';
-import { Competition, Tournament, User, UserOnTournament } from '../FillBase/types';
+import { Competition, Tournament, User, UserOnTournament } from '../../../interfaces/types';
 import { SetStateAction, Dispatch, useState, useEffect } from 'react';
 import { addData, updateData } from '../../../functions/updateData';
 import ChooseOption from '../../chooseOption/chooseOption';
@@ -105,14 +105,12 @@ export default function EditTournamentForm(props: {
     </EntityModalForm>
   );
   async function submitForm() {
-    const updatedTournament: Tournament = {
+    const updatedTournament = {
       id: props.tournament.id,
       name: tournamentName,
       comments: tournamentComments,
       competitionID: tournamentCompetition?.id as number,
-      competition: tournamentCompetition as Competition | undefined,
       active: true,
-      usersOnTournament: props.tournament.usersOnTournament,
       roomAdminID: roomAdmin.id,
     };
     if (props.addNewTournament) {

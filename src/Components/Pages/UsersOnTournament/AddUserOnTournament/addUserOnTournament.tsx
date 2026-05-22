@@ -1,12 +1,13 @@
 import { useState } from 'react';
 
-import { Tournament, User, UserOnTournament } from '../../FillBase/types';
+import { Tournament, User, UserOnTournament } from '../../../../interfaces/types';
 import './addUserOnTournament.scss';
 import '../../../common/ModalEntityForm.scss';
 import { createData } from '../../FillBase/fetchData';
 import ConfirmPopUp from '../../../ConfirmPopUp/confirmPopup';
 import ChooseOptionWithFilter from '../../../../Components/chooseOption/withFilter/chooseOptionFilter';
 import EntityModalForm from '../../../common/EntityModalForm';
+import { addData } from '../../../../functions/updateData';
 
 export default function AddUserOnTournament(props: {
   currentTournament: Tournament;
@@ -24,7 +25,7 @@ export default function AddUserOnTournament(props: {
           message="Are you sure you want to add this user to the tournament?"
           data={{ userID: currentUser.id, tournamentID: props.currentTournament.id }}
           action={async (_host: string, data: { userID: number; tournamentID: number }) => {
-            await createData(`/usersOnTournaments`, data);
+            await addData(`/usersOnTournaments`, { data: { ...data } as UserOnTournament });
             /* ConfirmPopUp обновляет список только при result === 200 (как deleteData/addData) */
             return 200;
           }}
@@ -57,14 +58,14 @@ export default function AddUserOnTournament(props: {
           </>
         }
       >
-          <div className="modalEntityFieldBlock">
-            <h3 className="modalEntityFieldLabel">User</h3>
-            <ChooseOptionWithFilter<User>
-              currentOption={currentUser}
-              setChosenOption={setCurrentUser}
-              options={props.users}
-            />
-          </div>
+        <div className="modalEntityFieldBlock">
+          <h3 className="modalEntityFieldLabel">User</h3>
+          <ChooseOptionWithFilter<User>
+            currentOption={currentUser}
+            setChosenOption={setCurrentUser}
+            options={props.users}
+          />
+        </div>
       </EntityModalForm>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Competition, Tournament } from '../types';
+import { Competition, Tournament } from '../../../../interfaces/types';
 
 const tournaments: Tournament[] = [
   {
@@ -7,7 +7,7 @@ const tournaments: Tournament[] = [
     competitionID: 2,
     comments: 'Pronin davai davai',
     active: true,
-    roomAdminID:4
+    roomAdminID: 4,
   },
 
   {
@@ -16,7 +16,7 @@ const tournaments: Tournament[] = [
     competitionID: 1,
     comments: 'Vinokurov davai davai',
     active: true,
-    roomAdminID:4
+    roomAdminID: 4,
   },
 ];
 export default tournaments;

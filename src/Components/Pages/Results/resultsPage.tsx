@@ -1,9 +1,10 @@
 import './results.css';
 import { useEffect, useState } from 'react';
 import fetchData from '../../../functions/fetchData';
+import { fetchGamesWithTeams } from '../../../functions/fetchCompetitionGames';
 import { appState } from '../../../constants';
 import { Game } from '../../../interfaces/interfaces';
-import { Competition } from '../FillBase/types';
+import { Competition } from '../../../interfaces/types';
 import { useTournamentContext } from '../../../context/TournamentContext';
 
 import MatchLine from './matchLine';
@@ -33,9 +34,15 @@ export default function GamesPage() {
   }, [currentTournament, competitions]);
 
   useEffect(() => {
-    if (!currentTournament?.id) return;
-    fetchData(`/matches/${currentTournament.id}`, setGames);
-  }, [currentTournament?.id]);
+    if (!currentTournament?.competitionID) return;
+    let cancelled = false;
+    fetchGamesWithTeams(currentTournament.competitionID).then((loaded) => {
+      if (!cancelled) setGames(loaded);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [currentTournament?.id, currentTournament?.competitionID]);
 
   if (competition?.id) {
     appState.currentCompetition = competition;

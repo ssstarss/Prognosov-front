@@ -3,7 +3,7 @@ import App from './App';
 import ErrorNotifications from './Components/common/notifications/ErrorNotifications';
 import GlobalLoadingOverlay from './Components/common/GlobalLoadingOverlay';
 import { installFetchLoadingTracker } from './context/loadingStore';
-import './fonts/DrukCur/stylesheet.css';
+import './fonts/used-fonts.css';
 import './fonts/Manrope/stylesheet.css';
 import './main.scss';
 

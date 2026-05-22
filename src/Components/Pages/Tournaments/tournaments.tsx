@@ -3,7 +3,7 @@ import './tournaments.css';
 import '../../common/ListRow.css';
 
 import { appState } from '../../../constants';
-import { Competition, Tournament, User } from '../FillBase/types';
+import { Competition, Tournament, User } from '../../../interfaces/types';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
