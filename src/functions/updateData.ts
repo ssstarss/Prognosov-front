@@ -4,6 +4,7 @@ import { Competition, User, UserProfile, Tournament, UserOnTournament } from '..
 import { SERVER } from '../constants';
 import { notifyError } from '../Components/common/notifications/notificationBus';
 import { readErrorMessage } from './errorMessage';
+import { apiFetch } from './apiClient';
 
 export const updateData = async (
   host: string,
@@ -22,10 +23,7 @@ export const updateData = async (
     body,
   };
   try {
-    const response = await fetch(SERVER + host, request);
-
-    if (response.status === 401)
-      throw Error(`Error reading ${SERVER + host} ${response.status} ${response.statusText} `);
+    const response = await apiFetch(SERVER + host, request);
 
     if (!response.ok) {
       const message = await readErrorMessage(response, `Ошибка обновления данных: ${host}`);
@@ -53,7 +51,7 @@ export const deleteData = async (host: string, data: UserOnTournament) => {
     headers: myHeaders,
   };
   try {
-    const response = await fetch(SERVER + host, request);
+    const response = await apiFetch(SERVER + host, request);
 
     if (!response.ok) {
       const message = await readErrorMessage(response, `Ошибка удаления данных: ${host}`);
@@ -97,7 +95,7 @@ export const addData = async (
     body,
   };
   try {
-    const response = await fetch(SERVER + host, request);
+    const response = await apiFetch(SERVER + host, request);
 
     if (!response.ok) {
       const message = await readErrorMessage(response, `Ошибка добавления данных: ${host}`);

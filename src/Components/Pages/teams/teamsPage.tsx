@@ -6,8 +6,6 @@ import { Team } from '../../../interfaces/interfaces';
 import EditTeamPage from './editTeam';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import { deleteData } from '../../../functions/updateData';
-import { SERVER } from '../../../constants';
-import { appState } from '../../../constants';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 import AvatarCircle from '../../common/AvatarCircle';
@@ -93,12 +91,9 @@ export default function TeamsPage() {
             <select
               className="selectTeamType"
               onChange={async (event) => {
-                let url = new URL(`${SERVER}/teams`);
-                url.searchParams.append('type', event.target.value);
-
-                const result = await fetchDataTeam(url.href);
-
-                setTeams(result);
+                const type = encodeURIComponent(event.target.value);
+                const result = await fetchData(`/teams?type=${type}`);
+                if (result) setTeams(result);
               }}
             >
               <option value="*">ALL</option>
@@ -133,28 +128,4 @@ export default function TeamsPage() {
       </EntityPageLayout>
     </div>
   );
-
-  async function fetchDataTeam(host: string, setFunc?: Function) {
-    const myHeaders = {
-      Accept: 'application/json',
-      'Content-type': 'application/json',
-      Authorization: 'Bearer ' + appState.accessToken,
-    };
-    const request = {
-      method: 'GET',
-      headers: myHeaders,
-    };
-
-    try {
-      const response = await fetch(host, request);
-      if (response.status === 401)
-        throw Error(`Error reading ${host} ${response.status} ${response.statusText} `);
-
-      const res = await response.json();
-      if (setFunc) setFunc(res);
-      else return res;
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  }
 }

@@ -3,6 +3,7 @@ import { appState } from '../../../../constants';
 import { SERVER } from '../../../../constants';
 import { notifyError } from '../../../common/notifications/notificationBus';
 import { readErrorMessage } from '../../../../functions/errorMessage';
+import { apiFetch } from '../../../../functions/apiClient';
 
 /** Только поля для API: без вложенного game (иначе циклы game.prognoses → JSON.stringify падает). */
 function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
@@ -48,9 +49,7 @@ export default async function updatePrognoseHandle(prognose: Prognose) {
   };
   if (prognose.id != null) request.method = 'PUT';
   try {
-    const response = await fetch(`${SERVER}/prognoses`, request);
-    if (response.status === 401)
-      throw Error(`Error creating prognoses ${response.status} ${response.statusText} `);
+    const response = await apiFetch(`${SERVER}/prognoses`, request);
     if (!response.ok) {
       const message = await readErrorMessage(
         response,

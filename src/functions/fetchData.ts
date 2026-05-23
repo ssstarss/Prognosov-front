@@ -2,6 +2,7 @@ import { appState } from '../constants';
 import { SERVER } from '../constants';
 import { notifyError } from '../Components/common/notifications/notificationBus';
 import { readErrorMessage } from './errorMessage';
+import { apiFetch } from './apiClient';
 
 const fetchData = async (host: string, setFunc?: Function) => {
   const myHeaders = {
@@ -16,7 +17,7 @@ const fetchData = async (host: string, setFunc?: Function) => {
   };
 
   try {
-    const response = await fetch(URL, request);
+    const response = await apiFetch(URL, request);
     if (!response.ok) {
       const message = await readErrorMessage(response, `Ошибка загрузки данных: ${host}`);
       throw Error(message);
