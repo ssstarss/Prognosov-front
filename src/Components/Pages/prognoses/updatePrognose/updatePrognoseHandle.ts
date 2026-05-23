@@ -1,9 +1,6 @@
 import { Prognose } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
-import { SERVER } from '../../../../constants';
-import { notifyError } from '../../../common/notifications/notificationBus';
-import { readErrorMessage } from '../../../../functions/errorMessage';
-import { apiFetch } from '../../../../functions/apiClient';
+import { apiRequest } from '../../../../functions/apiRequest';
 
 /** Только поля для API: без вложенного game (иначе циклы game.prognoses → JSON.stringify падает). */
 function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
@@ -36,32 +33,12 @@ function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
 }
 
 export default async function updatePrognoseHandle(prognose: Prognose) {
-  const body = JSON.stringify(leanPrognosePayload(prognose));
-  const myHeaders = {
-    Accept: 'application/json',
-    'Content-type': 'application/json',
-    Authorization: 'Bearer ' + appState.accessToken,
-  };
-  const request = {
-    method: 'POST',
-    headers: myHeaders,
-    body,
-  };
-  if (prognose.id != null) request.method = 'PUT';
-  try {
-    const response = await apiFetch(`${SERVER}/prognoses`, request);
-    if (!response.ok) {
-      const message = await readErrorMessage(
-        response,
-        `Ошибка сохранения прогноза: ${response.status} ${response.statusText}`
-      );
-      throw Error(message);
-    }
-    const result = await response.json().catch(() => null);
-    return result;
-  } catch (e: any) {
-    notifyError(e?.message || 'Ошибка сохранения прогноза');
-    console.log(e?.message ?? e);
-    throw e;
-  }
+  const result = await apiRequest({
+    host: '/prognoses',
+    method: prognose.id != null ? 'PUT' : 'POST',
+    body: leanPrognosePayload(prognose),
+    errorMessage: 'Ошибка сохранения прогноза',
+    rethrow: true,
+  });
+  return result?.data;
 }

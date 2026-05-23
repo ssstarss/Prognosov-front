@@ -1,68 +1,28 @@
-import { appState } from '../constants';
 import { RegisterFormData, Team } from '../interfaces/interfaces';
 import { Competition, User, UserProfile, Tournament, UserOnTournament } from '../interfaces/types';
-import { SERVER } from '../constants';
-import { notifyError } from '../Components/common/notifications/notificationBus';
-import { readErrorMessage } from './errorMessage';
-import { apiFetch } from './apiClient';
+import { apiRequest } from './apiRequest';
 
 export const updateData = async (
   host: string,
   data: Team | User | UserProfile | Partial<User> | Competition | Tournament
 ) => {
-  const myHeaders = {
-    Accept: 'application/json',
-    'Content-type': 'application/json',
-    Authorization: 'Bearer ' + appState.accessToken,
-  };
-
-  const body = JSON.stringify(data);
-  const request = {
+  const result = await apiRequest({
+    host,
     method: 'PUT',
-    headers: myHeaders,
-    body,
-  };
-  try {
-    const response = await apiFetch(SERVER + host, request);
-
-    if (!response.ok) {
-      const message = await readErrorMessage(response, `Ошибка обновления данных: ${host}`);
-      throw Error(message);
-    }
-
-    const res = await response.json();
-
-    return response.status;
-  } catch (e: any) {
-    notifyError(e?.message || `Ошибка обновления данных: ${host}`);
-    console.error('Update error:', e.message);
-    throw e;
-  }
+    body: data,
+    errorMessage: `Ошибка обновления данных: ${host}`,
+    rethrow: true,
+  });
+  return result?.status;
 };
+
 export const deleteData = async (host: string, data: UserOnTournament) => {
-  const myHeaders = {
-    Accept: 'application/json',
-    'Content-type': 'application/json',
-    Authorization: 'Bearer ' + appState.accessToken,
-  };
-
-  const request = {
+  const result = await apiRequest({
+    host,
     method: 'DELETE',
-    headers: myHeaders,
-  };
-  try {
-    const response = await apiFetch(SERVER + host, request);
-
-    if (!response.ok) {
-      const message = await readErrorMessage(response, `Ошибка удаления данных: ${host}`);
-      throw Error(message);
-    }
-    const res = await response.json();
-    return response.status;
-  } catch (e: any) {
-    notifyError(e?.message || `Ошибка удаления данных: ${host}`);
-    console.log(e.message);
-  }
+    errorMessage: `Ошибка удаления данных: ${host}`,
+  });
+  return result?.status;
 };
 
 export const addData = async (
@@ -79,33 +39,15 @@ export const addData = async (
       }
     | UserOnTournament
     | { data: RegisterFormData & { active: boolean; id: number; role?: string } }
-    | { data: UserOnTournament  }
+    | { data: UserOnTournament }
 ) => {
-  const myHeaders = {
-    Accept: 'application/json',
-    'Content-type': 'application/json',
-    Authorization: 'Bearer ' + appState.accessToken,
-  };
-
-  const body = JSON.stringify(data);
-  console.log('body in addData', body);
-  const request = {
+  console.log('body in addData', JSON.stringify(data));
+  const result = await apiRequest({
+    host,
     method: 'POST',
-    headers: myHeaders,
-    body,
-  };
-  try {
-    const response = await apiFetch(SERVER + host, request);
-
-    if (!response.ok) {
-      const message = await readErrorMessage(response, `Ошибка добавления данных: ${host}`);
-      throw Error(message);
-    }
-    const res = await response.json();
-    console.log('result in add', response.status);
-    return response.status;
-  } catch (e: any) {
-    notifyError(e?.message || `Ошибка добавления данных: ${host}`);
-    console.log(e.message);
-  }
+    body: data,
+    errorMessage: `Ошибка добавления данных: ${host}`,
+  });
+  if (result) console.log('result in add', result.status);
+  return result?.status;
 };
