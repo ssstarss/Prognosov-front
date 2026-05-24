@@ -5,7 +5,7 @@ import ChooseOption from '../chooseOption/chooseOption';
 import { Tournament } from '../../interfaces/types';
 import { useTournamentContext } from '../../context/TournamentContext';
 import AvatarCircle from '../common/AvatarCircle';
-
+import smartBall from '../../assets/svg/smartBall.png';
 function Header() {
   const { currentTournament, setCurrentTournament, tournaments } = useTournamentContext();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -31,6 +31,7 @@ function Header() {
   return (
     <div className="headerWrapper">
       <div className="bottomBar">
+        
         <span className="bottomBarTitle">PROGNOSOV.NET</span>
         <div className="bottomBarControls">
           <span className="bottomBarLabel">Турнир:</span>
@@ -113,6 +114,9 @@ function Header() {
       ></div>
       <aside className={`mobileMenuDrawer ${isMobileMenuOpen ? 'isOpen' : ''}`}>
         <nav className="mobileNavigationMenu">
+          <NavLink to="/" className="headerLogoLink" title="Prognosov" onClick={closeMobileMenu}>
+            <img src={smartBall} alt="" className="headerLogo" />
+          </NavLink>
           <NavLink to="/login" className={'headerLink'} onClick={closeMobileMenu}>
             Login
           </NavLink>

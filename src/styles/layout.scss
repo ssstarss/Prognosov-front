@@ -86,6 +86,22 @@
   width: 100%;
   max-width: 100%;
 }
+/* fixed — вне потока, поверх контента при прокрутке rulesContent */
+.rulesContent .logo {
+  position: fixed;
+  top: calc(20vh + 24px);
+  right: max(12px, calc((100vw - min(980px, 95vw)) / 2 + 120px));
+  margin: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .rulesContent .logo {
+    top: calc(10vh + 12px);
+    right: 28px;
+  }
+}
 
 .pageCard--scrollBody {
   min-height: 0;

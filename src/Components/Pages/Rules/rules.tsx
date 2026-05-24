@@ -1,5 +1,5 @@
 import './rules.scss';
-
+import smartBall from '../../../assets/svg/smartBall.png';
 export default function RulesPage() {
   return (
     <div className="pageWrapper">
@@ -8,10 +8,12 @@ export default function RulesPage() {
           <h2 className="formHeaderTitle">ПРАВИЛА КОНКУРСА</h2>
         </div>
         <div className="rulesContent">
+          <img src={smartBall} alt="" className="logo" />
           <p className="rulesLead">Регламент конкурса прогнозов ЧМ 2026 по футболу.</p>
 
           <section className="rulesSection">
             <h3 className="rulesSectionTitle">Общие положения</h3>
+
             <p>
               Организатор конкурса - неизменный куратор Сергей, e-mail:{' '}
               <a href="mailto:s.s.star@mail.ru">s.s.star@mail.ru</a>.

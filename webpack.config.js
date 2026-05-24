@@ -28,6 +28,7 @@ module.exports = (_env, argv) => {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       hash: true, // Cache busting
+      favicon: './src/assets/svg/smartBall.png',
       filename: 'index.html',
     }),
     new NodePolyfillPlugin(),
@@ -50,6 +51,10 @@ module.exports = (_env, argv) => {
         test: /\.js$/,
         include: /node_modules\/react-dom/,
         // use: ['react-hot-loader/webpack'],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|ico|webp)$/i,
+        type: 'asset/resource',
       },
       {
         test: /\.(scss|css)$/,

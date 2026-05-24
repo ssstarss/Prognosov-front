@@ -5,7 +5,7 @@ import { Competition, UserOnTournament } from '../../../interfaces/types';
 import fetchData from '../../../functions/fetchData';
 import { fetchCompetitionWithGamesAndTeams } from '../../../functions/fetchCompetitionGames';
 import { Game, Prognose } from '../../../interfaces/interfaces';
-
+import smartBall from '../../../assets/svg/smartBall.png';
 import GameCell from './GameCell';
 import { formatDateString } from '../../../functions/formatDate';
 import AvatarCircle from '../../common/AvatarCircle';
@@ -260,6 +260,7 @@ export default function MainTable() {
     <div className="pageWrapper">
       <div className="mainTablePageWrapper">
         <div className="formHeaderWrapper ">
+          <img src={smartBall} alt="" className="logo" />
           <h2 className="formHeader">Таблица результатов</h2>
           <div className="mainTableHeaderControls">
             <input

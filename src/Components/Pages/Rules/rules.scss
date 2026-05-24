@@ -3,6 +3,7 @@
 @use '../../../styles/form.scss' as *;
 
 .rulesContent {
+  position: relative;
   overflow-y: auto;
   color: $dark-blue;
   font-family: 'Manrope', sans-serif;

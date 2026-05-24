@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import './usersOnTornament.scss';
 import '../../common/ListRow.css';
 import fetchData from '../../../functions/fetchData';
-import { Tournament, User, UserOnTournament } from '../../../interfaces/types';
-import { appState } from '../../../constants';
-import ChooseOption from '../../chooseOption/chooseOption';
+import {  User, UserOnTournament } from '../../../interfaces/types';
 import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import AddUserOnTournament from './AddUserOnTournament/addUserOnTournament';
@@ -12,14 +10,13 @@ import ModalWrapper from '../../ModalPortal/modalWrapper';
 import EntityPageLayout from '../../common/EntityPageLayout';
 import EntityListRow from '../../common/EntityListRow';
 import { createPortal } from 'react-dom';
+import {useTournamentContext} from '../../../context/TournamentContext';
 export default function UsersOnTournament() {
-  const [currentTournament, setCurrentTournament] = useState<Tournament>(
-    appState.currentTournament
-  );
+  const { currentTournament, setCurrentTournament } = useTournamentContext();
   const [usersOnTournament, setUsersOnTournament] = useState<UserOnTournament[]>(
     [] as UserOnTournament[]
   );
-  const [tournaments, setTournaments] = useState<Tournament[]>([] as Tournament[]);
+  
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [user, setUser] = useState<UserOnTournament>({} as UserOnTournament);
   const [showModalAddUser, setShowModalAddUser] = useState(false);
@@ -41,9 +38,7 @@ export default function UsersOnTournament() {
       }}
     />
   ));
-  useEffect(() => {
-    fetchData(`/tournaments`, setTournaments);
-  }, []);
+
   return (
     <div className="pageWrapper">
       {showModalDelete &&
@@ -75,13 +70,7 @@ export default function UsersOnTournament() {
       <EntityPageLayout
         title="Users On Tournament"
         className="usersOnTornamentForm"
-        controls={
-          <ChooseOption<Tournament>
-            currentOption={currentTournament}
-            setChosenOption={setCurrentTournament}
-            options={tournaments}
-          />
-        }
+        
         action={
           <button
             className="submitFormButton shortButton"
