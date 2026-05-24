@@ -55,7 +55,6 @@ const UpdatePrognose = (props: {
         appState.currentTournamentID ??
         appState.currentTournament?.id,
       userOnTournamentUserID: props.prognose.userOnTournamentUserID ?? appState.userID,
-      result: 0,
     };
 
     if (props.prognose.id != null) newPrognose.id = props.prognose.id;

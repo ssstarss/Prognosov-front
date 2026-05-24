@@ -25,12 +25,6 @@
   opacity: 0.7;
 }
 
-.prognoses__prognose_wrapper--readonly .prognoses__date,
-.prognoses__prognose_wrapper--readonly .prognoses__time {
-  color: #b8c0cc;
-  opacity: 1;
-}
-
 .prognoses__match-wrapper {
   display: flex;
   justify-content: space-between;
@@ -144,11 +138,27 @@
   color: #fff;
 }
 
+.prognose__player-score.score_black {
+  color: $dark-blue;
+  box-shadow: none;
+  background: none;
+  border: none;
+}
+
 .prognoses__separator {
   font-family: 'Druk Text', sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: $dark-blue;
+}
+
+.prognoses__prognose_wrapper--readonly .prognoses__date,
+.prognoses__prognose_wrapper--readonly .prognoses__time,
+.prognoses__prognose_wrapper--readonly .prognoses__team-name,
+.prognoses__prognose_wrapper--readonly .prognoses__team-score,
+.prognoses__prognose_wrapper--readonly .prognoses__separator {
+  color: #b8c0cc;
+  opacity: 1;
 }
 
 @media (max-width: 1024px) {

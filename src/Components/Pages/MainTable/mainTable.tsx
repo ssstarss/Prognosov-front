@@ -1,7 +1,6 @@
 import './mainTable.scss';
-import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
-import { appState } from '../../../constants';
-import { Competition, UserOnTournament } from '../../../interfaces/types';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactElement } from 'react';
+import { appState } from '../../../constants';import { Competition, UserOnTournament } from '../../../interfaces/types';
 import fetchData from '../../../functions/fetchData';
 import { fetchCompetitionWithGamesAndTeams } from '../../../functions/fetchCompetitionGames';
 import { Game, Prognose } from '../../../interfaces/interfaces';
@@ -20,11 +19,25 @@ function formatOfficialGameScore(value: unknown): string | number {
   return typeof value === 'number' && Number.isFinite(value) ? value : '-';
 }
 
-export default function MainTable() {
-  const { currentTournament } = useTournamentContext();
+function gameStartsAt(startsAt: Game['starts_at']): Date | null {
+  if (startsAt == null) return null;
+  const d = startsAt instanceof Date ? startsAt : new Date(startsAt as string);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function localDateKey(date: Date | null, fallback: string): string {
+  if (!date) return fallback;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+export default function MainTable() {  const { currentTournament } = useTournamentContext();
+  const tableWrapperRef = useRef<HTMLDivElement>(null);
+  const didScrollRef = useRef(false);
   const [showCupResult, setShowCupResult] = useState(false);
-  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>(
-    appState.usersOnTournament
+  const [usersOnTournaments, setUsersOnTournametns] = useState<UserOnTournament[]>(    appState.usersOnTournament
   );
   const [currentCompetition, setCurrentCompetition] = useState<Competition | null>(
     currentTournament?.competition ?? null
@@ -53,8 +66,65 @@ export default function MainTable() {
     return allGames.filter((game) => game.cup === true);
   }, [currentCompetition, showCupResult]);
 
-  const gameById = useMemo(() => gameByIdFromCompetition(games), [games]);
+  const scrollAnchorGameIndex = useMemo(() => {
+    if (!games.length) return -1;
 
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayStartMs = todayStart.getTime();
+
+    for (let i = 0; i < games.length; i++) {
+      const start = gameStartsAt(games[i].starts_at);
+      if (!start) continue;
+
+      const dayStart = new Date(start.getFullYear(), start.getMonth(), start.getDate()).getTime();
+      if (dayStart < todayStartMs) continue;
+
+      let anchor = i;
+      while (anchor > 0) {
+        const curr = gameStartsAt(games[anchor].starts_at);
+        const prev = gameStartsAt(games[anchor - 1].starts_at);
+        if (localDateKey(curr, '') === localDateKey(prev, '')) anchor -= 1;
+        else break;
+      }
+      return anchor;
+    }
+    return -1;
+  }, [games]);
+
+  useEffect(() => {
+    didScrollRef.current = false;
+  }, [currentTournament?.id, showCupResult]);
+
+  useLayoutEffect(() => {
+    if (!games.length || scrollAnchorGameIndex < 0 || didScrollRef.current) return;
+
+    const scrollToAnchor = (): boolean => {
+      const wrapper = tableWrapperRef.current;
+      const anchor = wrapper?.querySelector('#firstUpcomingDate');
+      if (!wrapper || !anchor) return false;
+
+      const stickyCol = wrapper.querySelector('.mainTable th:first-child');
+      const stickyWidth = stickyCol?.getBoundingClientRect().width ?? 0;
+      const left =
+        anchor.getBoundingClientRect().left -
+        wrapper.getBoundingClientRect().left +
+        wrapper.scrollLeft -
+        stickyWidth -
+        8;
+
+      wrapper.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+      didScrollRef.current = true;
+      return true;
+    };
+
+    if (scrollToAnchor()) return;
+
+    const timeoutId = window.setTimeout(scrollToAnchor, 50);
+    return () => clearTimeout(timeoutId);
+  }, [games, scrollAnchorGameIndex, currentTournament?.id, showCupResult]);
+
+  const gameById = useMemo(() => gameByIdFromCompetition(games), [games]);
   const rows = useMemo(() => {
     const source = Array.isArray(usersOnTournaments) ? usersOnTournaments : [];
     if (!showCupResult) return source;
@@ -62,22 +132,7 @@ export default function MainTable() {
     return [...source].sort((a, b) => (b.resultCup ?? 0) - (a.resultCup ?? 0));
   }, [usersOnTournaments, showCupResult]);
 
-  const gameStartsAt = (startsAt: Game['starts_at']) => {
-    if (startsAt == null) return null;
-    const d = startsAt instanceof Date ? startsAt : new Date(startsAt as string);
-    return Number.isNaN(d.getTime()) ? null : d;
-  };
-
-  const localDateKey = (date: Date | null, fallback: string) => {
-    if (!date) return fallback;
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  const gameColumnGroups = useMemo(() => {
-    let groupIndex = -1;
+  const gameColumnGroups = useMemo(() => {    let groupIndex = -1;
     return games.map((game, index) => {
       const start = gameStartsAt(game.starts_at);
       const dateKey = localDateKey(start, `unknown-${index}`);
@@ -113,8 +168,11 @@ export default function MainTable() {
         const columnClassName = gameColumnGroups[index]?.columnClassName || '';
         const gameEditable = isGamePrognoseEditable(game.starts_at);
         return (
-          <th className={`mainTableHeaderCell ${columnClassName}`.trim()} key={game.id ?? index}>
-            <div className="gameCell">
+          <th
+            id={index === scrollAnchorGameIndex ? 'firstUpcomingDate' : undefined}
+            className={`mainTableHeaderCell ${columnClassName}`.trim()}
+            key={game.id ?? index}
+          >            <div className="gameCell">
               <div className="gameCellDateWrapper">
                 <a className={`gameCellDate ${gameEditable ? '' : 'gameCellDate--muted'}`.trim()}>
                   {start ? formatDateString(start as Date, false) : ''}
@@ -273,15 +331,14 @@ export default function MainTable() {
           </div>
         </div>
 
-        <div className="mainTableWrapper">
+        <div ref={tableWrapperRef} className="mainTableWrapper">
           <table className="mainTable">
             <thead>{tableHeader}</thead>
             <tbody>
               <Raws />
             </tbody>
           </table>
-        </div>
-      </div>
+        </div>      </div>
     </div>
   );
 }

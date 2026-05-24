@@ -14,9 +14,11 @@ type MatchRowBaseProps = {
   className?: string;
   as?: 'li' | 'div';
   onClick?: () => void;
+  firstEditable?: boolean;
 };
 
 export default function MatchRowBase({
+  firstEditable = false,
   startsAt,
   team1Name,
   team2Name,
@@ -33,7 +35,7 @@ export default function MatchRowBase({
   const startDate = new Date(startsAt);
 
   return (
-    <WrapperTag className={`prognoses__prognose_wrapper ${className}`.trim()} onClick={onClick}>
+    <WrapperTag id={firstEditable ? 'firstEditable' : ''} className={`prognoses__prognose_wrapper ${className}`.trim()} onClick={onClick}>
       <div className="prognose__date-wrapper">
         <div className="prognoses__date">{formatDateString(startDate, true)}</div>
         <div className="prognoses__time">{formatTimeString(startDate)}</div>
@@ -67,7 +69,6 @@ export default function MatchRowBase({
           </div>
           <div className="prognoses__team-name">{team2Name}</div>
         </div>
-        
       </div>
       {extraRight}
     </WrapperTag>

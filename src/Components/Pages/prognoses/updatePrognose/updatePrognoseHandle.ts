@@ -26,7 +26,6 @@ function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
     team2_result: t2,
     userOnTournamentTournamentID: tournamentId,
     userOnTournamentUserID: userId,
-    result: typeof prognose.result === 'number' && !Number.isNaN(prognose.result) ? prognose.result : 0,
   };
   if (prognose.id != null) payload.id = prognose.id;
   return payload;

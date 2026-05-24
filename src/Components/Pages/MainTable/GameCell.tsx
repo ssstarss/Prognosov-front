@@ -8,6 +8,7 @@ import {
   isPrognoseDeadlineBypassRole,
 } from '../../../functions/prognoseEditPolicy';
 import { getPrognoseScoreCircleClass } from '../../../functions/prognoseScoreCircleClass';
+import editIcon from '../../../assets/edit.png';
 import { createPortal } from 'react-dom';
 import ModalWrapper from '../../ModalPortal/modalWrapper';
 
@@ -61,9 +62,13 @@ function GameCell(props: MyProps) {
           {typeof shownPrognose.team1_result === 'number' ? shownPrognose.team1_result : '-'} -{' '}
           {typeof shownPrognose.team2_result === 'number' ? shownPrognose.team2_result : '-'}
         </p>
-        <div className={`score ${color}`}>
-          {typeof shownPrognose.result === 'number' ? shownPrognose.result : '-'}
-        </div>
+        {editable ? (
+          <img src={editIcon} alt="" className="scoreEditIcon" />
+        ) : (
+          <div className={`score ${color}`}>
+            {typeof shownPrognose.result === 'number' ? shownPrognose.result : '-'}
+          </div>
+        )}
       </div>
     </td>
   );

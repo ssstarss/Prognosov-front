@@ -1,11 +1,15 @@
 import { appState } from '../constants';
 import initStartValues from './initStartValues';
 import { refreshAccessToken } from './refreshAccessToken';
+import { markSessionAnonymous, markSessionAuthenticated } from './ensureSession';
 
 /** Полный refresh при старте приложения / профиле: токены + initStartValues + шапка. */
 export default async function loginRefresh() {
   const ok = await refreshAccessToken();
-  if (!ok) return false;
+  if (!ok) {
+    markSessionAnonymous();
+    return false;
+  }
 
   await initStartValues();
 
@@ -16,5 +20,6 @@ export default async function loginRefresh() {
   const headerLinks = Array.from(document.getElementsByClassName('adminHeaderLink'));
   headerLinks.forEach((link) => ((link as HTMLElement).style.display = isAdmin ? 'block' : 'none'));
 
+  markSessionAuthenticated();
   return true;
 }

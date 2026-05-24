@@ -13,6 +13,8 @@ import MainTable from './Components/Pages/MainTable/mainTable';
 import UsersOnTournament from './Components/Pages/UsersOnTournament/usersOnTornament';
 import { TournamentProvider } from './context/TournamentContext';
 import RulesPage from './Components/Pages/Rules/rules';
+import RequireAuth from './Components/common/RequireAuth';
+
 function App() {
   return (
     <TournamentProvider>
@@ -21,18 +23,22 @@ function App() {
           <Header />
           <main className="appMain">
             <Routes>
-              <Route path="/" element={<StartPage />}></Route>
-              <Route path="/login" element={<LoginPage />}></Route>
-              <Route path="/teams" element={<TeamsPage />}></Route>
-              <Route path="/competitions" element={<CompetitionsPage />}></Route>
-              <Route path="/tournaments" element={<TournamentsPage />}></Route>
-              <Route path="/usersOnTournament" element={<UsersOnTournament />}></Route>
-              <Route path="/users" element={<UsersPage />}></Route>
-              <Route path="/mainTable" element={<MainTable />}></Route>
-              <Route path="/prognoses" element={<PrognosesPage />}></Route>
-              <Route path="/games" element={<GamesPage />}></Route>
-              <Route path="/userprofile" element={<UserProfile />}></Route>
-              <Route path="/rules" element={<RulesPage />}></Route>
+              <Route path="/" element={<StartPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/rules" element={<RulesPage />} />
+
+              <Route element={<RequireAuth />}>
+                <Route path="/teams" element={<TeamsPage />} />
+                <Route path="/competitions" element={<CompetitionsPage />} />
+                <Route path="/tournaments" element={<TournamentsPage />} />
+                <Route path="/usersOnTournament" element={<UsersOnTournament />} />
+                <Route path="/users" element={<UsersPage />} />
+                <Route path="/mainTable" element={<MainTable />} />
+                <Route path="/prognoses" element={<PrognosesPage />} />
+                <Route path="/games" element={<GamesPage />} />
+                <Route path="/userprofile" element={<UserProfile />} />
+              </Route>
+
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

@@ -37,6 +37,7 @@
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
+  scroll-behavior: smooth;
   margin: 0;
   padding: 0 4px 8px;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -90,6 +91,10 @@
 
 .prognoses__prognose_wrapper--readonly {
   cursor: default;
+}
+
+#firstEditable {
+  scroll-margin-top: 12px;
 }
 
 .prognoses__prognose_wrapper:last-child {

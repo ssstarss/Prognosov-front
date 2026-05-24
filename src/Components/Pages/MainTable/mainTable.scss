@@ -34,6 +34,7 @@
   border-bottom: none;
   overflow-y: auto;
   overflow-x: auto;
+  scroll-behavior: smooth;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -118,6 +119,10 @@
 
 .mainTableHeaderCell.dateGroupEnd {
   border-right: 1px solid $dark-blue;
+}
+
+#firstUpcomingDate {
+  scroll-margin-inline-start: 180px;
 }
 
 .gameCellDateWrapper {
@@ -358,6 +363,16 @@
   padding-top: 3px;
 }
 
+.scoreEditIcon {
+  display: block;
+  align-self: center;
+  margin: 3px auto;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
 .score,
 .prognose {
   text-align: center;
@@ -516,6 +531,11 @@
   .score,
   .prognose {
     font-size: 0.78rem;
+  }
+
+  .scoreEditIcon {
+    width: 22px;
+    height: 22px;
   }
 }
 

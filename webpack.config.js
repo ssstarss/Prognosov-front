@@ -53,6 +53,13 @@ module.exports = (_env, argv) => {
         // use: ['react-hot-loader/webpack'],
       },
       {
+        test: /[/\\]edit\.png$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'edit.png',
+        },
+      },
+      {
         test: /\.(png|jpe?g|gif|svg|ico|webp)$/i,
         type: 'asset/resource',
       },

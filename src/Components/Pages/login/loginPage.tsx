@@ -10,6 +10,7 @@ import CodeInputModal from './CodeInputModal';
 import { RegisterFormData } from '../../../interfaces/interfaces';
 import ForgotPasswordFlowModal from '../../common/ForgotPasswordFlowModal';
 import validateEmail from '../../../functions/validateEmail';
+import loginRefresh from '../../../functions/loginRefresh';
 
 type Tab = 'login' | 'register';
 
@@ -71,8 +72,7 @@ export default function LoginPage() {
       localStorage.setItem('refreshToken', result.refreshToken);
       appState.accessToken = result.accessToken;
       appState.userID = result.userID ?? 0;
-      const headerLinks = document.getElementsByClassName('adminHeaderLink');
-      Array.from(headerLinks).forEach((link) => ((link as HTMLElement).style.display = 'none'));
+      await loginRefresh();
       setShowCodeInput(false);
       setPendingFormData(null);
       navigate('/competitions');

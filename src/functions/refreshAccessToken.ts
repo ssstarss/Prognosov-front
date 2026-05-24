@@ -1,5 +1,6 @@
 import { appState, SERVER } from '../constants';
 import { readErrorMessage } from './errorMessage';
+import { resetSessionBootstrap } from './ensureSession';
 
 /** Один refresh на все параллельные 401 — иначе бэкенд инвалидирует лишние refresh-токены. */
 let refreshInFlight: Promise<boolean> | null = null;
@@ -9,6 +10,7 @@ export function clearAuthSession() {
   appState.accessToken = '';
   appState.userID = 0;
   appState.userRole = 'user';
+  resetSessionBootstrap();
 }
 
 export function redirectToLogin() {

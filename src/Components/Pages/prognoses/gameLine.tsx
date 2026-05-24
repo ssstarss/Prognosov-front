@@ -10,6 +10,7 @@ import MatchRowBase from './MatchRowBase';
 
 interface MyProps {
   prognose: Prognose;
+  firstEditable: boolean;
 }
 export default function PrognoseLine(props: MyProps) {
   const [prognose, setPrognose] = useState<Prognose>(props.prognose);
@@ -17,6 +18,7 @@ export default function PrognoseLine(props: MyProps) {
 
   const editable = isGamePrognoseEditable(props.prognose.game.starts_at);
   const color = getPrognoseScoreCircleClass(prognose);
+  
   return (
     <>
       {showModal &&
@@ -33,6 +35,7 @@ export default function PrognoseLine(props: MyProps) {
       <MatchRowBase
         as="li"
         className={editable ? 'prognoses__prognose_wrapper--editable' : 'prognoses__prognose_wrapper--readonly'}
+        firstEditable={props.firstEditable}
         startsAt={prognose.game.starts_at}
         team1Name={prognose.game.team1?.name}
         team2Name={prognose.game.team2?.name}

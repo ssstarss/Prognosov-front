@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import loginRefresh from '../../../functions/loginRefresh';
+import { ensureSession } from '../../../functions/ensureSession';
 import { appState } from '../../../constants';
+
 function StartPage() {
   const navigate = useNavigate();
+
   useEffect(() => {
-    loginRefresh()
+    ensureSession()
       .then((result) => {
         if (result) {
           if (appState.userRole === 'admin' || appState.userRole === 'superadmin') {
@@ -13,8 +15,6 @@ function StartPage() {
           } else {
             navigate('./mainTable');
           }
-          const header = document.getElementById('header');
-          if (header) header.style.display = 'flex';
         } else {
           navigate('./login');
         }
@@ -24,6 +24,7 @@ function StartPage() {
       });
   }, [navigate]);
 
-  return <div></div>;
+  return null;
 }
+
 export default StartPage;
