@@ -182,7 +182,7 @@ export default function MainTable() {  const { currentTournament } = useTourname
                 <div className="teamCell">
                   <a className="vertical-text teamName">{game.team1 ? game.team1.name : ''}</a>
                   <AvatarCircle
-                    avatar={game.team1?.avatar}
+                    teamId={game.team1?.id}
                     className="teamAvatarInHeader"
                     placeholderClassName="teamAvatarInHeaderPlaceholder"
                     placeholderText=""
@@ -192,7 +192,7 @@ export default function MainTable() {  const { currentTournament } = useTourname
                 <div className="teamCell">
                   <a className="vertical-text teamName">{game.team2 ? game.team2.name : ''}</a>
                   <AvatarCircle
-                    avatar={game.team2?.avatar}
+                    teamId={game.team2?.id}
                     className="teamAvatarInHeader"
                     placeholderClassName="teamAvatarInHeaderPlaceholder"
                     placeholderText=""
@@ -297,7 +297,7 @@ export default function MainTable() {  const { currentTournament } = useTourname
               <div className="playerIdentity">
                 <div className="playerAvatarZoom">
                   <AvatarCircle
-                    avatar={user.user.avatar}
+                    userId={user.user.id}
                     className="playerAvatar"
                     placeholderClassName="playerAvatarPlaceholder"
                   />

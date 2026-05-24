@@ -36,7 +36,7 @@ export default function TeamsPage() {
       leading={
         <div className="teamAvatarWrapper">
           <AvatarCircle
-            avatar={team.avatar}
+            teamId={team.id}
             alt={team.name ? `${team.name} logo` : 'Team logo'}
             className="teamAvatar"
             placeholderClassName="teamAvatarPlaceholder"

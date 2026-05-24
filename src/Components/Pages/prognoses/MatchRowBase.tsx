@@ -6,6 +6,8 @@ type MatchRowBaseProps = {
   startsAt: Date | string;
   team1Name?: string;
   team2Name?: string;
+  team1Id?: number;
+  team2Id?: number;
   team1Avatar?: unknown;
   team2Avatar?: unknown;
   team1Score?: number;
@@ -22,6 +24,8 @@ export default function MatchRowBase({
   startsAt,
   team1Name,
   team2Name,
+  team1Id,
+  team2Id,
   team1Avatar,
   team2Avatar,
   team1Score,
@@ -46,6 +50,7 @@ export default function MatchRowBase({
           <div className="prognoses__team-name">{team1Name}</div>
           <div className="prognoses__team-logo">
             <AvatarCircle
+              teamId={team1Id}
               avatar={team1Avatar}
               alt={team1Name ? `${team1Name} logo` : 'Team logo'}
               className="prognoses__team-logo-circle"
@@ -62,6 +67,7 @@ export default function MatchRowBase({
         <div className="prognoses__team-wrapper prognoses__team-wrapper--right">
           <div className="prognoses__team-logo">
             <AvatarCircle
+              teamId={team2Id}
               avatar={team2Avatar}
               alt={team2Name ? `${team2Name} logo` : 'Team logo'}
               className="prognoses__team-logo-circle"

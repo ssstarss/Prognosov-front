@@ -69,7 +69,7 @@ function Header() {
             title={currentTournament?.competition?.name || 'Competition'}
           >
             <AvatarCircle
-              avatar={currentTournament?.competition?.avatar}
+              competitionId={currentTournament?.competition?.id}
               alt={currentTournament?.competition?.name || 'Competition avatar'}
               className="headerCompetitionAvatarImage"
               placeholderClassName="headerCompetitionAvatarPlaceholder"
@@ -129,7 +129,7 @@ function Header() {
             title={currentTournament?.competition?.name || 'Competition'}
           >
             <AvatarCircle
-              avatar={currentTournament?.competition?.avatar}
+              competitionId={currentTournament?.competition?.id}
               alt={currentTournament?.competition?.name || 'Competition avatar'}
               className="headerCompetitionAvatarImage"
               placeholderClassName="headerCompetitionAvatarPlaceholder"
