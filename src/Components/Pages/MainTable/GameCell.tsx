@@ -14,7 +14,10 @@ import ModalWrapper from '../../ModalPortal/modalWrapper';
 
 interface MyProps {
   prognose: Prognose;
-  onPrognoseSaved?: (p: Prognose) => void;
+  onPrognoseSaved?: (
+    p: Prognose,
+    extras?: { result?: number; resultCup?: number }
+  ) => void;
   columnClassName?: string;
 }
 function GameCell(props: MyProps) {

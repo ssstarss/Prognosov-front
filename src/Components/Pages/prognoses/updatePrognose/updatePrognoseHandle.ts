@@ -2,6 +2,15 @@ import { Prognose } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 import { apiRequest } from '../../../../functions/apiRequest';
 
+export type PrognoseSaveResult = {
+  prognose: Record<string, unknown>;
+  userOnTournament?: {
+    userID?: number;
+    result?: number;
+    resultCup?: number;
+  };
+};
+
 /** Только поля для API: без вложенного game (иначе циклы game.prognoses → JSON.stringify падает). */
 function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
   const t1 =
@@ -31,7 +40,27 @@ function leanPrognosePayload(prognose: Prognose): Record<string, unknown> {
   return payload;
 }
 
-export default async function updatePrognoseHandle(prognose: Prognose) {
+function normalizeSaveResponse(data: unknown): PrognoseSaveResult | null {
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return null;
+  const obj = data as Record<string, unknown>;
+
+  if (obj.prognose && typeof obj.prognose === 'object' && !Array.isArray(obj.prognose)) {
+    const userOnTournament =
+      obj.userOnTournament && typeof obj.userOnTournament === 'object' && !Array.isArray(obj.userOnTournament)
+        ? (obj.userOnTournament as PrognoseSaveResult['userOnTournament'])
+        : undefined;
+    return {
+      prognose: obj.prognose as Record<string, unknown>,
+      userOnTournament,
+    };
+  }
+
+  return { prognose: obj };
+}
+
+export default async function updatePrognoseHandle(
+  prognose: Prognose
+): Promise<PrognoseSaveResult | null | undefined> {
   const result = await apiRequest({
     host: '/prognoses',
     method: prognose.id != null ? 'PUT' : 'POST',
@@ -39,5 +68,6 @@ export default async function updatePrognoseHandle(prognose: Prognose) {
     errorMessage: 'Ошибка сохранения прогноза',
     rethrow: true,
   });
-  return result?.data;
+  if (!result) return undefined;
+  return normalizeSaveResponse(result.data);
 }

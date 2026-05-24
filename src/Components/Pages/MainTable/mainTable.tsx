@@ -208,7 +208,10 @@ export default function MainTable() {  const { currentTournament } = useTourname
   );
 
   const updatePrognoseInUsers = useCallback(
-    (updatedPrognose: Prognose) => {
+    (
+      updatedPrognose: Prognose,
+      extras?: { result?: number; resultCup?: number }
+    ) => {
       setUsersOnTournametns((prev) => {
         const list = Array.isArray(prev) ? prev : [];
         return list.map((u) => {
@@ -224,7 +227,12 @@ export default function MainTable() {  const { currentTournament } = useTourname
                   : p
               )
             : [...existing, updatedPrognose];
-          return { ...u, prognoses };
+          return {
+            ...u,
+            prognoses,
+            ...(typeof extras?.result === 'number' ? { result: extras.result } : null),
+            ...(typeof extras?.resultCup === 'number' ? { resultCup: extras.resultCup } : null),
+          };
         });
       });
     },

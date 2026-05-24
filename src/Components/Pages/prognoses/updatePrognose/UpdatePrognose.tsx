@@ -11,7 +11,10 @@ const UpdatePrognose = (props: {
   updateCellPrognose?: Function;
   updateLinePrognose?: Function;
   /** Обновить данные в родителе (таблица турнира и т.п.) до закрытия модалки */
-  onPrognoseSaved?: (p: Prognose) => void;
+  onPrognoseSaved?: (
+    p: Prognose,
+    extras?: { result?: number; resultCup?: number }
+  ) => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [initialScore, setInitialScore] = useState({
@@ -59,7 +62,7 @@ const UpdatePrognose = (props: {
 
     if (props.prognose.id != null) newPrognose.id = props.prognose.id;
 
-    let saved: unknown;
+    let saved: Awaited<ReturnType<typeof updatePrognoseHandle>>;
     try {
       saved = await updatePrognoseHandle(newPrognose);
     } catch {
@@ -71,15 +74,28 @@ const UpdatePrognose = (props: {
       ...newPrognose,
       game: newPrognose.game,
     };
-    if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
-      const s = saved as Record<string, unknown>;
-      if (s.id != null && Number.isFinite(Number(s.id))) merged.id = Number(s.id);
-      if (typeof s.team1_result === 'number') merged.team1_result = s.team1_result;
-      if (typeof s.team2_result === 'number') merged.team2_result = s.team2_result;
-      if (typeof s.result === 'number') merged.result = s.result;
+    const savedPrognose = saved?.prognose;
+    if (savedPrognose) {
+      if (savedPrognose.id != null && Number.isFinite(Number(savedPrognose.id))) {
+        merged.id = Number(savedPrognose.id);
+      }
+      if (typeof savedPrognose.team1_result === 'number') merged.team1_result = savedPrognose.team1_result;
+      if (typeof savedPrognose.team2_result === 'number') merged.team2_result = savedPrognose.team2_result;
+      if (typeof savedPrognose.result === 'number') merged.result = savedPrognose.result;
+      else if (savedPrognose.result === null) merged.result = undefined;
     }
 
-    if (props.onPrognoseSaved) props.onPrognoseSaved(merged);
+    const userStats = saved?.userOnTournament;
+    const extras =
+      userStats &&
+      (typeof userStats.result === 'number' || typeof userStats.resultCup === 'number')
+        ? {
+            result: typeof userStats.result === 'number' ? userStats.result : undefined,
+            resultCup: typeof userStats.resultCup === 'number' ? userStats.resultCup : undefined,
+          }
+        : undefined;
+
+    if (props.onPrognoseSaved) props.onPrognoseSaved(merged, extras);
     if (props.updateCellPrognose) props.updateCellPrognose(merged);
     if (props.updateLinePrognose) props.updateLinePrognose(merged);
 
