@@ -1,0 +1,140 @@
+@use '../../../variables.scss' as *;
+
+.loginTabs {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 0;
+  margin-bottom: 1.25rem;
+  font-family: 'Druk Cyr', sans-serif;
+  color: $dark-blue;
+}
+
+.loginTab {
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.loginTabActive {
+  display: none;
+}
+
+// Регистрация: `modalEntityForm` уже ограничен по ширине, внутри широкой колонки прижимается влево
+.loginRegisterRoot {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userDataInputWrapper {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 1.25rem;
+}
+.loginFormInputWrapper input {
+  padding: $input-padding-y-tall;
+}
+.loginFormInputWrapper .inputField {
+  width: 100%;
+}
+.loginFormInputWrapper .inputField.inputError {
+  border: 1px solid #f44336;
+  background-color: #ffebee;
+}
+.loginFormInputWrapper .errorMessage {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: -6px;
+  margin-bottom: 8px;
+}
+
+input {
+  font-size: 14px;
+}
+
+.loginError {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.loginSubmitButton {
+  min-width: 90%;
+
+  margin-top: 1.25rem;
+  transition: background-color 0.3s ease;
+}
+.loginSubmitButton:hover {
+  background-color: $dark-blue;
+}
+.loginSubmitButton:disabled {
+  background-color: #999;
+  border-color: #999;
+  cursor: not-allowed;
+}
+.loginForm .userFormBlock {
+  border: none;
+  padding: 0;
+}
+
+.forgotPasswordLink {
+  border: none;
+  background: transparent;
+  color: $light-blue;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  align-self: flex-end;
+}
+.forgotPasswordWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.forgotPasswordLink:hover {
+  text-decoration: underline;
+}
+
+.forgotEmailInput,
+.forgotPasswordInput {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+  .loginTabs {
+    margin-bottom: 1rem;
+  }
+  .loginTab {
+    font-size: 0.85rem;
+  }
+}
+
+// 767px + landscape: высоты часто не хватает из-за vh и фикс. шапки,
+// поэтому даём прокрутку внутри формы, не затрагивая остальные страницы.
+@media (max-width: 767px) and (orientation: landscape) {
+  .pageWrapper--auth {
+    height: calc(100dvh - 5vh);
+    height: calc(100vh - 5vh);
+    min-height: 0;
+    align-items: stretch;
+    padding-top: 0;
+    padding: 4px;
+    overflow: hidden;
+  }
+
+  .pageWrapper--auth .formWrapper {
+    max-height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pageWrapper--auth .submitFormButton {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

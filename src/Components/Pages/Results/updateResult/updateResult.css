@@ -1,0 +1,74 @@
+.updateResult__cupRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.updateResult__cupLabel {
+  cursor: pointer;
+  user-select: none;
+}
+
+.updateResultWrapper {
+  position: absolute;
+  width: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  border: 1px black solid;
+  border-radius: 20px;
+  padding: 20px;
+  align-items: center;
+  background-color: antiquewhite;
+}
+
+.resultWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 90%;
+}
+.gameResultInput {
+  height: 20px;
+  width: 30px;
+}
+
+.resultTeamWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.gameResultInput{
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .updateResultWrapper {
+    width: min(92vw, 340px);
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .resultWrapper {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .resultTeamWrapper {
+    width: 50%;
+  }
+
+  .gameResultInput {
+    width: 40px;
+    height: 32px;
+    font-size: 16px;
+  }
+}

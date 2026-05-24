@@ -1,0 +1,108 @@
+@use '../../variables.scss' as *;
+
+.formWrapper.updatePrognoseWrapper {
+  width: 100%;
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* row1: | имя L (×2) | лого L | — | лого R | имя R (×2) |
+   row2: |           | счёт 1 | : | счёт 2 |           | */
+.updatePrognoseWrapper .prognoses__match-wrapper--edit {
+  margin: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto auto auto minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  row-gap: 12px;
+  column-gap: 12px;
+  align-items: center;
+}
+
+.updatePrognoseWrapper .prognoses__prognose_wrapper {
+  width: 100%;
+}
+
+.updatePrognoseWrapper .prognoseResultInput {
+  text-align: center;
+  font-size: 2rem;
+  width: 50px;
+  font-family: 'Druk Text', sans-serif;
+  font-weight: 800;
+  color: $dark-blue;
+  border: none;
+  border-bottom: 1px solid $dark-blue;
+}
+
+.updatePrognoseWrapper .prognoses__team-name--edit-left,
+.updatePrognoseWrapper .prognoses__team-name--edit-right {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.1rem;
+  color: $dark-blue;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.updatePrognoseWrapper .prognoses__team-name--edit-left {
+  grid-column: 1 / 3;
+  grid-row: 1;
+  min-width: 0;
+  text-align: right;
+}
+
+.updatePrognoseWrapper .prognoses__team-logo--edit-left {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: center;
+}
+
+.updatePrognoseWrapper .prognoses__team-logo--edit-right {
+  grid-column: 5;
+  grid-row: 1;
+  justify-self: center;
+}
+
+.updatePrognoseWrapper .prognoses__team-name--edit-right {
+  grid-column: 6 / 8;
+  grid-row: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.updatePrognoseWrapper .prognoses__team-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.updatePrognoseWrapper .prognoses__score-block {
+  grid-column: 3;
+  grid-row: 2;
+  justify-self: center;
+  min-width: 0;
+}
+
+.updatePrognoseWrapper .prognoses__separator {
+  grid-column: 4;
+  grid-row: 2;
+  justify-self: center;
+}
+
+.updatePrognoseWrapper .prognoseResultInput--team2 {
+  grid-column: 5;
+  grid-row: 2;
+  justify-self: center;
+}
+
+@media (max-width: 767px) {
+  .updatePrognoseWrapper .prognoseResultInput {
+    font-size: 1.5rem;
+    width: 32px;
+  }
+}

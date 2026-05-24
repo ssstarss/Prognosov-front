@@ -1,0 +1,38 @@
+// Единый слой для мобайла (<768px): чуть меньше rem-база + плотнее отступы на общих блоках.
+// Конфликтующие правила страниц можно по-прежнему переопределять ниже по коду.
+@media (max-width: 767px) {
+  html {
+    font-size: 100%;
+  }
+
+  h3,
+  h4 {
+    padding: 3px;
+  }
+
+  .entityPageListWrapper {
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .entityPageControls {
+    gap: 6px;
+  }
+
+  .headerControls {
+    gap: 6px;
+  }
+
+  .modalEntityForm {
+    padding: 12px 14px 16px;
+  }
+
+  .modalEntityFormBody {
+    gap: 8px;
+  }
+
+  .modalEntityFieldLabel {
+    min-width: 96px;
+    font-size: 1.2rem;
+  }
+}

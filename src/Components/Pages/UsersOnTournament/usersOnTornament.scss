@@ -1,0 +1,31 @@
+.usersOnTornamentPageWrapper {
+  display: flex;
+  margin: auto;
+  width: 90%;
+  height: 90vh;
+  border: solid 1px black;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.usersOnTornamentForm {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.usersOnTournamentList {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.userLine {
+  cursor: pointer;
+}
+
+.userLine .deleteIcon {
+  order: 2;
+}

@@ -1,0 +1,74 @@
+@use '../../../variables.scss' as *;
+@use '../../../styles/layout.scss' as *;
+@use '../../../styles/form.scss' as *;
+
+.rulesContent {
+  position: relative;
+  overflow-y: auto;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding-right: 8px;
+}
+
+.rulesLead {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.rulesSection {
+  margin-bottom: 18px;
+}
+
+.rulesSectionTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $dark-blue;
+  padding: 0;
+  margin-bottom: 8px;
+}
+
+.rulesList,
+.rulesOrderedList {
+  margin: 8px 0 8px 18px;
+}
+
+.rulesList li {
+  list-style: disc;
+  margin-bottom: 4px;
+}
+
+.rulesOrderedList li {
+  list-style: decimal;
+  margin-bottom: 4px;
+}
+
+.rulesSection a {
+  color: $light-blue;
+  text-decoration: none;
+}
+
+.rulesSection a:hover {
+  color: $dark-blue;
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .rulesContent {
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .rulesContent {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .rulesLead {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+}

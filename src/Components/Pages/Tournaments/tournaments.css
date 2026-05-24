@@ -1,0 +1,27 @@
+.tournamentsForm {
+  width: 100%;
+}
+.tournamentLine {
+  cursor: pointer;
+}
+.currentTournament {
+  background-color: rgb(238, 237, 237);
+}
+
+@media (max-width: 1024px) {
+  .tournamentsForm .entityPageListWrapper {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .tournamentsForm .formHeaderWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .tournamentsForm .submitFormButton.shortButton {
+    width: 100%;
+  }
+}

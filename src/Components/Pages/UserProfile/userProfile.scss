@@ -1,0 +1,87 @@
+@use '../../../variables.scss' as *;
+
+.userProfileAvatarWrapper {
+  margin: 8px 0 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: $dark-blue;
+  margin-left: 10px;
+  text-align: right;
+}
+
+.userProfileAvatar {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+}
+
+.userProfileDataWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  padding-top: 40px;
+  max-height: 400px;
+  box-sizing: border-box;
+  border-top: 1px solid $dark-blue;
+}
+.userProfileAvatarPlaceholder {
+  display: flex;
+
+  background: #f2f2f2;
+  color: #666;
+  font-size: 36px;
+}
+
+.userRegisterWrapper {
+  width: 100%;
+}
+
+.inputWthErrorWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
+  width: auto;
+  height: 3rem;
+}
+
+.inputWthErrorWrapper .inputField {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.userFormAvatarField {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.userFormAvatarField .userProfileDataLabel {
+  min-width: 0;
+}
+
+.userFormAvatarField .inputField {
+  width: 100%;
+}
+
+.userFormAvatarField .errorMessage {
+  align-self: flex-start;
+}
+
+@media (max-width: 767px) {
+  .userName {
+    font-size: 1rem;
+  }
+}

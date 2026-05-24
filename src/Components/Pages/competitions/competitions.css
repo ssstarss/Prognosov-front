@@ -1,0 +1,21 @@
+.competitionsForm {
+  width: 100%;
+}
+.competitionList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.competitionLine {
+  cursor: pointer;
+}
+.competitionName {
+  order: 1;
+}
+.iconsBlock {
+  order: 2;
+}
+.currentCompetition {
+  background-color: rgb(238, 237, 237);
+}

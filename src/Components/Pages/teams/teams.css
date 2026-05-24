@@ -1,0 +1,82 @@
+.teamsPageWrapper {
+  display: flex;
+  margin: auto;
+  width: 90%;
+  height: 90vh;
+  border: solid 1px black;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.teamsListWrapper {
+  width: 500px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px black;
+  border-radius: 20px;
+  align-items: center;
+}
+.teamIdentity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #203b69;
+}
+
+.teamAvatarWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.teamAvatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid #d9d9d9;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.teamAvatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.teamList {
+  width: 90%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.teamListItems {
+  width: 100%;
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.teamsForm {
+  width: 100%;
+}
+.teamButtonsWrapper {
+  order: 2;
+}
+
+.teamName {
+  font-size: 1rem;
+  color: #203b69;
+}
+

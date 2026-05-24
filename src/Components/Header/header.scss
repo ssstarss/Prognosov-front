@@ -1,0 +1,364 @@
+@use '../../variables.scss' as *;
+#header {
+  height: 60%;
+  width: 100%;
+  display: none;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 1rem;
+  padding-left: 2%;
+  overflow: visible;
+  border-bottom: 1px solid $color-neutral;
+}
+a {
+  text-decoration: none;
+}
+
+.headerWrapper {
+  height: 15vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigationMenu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+
+  flex: 1;
+  min-width: 0;
+  gap: 2rem;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+.headerLink {
+  color: $dark-blue;
+  display: block;
+}
+
+
+
+.mobileNavigationMenu .headerLogoLink {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.mobileNavigationMenu .headerLogo {
+  display: block;
+  width: 48px;
+  height: 48px;
+  max-width: 48px;
+  max-height: 48px;
+  object-fit: contain;
+}
+.navigationMenu .loginHeaderButton {
+  width: 120px;
+}
+
+.loginHeaderButton .headerLink {
+  color: white;
+}
+.headerCompetitionAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.headerCompetitionAvatarImage {
+  width: 70px;
+  height: 70px;
+  padding: 5px;
+  margin-left: 50px;
+  margin-right: 50px;
+  min-width: 38px;
+  min-height: 70px;
+
+  background-color: white;
+  display: block;
+  object-fit: scale-down;
+  object-position: center;
+}
+
+.headerCompetitionAvatarPlaceholder {
+  background: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.adminHeaderLink {
+  color: $dark-blue;
+  display: none;
+}
+.adminHeaderLink {
+  font-size: 1.2rem;
+}
+
+.headerLink,
+.adminHeaderLink {
+  &:hover {
+    color: $color-neutral;
+    transition: color 0.3s ease;
+  }
+}
+
+.bottomBar {
+  height: 40%;
+  width: 100%;
+  background-color: $dark-blue;
+  display: flex;
+  gap: 100px;
+  align-items: center;
+  overflow: visible;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+  color: white;
+  padding: 0 50px;
+}
+
+.bottomBarTitle {
+  white-space: nowrap;
+  margin-left: 4%;
+}
+
+.bottomBarControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bottomBarLabel {
+  font-size: 1.2rem;
+  color: #d6e6ff;
+  text-transform: none;
+  white-space: nowrap;
+}
+
+.bottomBarControls .selectItem {
+  margin-left: 0;
+  min-width: 360px;
+
+  height: 34px;
+}
+
+.burgerButton {
+  margin-left: auto;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1201;
+}
+
+.burgerButton span {
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition:
+    transform 0.25s ease,
+    opacity 0.2s ease;
+}
+
+.burgerButton.isOpen span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.burgerButton.isOpen span:nth-child(2) {
+  opacity: 0;
+}
+
+.burgerButton.isOpen span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobileMenuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 20, 43, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 1198;
+}
+
+.mobileMenuOverlay.isOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileMenuDrawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(86vw, 360px);
+  height: 100vh;
+  background: #fff;
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1199;
+  padding: 84px 20px 24px;
+  overflow-y: auto;
+}
+
+.mobileMenuDrawer.isOpen {
+  transform: translateX(0);
+}
+
+.mobileNavigationMenu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  text-transform: uppercase;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+}
+
+.mobileNavigationMenu .headerCompetitionAvatar {
+  justify-content: flex-end;
+}
+
+.mobileNavigationMenu .headerCompetitionAvatarImage {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@media (max-width: 1024px) {
+  .headerCompetitionAvatar {
+    display: none;
+  }
+
+  .bottomBar {
+    gap: 20px;
+    padding: 0 16px;
+    font-size: 1.2rem;
+  }
+
+  .bottomBarControls {
+    flex: 1;
+    min-width: 0;
+    max-width: 350px;
+  }
+
+  .bottomBarLabel {
+    flex-shrink: 0;
+  }
+
+  .bottomBarControls .chooseOption {
+    flex: 1;
+    min-width: 0;
+    display: block;
+  }
+
+  .bottomBarControls .selectItem {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  #header {
+    display: none !important;
+  }
+
+  .burgerButton {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .headerWrapper {
+    height: 5vh;
+    background-color: $dark-blue;
+  }
+
+  .bottomBarTitle {
+    display: none;
+  }
+  .bottomBar {
+    gap: 10px;
+    padding: 0 10px;
+    font-size: 0.95rem;
+  }
+
+  .bottomBarLabel {
+    font-size: 0.9rem;
+    padding-right: 10px;
+  }
+
+  .bottomBarControls {
+    flex: 1;
+    min-width: 0;
+    gap: 6px;
+  }
+
+  .bottomBarControls .chooseOption {
+    flex: 1;
+    min-width: 0;
+    display: block;
+  }
+
+  .bottomBarControls .selectItem {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    height: 4vh;
+    font-size: 0.9rem;
+    padding: 1px;
+  }
+
+  .burgerButton {
+    width: 36px;
+    height: 36px;
+    gap: 4px;
+  }
+
+  .burgerButton span {
+    width: 18px;
+  }
+
+  .mobileMenuDrawer {
+    width: min(84vw, 320px);
+    padding: 68px 14px 14px;
+  }
+
+  .mobileNavigationMenu {
+    gap: 10px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Landscape на телефоне: ширина >767, но высота мала — убираем 15vh + 40% bottomBar */
+@media (orientation: landscape) and (max-height: 520px) {
+  .headerWrapper {
+    height: auto !important;
+  }
+
+  .bottomBar {
+    height: auto !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  .mobileMenuOverlay,
+  .mobileMenuDrawer {
+    display: none;
+  }
+}

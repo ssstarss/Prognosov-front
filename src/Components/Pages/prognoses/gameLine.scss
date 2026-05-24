@@ -1,0 +1,243 @@
+@use '../../../variables.scss' as *;
+
+.prognose__date-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 96px;
+  gap: 2px;
+}
+
+.prognoses__date {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $dark-blue;
+  line-height: 1.2;
+}
+
+.prognoses__time {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $dark-blue;
+  opacity: 0.7;
+}
+
+.prognoses__prognose_wrapper--readonly .prognoses__date,
+.prognoses__prognose_wrapper--readonly .prognoses__time {
+  color: #b8c0cc;
+  opacity: 1;
+}
+
+.prognoses__match-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  gap: 24px;
+  margin-right: 60px;
+  min-width: 0;
+}
+
+.prognoses__team-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 30px;
+  min-width: 0;
+}
+
+.prognoses__team-wrapper--left {
+  justify-content: flex-end;
+  padding-right: 40px;
+}
+
+.prognoses__team-wrapper--left .prognoses__team-name {
+  text-align: right;
+}
+
+.prognoses__team-wrapper--right {
+  justify-content: flex-end;
+  padding-left: 40px;
+}
+
+.prognoses__team-wrapper--right .prognoses__team-name {
+  text-align: left;
+}
+
+.prognoses__team-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.prognoses__team-logo-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(12, 83, 158, 0.2);
+}
+
+.prognoses__team-name {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.8rem;
+  color: $dark-blue;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prognoses__score-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  gap: 8px;
+}
+
+.prognoses__team-score {
+  font-family: 'Druk Text', sans-serif;
+  font-size: 2rem;
+  line-height: 1;
+  font-weight: 800;
+  color: $dark-blue;
+}
+
+.prognose__player-score {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: $dark-blue;
+  line-height: 1;
+  justify-self: flex-end;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin: 3px;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+  justify-content: center;
+  padding: 6px 10px;
+  cursor: default;
+  font-weight: bold;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3);
+}
+
+.prognose__player-score.score_brown {
+  background: linear-gradient(145deg, #a0522d, #6b3410);
+  border: 1px solid #4a2409;
+  color: #fff;
+}
+
+.prognoses__separator {
+  font-family: 'Druk Text', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: $dark-blue;
+}
+
+@media (max-width: 1024px) {
+  .prognose__date-wrapper {
+    min-width: 78px;
+  }
+
+  .prognoses__match-wrapper {
+    gap: 12px;
+    margin-right: 0;
+  }
+
+  .prognoses__team-wrapper {
+    gap: 12px;
+  }
+
+  .prognoses__team-wrapper--left {
+    padding-right: 0;
+  }
+
+  .prognoses__team-wrapper--right {
+    padding-left: 0;
+  }
+
+  .prognoses__team-name {
+    font-size: 1.1rem;
+  }
+
+  .prognoses__team-score {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .prognoses__prognose_wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .prognose__date-wrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .prognoses__match-wrapper {
+    gap: 10px;
+  }
+
+  .prognoses__team-logo,
+  .prognoses__team-logo-circle {
+    width: 28px;
+    height: 28px;
+  }
+
+  .prognoses__team-name {
+    font-size: 0.95rem;
+  }
+
+  .prognoses__score-block {
+    min-width: 72px;
+    gap: 6px;
+  }
+
+  .prognoses__team-score {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .prognoses__match-wrapper {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    gap: 8px;
+  }
+
+  .prognoses__team-wrapper--left,
+  .prognoses__team-wrapper--right {
+    padding-left: 0;
+    padding-right: 0;
+    width: auto;
+  }
+
+  .prognoses__score-block {
+    order: 0;
+    flex: 0 0 auto;
+    min-width: 64px;
+    margin-top: 0;
+  }
+}

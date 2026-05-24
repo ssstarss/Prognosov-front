@@ -1,0 +1,110 @@
+@use '../../../variables.scss' as *;
+.codeInputModalOverlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 10px;
+}
+
+.codeInputModal {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  width: 50%;
+  border: solid 1px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.codeInputModal h3 {
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.codeInputModalHint {
+  font-size: 14px;
+  color: #666;
+  margin: 0 0 8px 0;
+  text-align: center;
+}
+
+.codeInputModalAttempts {
+  font-size: 14px;
+  margin: 0 0 16px 0;
+  text-align: center;
+}
+
+.codeInputField {
+  width: 40%;
+  padding: 12px;
+  font-size: 24px;
+  letter-spacing: 8px;
+  text-align: center;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  align-self: center;
+  margin-bottom: 8px;
+}
+
+.codeInputField:focus {
+  outline: none;
+  border-color: $dark-blue;
+}
+
+.codeInputModalOverlay .inputField.inputError {
+  border: 1px solid #f44336;
+  background-color: #ffebee;
+}
+
+.codeInputModalOverlay .errorMessage {
+  display: block;
+  color: #f44336;
+  font-size: 12px;
+}
+
+.codeInputModalOverlay .submitFormButton:disabled {
+  background-color: #999;
+  border-color: #999;
+  cursor: not-allowed;
+}
+
+.codeInputModal .errorMessage {
+  display: block;
+  color: #f44336;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.codeInputButton {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.codeInputButton:hover {
+  background-color: #45a049;
+}
+
+.codeInputButtonCancel:hover {
+  background-color: #777;
+}
+@media (max-width: 767px) {
+  .codeInputModal {
+    width: 100%;
+    padding: 10px;
+  }
+}

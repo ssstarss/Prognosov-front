@@ -1,0 +1,121 @@
+@use '../../../variables.scss' as *;
+@use '../../../styles/form.scss' as *;
+
+.userFormRoot {
+  width: 100%;
+  justify-self: center;
+}
+
+.closeCrossWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
+
+.closeCross {
+  padding: 5px 10px 0 0;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.closeCross:hover {
+  color: red;
+}
+
+.userDateEditWrapper {
+  width: 100%;
+}
+.userFormField {
+  width: 100%;
+  margin: 5px 0;
+  display: flex;
+
+  align-items: center;
+}
+
+.userFormField h3 {
+  margin: 5px;
+
+  text-align: left;
+}
+
+.userFormBlock .inputField:focus,
+.userFormBlock .inputField:active {
+  border: 1px solid #4caf50;
+  outline: none;
+}
+
+.userFormBlock .inputField.inputError {
+  border: 1px solid #f44336;
+  background-color: #ffebee;
+}
+
+.userFormBlock .errorMessage {
+  color: #f44336;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.userFormSubmitButton {
+  margin-top: 20px;
+  padding: 10px 30px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.userFormSubmitButton:hover {
+  background-color: #45a049;
+}
+
+.userFormFooterMessages {
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.userFormFooterError {
+  margin: 0;
+  color: #f44336;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.userFormFooterHint {
+  margin: 0;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.35;
+  opacity: 0.75;
+}
+
+@media (max-width: 767px) {
+  .userFormField {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .userFormField .inputField {
+    width: 100%;
+  }
+
+  .avatarPreview--lg {
+    width: 72px;
+    height: 72px;
+  }
+}

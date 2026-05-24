@@ -1,0 +1,635 @@
+@use '../../../variables.scss' as *;
+
+.mainTablePageWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  min-width: 50%;
+  max-width: 95%;
+  height: 100%;
+
+  border: solid 1px $dark-blue;
+  border-radius: 20px;
+}
+
+.mainTablePageWrapper .formHeaderWrapper {
+  padding-left: 40px;
+  padding-right: 40px;
+  display: flex;
+  justify-content: start;
+  gap: 20px;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.mainTableHeaderControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.mainTableWrapper {
+  border-bottom: none;
+  overflow-y: auto;
+  overflow-x: auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.mainTable {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-color: $dark-blue;
+
+  overflow: auto;
+}
+
+.mainTableEmptyCell {
+  padding: 16px;
+  text-align: center;
+}
+
+.mainTableHeader {
+  height: 60px;
+  text-align: center;
+  margin-top: 20px;
+}
+.mainTableHeaderText {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.selectItem {
+  width: 80%;
+  height: 30px;
+
+  padding: 5px;
+  margin-left: 20px;
+}
+
+.mainTable td:nth-child(1),
+.mainTable th:nth-child(1) {
+  position: sticky;
+  left: 0;
+  z-index: 5;
+}
+
+.mainTable th:nth-child(1) {
+  z-index: 6;
+}
+
+.mainTable th {
+  vertical-align: top;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: whitesmoke;
+}
+
+.mainTable th:first-child {
+  border-left: 2px solid $dark-blue;
+  border-right: 2px solid $dark-blue;
+}
+
+.mainTableHeaderCell {
+  height: 100%;
+  border: 2px solid;
+  border-width: 2px 1px 2px 0;
+  border-color: $dark-blue;
+  color: $dark-blue;
+}
+
+.mainTableHeaderCell.dateGroupOdd {
+  background-color: $bg-color-odd;
+}
+
+.mainTableHeaderCell.dateGroupEven {
+  background-color: $bg-color-even;
+}
+
+.mainTableHeaderCell.dateGroupStart {
+  border-left: 1px solid $dark-blue;
+}
+
+.mainTableHeaderCell.dateGroupEnd {
+  border-right: 1px solid $dark-blue;
+}
+
+.gameCellDateWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px $dark-blue solid;
+}
+
+.gameResultWrapper {
+  display: flex;
+  height: 140px;
+  border-bottom: 1 px $dark-blue solid;
+  border-color: $dark-blue;
+  width: 4rem;
+}
+.gameCellDate {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: $dark-blue;
+}
+
+.gameCellDate--muted {
+  color: #b8c0cc;
+}
+.teamCell {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  border-right-style: initial;
+  width: 50%;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+}
+
+.teamAvatarInHeader {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  min-height: 18px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  align-self: center;
+
+  flex-shrink: 0;
+}
+
+.teamAvatarInHeaderPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  color: #666;
+}
+
+.teamName:first-child {
+  border-right: none;
+}
+
+.teamName {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.875rem;
+
+  height: 85%;
+  margin-bottom: 5px;
+  text-align: end;
+  border-right-style: initial;
+  line-height: 1;
+}
+
+.vertical-text {
+  writing-mode: vertical-rl;
+}
+
+.gameCellScore {
+  font-size: 1rem;
+  font-weight: bold;
+  border-top: 2px $dark-blue solid;
+  color: $dark-blue;
+  background-color: $light-blue;
+  margin-top: 3px;
+}
+
+.playerRaw {
+  background-color: whitesmoke;
+  height: 50px;
+}
+
+/* при увеличенном аватаре строка целиком выше соседних строк и угловой ячейки thead (z-index: 6) */
+.mainTable tbody tr.playerRaw:has(.playerAvatarZoom:hover),
+.mainTable tbody tr.playerRaw:has(.playerAvatarZoom:active) {
+  position: relative;
+  z-index: 50;
+}
+.playerNameCell {
+  height: 50px;
+  overflow: visible;
+
+  border: solid $dark-blue;
+  border-width: 0 2px 2px 2px;
+  background-color: whitesmoke;
+}
+.currentUserRaw {
+  background-color: rgb(235, 235, 199);
+}
+
+.currentUserRaw .playerNameCell,
+.currentUserRaw .playerResultCell,
+.currentUserRaw .playerResultCell.dateGroupOdd,
+.currentUserRaw .playerResultCell.dateGroupEven {
+  background-color: rgb(235, 235, 199);
+}
+.playerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.playerIdentity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 8px;
+}
+
+.playerAvatarZoom {
+  position: relative;
+  z-index: 0;
+  flex-shrink: 0;
+  touch-action: manipulation;
+
+  &:hover,
+  &:active {
+    z-index: 40;
+  }
+
+  .avatarCircle {
+    transition: transform 1s ease;
+    transform-origin: left center;
+  }
+
+  &:hover .avatarCircle,
+  &:active .avatarCircle {
+    transform: scale(3);
+  }
+}
+
+.playerAvatar {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
+
+  box-shadow: 0.4em 0.4em 11px rgba(122, 122, 122, 0.5);
+  flex-shrink: 0;
+}
+
+.playerAvatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+}
+
+.playerName {
+  font-family: 'Manrope', sans-serif;
+  color: $dark-blue;
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.playerNamePart {
+  display: inline;
+}
+.playerResult {
+  width: 30px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: $dark-blue;
+  border-left: 2px solid $dark-blue;
+  height: 100%;
+  align-content: center;
+  text-align: center;
+}
+
+.playerResultCell {
+  border: $dark-blue solid;
+  border-width: 0px 1px 2px 0px;
+  border-right: 1px dotted;
+}
+
+.playerResultCell--editable {
+  cursor: pointer;
+}
+
+.playerResultCell--readonly {
+  cursor: default;
+}
+
+.playerResultCell.dateGroupOdd {
+  background-color: $bg-color-odd;
+}
+.playerResultCell.dateGroupEven {
+  background-color: $bg-color-even;
+}
+
+.playerResultCell.dateGroupStart {
+  border-left: 1px solid $dark-blue;
+}
+
+.playerResultCell.dateGroupEnd {
+  border-right: 1px dotted $dark-blue;
+}
+
+.playerResultWrapper {
+  display: flex;
+  flex-direction: column;
+}
+.prognose {
+  font-size: 0.875rem;
+  border-bottom: 1px $dark-blue solid;
+  margin: 0 5px 0 5px;
+  padding-bottom: 3px;
+  padding-top: 3px;
+}
+
+.score,
+.prognose {
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  color: $dark-blue;
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  margin: 3px;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #fff;
+  text-align: center;
+  justify-content: center;
+  padding: 2px 8px;
+  cursor: default;
+  font-weight: bold;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3);
+}
+.score_black {
+  color: $dark-blue;
+  box-shadow: none;
+}
+
+.score_blue {
+  background: linear-gradient(145deg, #4a90e2, #2f76e2);
+  border: 1px solid #1e5bbf;
+}
+
+.score_orange {
+  background: linear-gradient(145deg, orange, rgb(141, 92, 2));
+  border: 1px solid rgb(177, 115, 2);
+}
+
+.score_green {
+  background: linear-gradient(145deg, rgb(66, 154, 4), rgb(49, 115, 2));
+  border: 1px solid rgb(1, 116, 1);
+}
+
+.score_aqua {
+  background: linear-gradient(145deg, rgb(1, 182, 248), rgb(2, 154, 210));
+  border: 1px solid rgb(3, 143, 194);
+}
+
+.score_brown {
+  background: linear-gradient(145deg, #a0522d, #6b3410);
+  border: 1px solid #4a2409;
+  color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .mainTablePageWrapper {
+    max-width: 100%;
+  }
+
+  .mainTablePageWrapper .formHeaderWrapper {
+    padding: 12px 16px 0;
+  }
+
+  .mainTableHeaderText {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+
+  .mainTableWrapper {
+    padding-bottom: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .mainTablePageWrapper .formHeader {
+    display: none;
+  }
+
+  .mainTablePageWrapper .formHeaderWrapper {
+    padding: 6px 8px 0;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    border: none;
+  }
+
+  .mainTableHeaderControls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .formHeaderWrapper {
+    padding-bottom: 0;
+  }
+  formHeader .mainTableHeader {
+    height: 42px;
+  }
+
+  .mainTableHeaderCell {
+    font-size: 0.68rem;
+  }
+
+  .gameCellDate {
+    font-size: 0.72rem;
+  }
+
+  .gameResultWrapper {
+    width: 3.2rem;
+    height: 108px;
+  }
+
+  .teamName {
+    font-size: 0.72rem;
+    margin-bottom: 2px;
+  }
+
+  .gameCellScore {
+    font-size: 0.78rem;
+    margin-top: 1px;
+  }
+
+  .playerName {
+    font-size: 0.74rem;
+    max-width: 78px;
+    white-space: normal;
+    line-height: 1.05;
+  }
+
+  .playerNamePart {
+    display: block;
+  }
+
+  .playerResult {
+    width: 24px;
+    font-size: 0.72rem;
+  }
+
+  .playerAvatar {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .playerIdentity {
+    gap: 4px;
+    padding-left: 4px;
+  }
+
+  .playerResultCell {
+    min-width: 34px;
+  }
+
+  .score,
+  .prognose {
+    font-size: 0.78rem;
+  }
+}
+
+/* Телефон landscape: общая вёрстка — styles/landscape-phone.scss */
+@media (orientation: landscape) and (max-height: 520px) {
+  .mainTablePageWrapper .formHeader {
+    display: none;
+  }
+
+  .mainTableHeaderCell {
+    font-size: 0.62rem;
+  }
+
+  .gameResultWrapper {
+    width: 2.6rem;
+    height: 90px;
+  }
+
+  .gameCellDate {
+    font-size: 0.62rem;
+  }
+
+  .teamName {
+    font-size: 0.62rem;
+    margin-bottom: 1px;
+  }
+
+  .teamAvatarInHeader {
+    width: 14px;
+    height: 14px;
+    min-width: 14px;
+    min-height: 14px;
+  }
+
+  .gameCellScore {
+    font-size: 0.68rem;
+    margin-top: 0;
+  }
+
+  .playerRaw {
+    height: auto;
+    min-height: 40px;
+  }
+
+  .playerNameCell {
+    position: relative;
+    height: 1px;
+    min-height: 40px;
+    vertical-align: middle;
+    overflow: visible;
+    padding: 0;
+  }
+
+  /* Линия на всю высоту ячейки (flex border-left у очков не тянется) */
+  .playerNameCell::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: -2px;
+    right: 22px;
+    width: 2px;
+    background-color: $dark-blue;
+    pointer-events: none;
+  }
+
+  .playerWrapper {
+    align-items: center;
+    min-height: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .playerIdentity {
+    flex: 1 1 auto;
+    min-width: 0;
+    align-items: center;
+    gap: 4px;
+    padding-left: 4px;
+  }
+
+  .playerAvatar {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+  }
+
+  .playerName {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 72px;
+    font-size: 0.68rem;
+    white-space: normal;
+    line-height: 1.1;
+    overflow-wrap: break-word;
+    word-break: normal;
+  }
+
+  .playerNamePart {
+    display: block;
+  }
+
+  .playerResult {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 22px;
+    font-size: 0.65rem;
+    border-left: none;
+  }
+
+  .score,
+  .prognose {
+    font-size: 0.68rem;
+  }
+}

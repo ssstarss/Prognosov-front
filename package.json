@@ -1,0 +1,59 @@
+{
+  "name": "prognosov-front",
+  "version": "1.0.0",
+  "description": "Frontside prognosov.net",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssstarss/Prognosov-front.git"
+  },
+  "author": "s.s.star",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssstarss/Prognosov-front/issues"
+  },
+  "homepage": "https://github.com/ssstarss/Prognosov-front#readme",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint --ext .ts --fix",
+    "format": "prettier **/*.{ts,css} --write"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.7",
+    "@babel/preset-react": "^7.26.3",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "babel-loader": "^9.2.1",
+    "classnames": "^2.5.1",
+    "css-loader": "^7.1.2",
+    "dotenv": "^16.4.7",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
+    "favicons-webpack-plugin": "^6.0.1",
+    "html-webpack-plugin": "^5.6.3",
+    "node-polyfill-webpack-plugin": "^4.1.0",
+    "normalize.css": "^8.0.1",
+    "postcss-loader": "^8.1.1",
+    "postcss-preset-env": "^10.1.3",
+    "prettier": "^3.4.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.3",
+    "sass": "^1.83.4",
+    "sass-loader": "^16.0.4",
+    "style-loader": "^4.0.0",
+    "svg-inline-loader": "^0.8.2",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.7.3",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
+}

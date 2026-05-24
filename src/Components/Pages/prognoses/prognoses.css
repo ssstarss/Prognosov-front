@@ -1,0 +1,128 @@
+.prognosesForm {
+  width: min(1120px, 96%);
+  max-height: 100%;
+
+  align-items: center;
+  overflow: hidden;
+  min-height: 0;
+
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  border: solid 1px white;
+  border-radius: 1.5rem;
+
+  box-sizing: border-box;
+  background-color: white;
+  padding: 1.875rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.05) 0px 8px 28px 0px,
+    rgba(0, 0, 0, 0.04) 0px 4px 16px 0px,
+    rgba(0, 0, 0, 0.03) 0px 2px 8px 0px;
+}
+
+.prognosesForm > *:not(.prognoses__list) {
+  flex-shrink: 0;
+}
+.prognosesHeaderWrapper {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.prognoses__list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0 4px 8px;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox, Safari 18.2+, Chromium 121+ */
+}
+
+@media (min-width: 1025px) {
+  .prognoses__list {
+    scrollbar-width: thin;
+    -ms-overflow-style: auto;
+  }
+
+  .prognoses__list::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+  }
+
+  .prognoses__list::-webkit-scrollbar-thumb {
+    background: rgba(12, 83, 158, 0.35);
+    border-radius: 4px;
+  }
+}
+
+.prognoses__prognose_wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  min-height: 72px;
+  margin-bottom: 8px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(12, 83, 158, 0.12);
+  background: #fff;
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.prognoses__prognose_wrapper--editable {
+  cursor: pointer;
+}
+
+.prognoses__prognose_wrapper--editable:hover {
+  border-color: rgba(12, 83, 158, 0.35);
+  box-shadow: 0 4px 12px rgba(12, 83, 158, 0.12);
+  transform: translateY(-1px);
+}
+
+.prognoses__prognose_wrapper--readonly {
+  cursor: default;
+}
+
+.prognoses__prognose_wrapper:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1024px) {
+  .prognosesForm {
+    width: 100%;
+    max-height: none;
+    min-height: 0;
+    padding: 1rem;
+  }
+
+  .prognosesHeaderWrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .prognoses__list {
+    width: 100%;
+    padding: 0 0 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .prognosesForm {
+    padding: 0.75rem;
+  }
+
+  .prognoses__prognose_wrapper {
+    gap: 10px;
+    padding: 10px 12px;
+    min-height: 64px;
+  }
+}

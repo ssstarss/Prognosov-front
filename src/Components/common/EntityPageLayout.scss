@@ -1,0 +1,93 @@
+@use '../../variables.scss' as *;
+
+.entityPageForm {
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.entityPageControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 250px;
+}
+
+.entityPageListWrapper {
+  width: 50%;
+  align-self: center;
+  flex: 1;
+  margin: auto;
+  min-height: 0;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border: solid 1px $dark-blue;
+  border-radius: 20px;
+  padding: 10px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .entityPageListWrapper {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 767px) {
+  .entityPageControls {
+    min-width: 0;
+    flex: 1 1 auto;
+    max-width: 100%;
+  }
+
+  .entityPageControls .chooseOption {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .entityPageForm .formHeaderWrapper {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .entityPageForm .formHeaderWrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .entityPageControls {
+    width: 100%;
+  }
+
+  .entityPageForm .submitFormButton.shortButton {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+// Низкий экран в landscape (например 767px): body с overflow:hidden,
+// поэтому ограничиваем высоту формы и скроллим список внутри wrapper.
+@media (max-width: 767px) and (orientation: landscape) {
+  .entityPageForm {
+    max-height: calc(100vh - 5vh);
+    max-height: calc(100dvh - 5vh);
+    overflow: hidden;
+  }
+
+  .entityPageListWrapper {
+    margin: 0;
+  }
+}
