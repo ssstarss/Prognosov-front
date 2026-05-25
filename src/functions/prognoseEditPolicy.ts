@@ -4,10 +4,10 @@ import { appState } from '../constants';
  * Временно: admin / superadmin может открывать и менять прогнозы без учёта дедлайна
  * (и на главной таблице — чужие ячейки). Убрать/сузить, когда бэкенд начнёт сам валидировать.
  */
-export function isPrognoseDeadlineBypassRole(): boolean {
-  const r = appState.userRole;
-  return r === 'admin' || r === 'superadmin';
-}
+//export function isPrognoseDeadlineBypassRole(): boolean {
+ // const r = appState.userRole;
+ // return r === 'admin' || r === 'superadmin';
+//}
 
 /** До начала матча ещё можно вносить/менять прогноз (с учётом deadlineMinutes). */
 export function isGameBeforePrognoseDeadline(startsAt: Date | string | null | undefined): boolean {
@@ -20,5 +20,5 @@ export function isGameBeforePrognoseDeadline(startsAt: Date | string | null | un
 
 /** Игра доступна для редактирования прогноза (дедлайн или роль admin). */
 export function isGamePrognoseEditable(startsAt: Date | string | null | undefined): boolean {
-  return isPrognoseDeadlineBypassRole() || isGameBeforePrognoseDeadline(startsAt);
+  return isGameBeforePrognoseDeadline(startsAt);
 }

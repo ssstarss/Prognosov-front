@@ -17,6 +17,21 @@ export function redirectToLogin() {
   window.location.replace(`${window.location.origin}/#/login`);
 }
 
+/** Сеть / abort при уходе со страницы — не считаем сессию недействительной. */
+function isTransientFetchError(e: unknown): boolean {
+  if (!(e instanceof Error)) return false;
+  if (e.name === 'AbortError') return true;
+  const msg = e.message.toLowerCase();
+  return (
+    msg.includes('aborted') ||
+    msg.includes('abort') ||
+    msg.includes('failed to fetch') ||
+    msg.includes('networkerror') ||
+    msg.includes('network request failed') ||
+    msg.includes('load failed')
+  );
+}
+
 /**
  * Обновляет access (и refresh) по refreshToken из localStorage.
  * @returns true — токены обновлены, false — сессия недействительна
@@ -66,7 +81,9 @@ async function performRefresh(): Promise<boolean> {
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : 'loginRefresh error';
     console.warn(message);
-    clearAuthSession();
+    if (!isTransientFetchError(e)) {
+      clearAuthSession();
+    }
     return false;
   }
 }

@@ -42,7 +42,31 @@ export default function CodeInputModal({
         <div className="formHeaderWrapper">
           <h2 className="formHeader">{title}</h2>
         </div>
-        <div className="userDataInputWrapper">
+        <form
+          className="userDataInputWrapper"
+          autoComplete="off"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void handleSubmit();
+          }}
+        >
+          {/* Ловушки для менеджеров паролей — не подставлять логин/пароль в поле кода (часто на HTTPS). */}
+          <input
+            type="text"
+            name="username"
+            autoComplete="username"
+            tabIndex={-1}
+            aria-hidden
+            className="codeInputAutofillTrap"
+          />
+          <input
+            type="password"
+            name="password"
+            autoComplete="current-password"
+            tabIndex={-1}
+            aria-hidden
+            className="codeInputAutofillTrap"
+          />
           <p className="inputHint">
             Код отправлен на почтовый адрес:<strong> {email}</strong>
           </p>
@@ -50,6 +74,8 @@ export default function CodeInputModal({
           <input
             className="codeInputField"
             type="text"
+            name="prognosov-verification-code"
+            id="prognosov-verification-code"
             inputMode="numeric"
             maxLength={5}
             value={code}
@@ -59,19 +85,27 @@ export default function CodeInputModal({
               setLocalError('');
             }}
             placeholder="12345"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            data-lpignore="true"
+            data-1p-ignore
+            readOnly
+            onFocus={(e) => e.currentTarget.removeAttribute('readonly')}
             autoFocus
           />
           {extraContent}
           {error && <span className="errorMessage">{error}</span>}
           <div className="submitFormButtonsWrapper">
-            <button className="submitFormButton" onClick={handleSubmit}>
+            <button type="submit" className="submitFormButton">
               {submitLabel}
             </button>
-            <button className="submitFormButton" onClick={onCancel}>
+            <button type="button" className="submitFormButton" onClick={onCancel}>
               Отмена
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

@@ -51,7 +51,7 @@ export default function ConfirmPopUp(props: {
 
   async function submit() {
     await props.action(props.host, props.data).then(async (result: any) => {
-      console.log('result in confirmPopup', result);
+
       if (result === 200) {
         if (props.setData) {
           if (props.skipFetchAfterAction) {

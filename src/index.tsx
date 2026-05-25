@@ -8,13 +8,12 @@ import './fonts/Manrope/stylesheet.css';
 import './main.scss';
 
 
-// При перезагрузке страницы переходим на стартовую (нет токена — данные не подгрузятся)
+// Не делаем replace('/') при F5: hash сбрасывался, была вторая загрузка,
+// refresh с #/prognoses обрывался и refreshToken удалялся в catch.
 const navEntry = window.performance?.getEntriesByType?.('navigation')[0] as
   | PerformanceNavigationTiming
   | undefined;
-if (navEntry?.type === 'reload') {
-  window.location.replace(window.location.origin + '/');
-} else if (window.location.pathname !== '/' && window.location.pathname !== '') {
+if (navEntry?.type !== 'reload' && window.location.pathname !== '/' && window.location.pathname !== '') {
   const hashPart = window.location.hash || window.location.pathname;
   window.location.replace(window.location.origin + '/' + hashPart);
 }

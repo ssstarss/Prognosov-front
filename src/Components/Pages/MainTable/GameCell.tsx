@@ -4,8 +4,7 @@ import { Prognose } from '../../../interfaces/interfaces';
 import UpdatePrognose from '../prognoses/updatePrognose/UpdatePrognose';
 import { appState } from '../../../constants';
 import {
-  isGameBeforePrognoseDeadline,
-  isPrognoseDeadlineBypassRole,
+  isGameBeforePrognoseDeadline
 } from '../../../functions/prognoseEditPolicy';
 import { getPrognoseScoreCircleClass } from '../../../functions/prognoseScoreCircleClass';
 import editIcon from '../../../assets/edit.png';
@@ -33,7 +32,7 @@ function GameCell(props: MyProps) {
   const color = getPrognoseScoreCircleClass(shownPrognose);
   const isOwn = appState.userID === shownPrognose.userOnTournamentUserID;
   const editable =
-    isPrognoseDeadlineBypassRole() ||
+   
     (isGameBeforePrognoseDeadline(shownPrognose.game.starts_at) && isOwn);
   return (
     <td
