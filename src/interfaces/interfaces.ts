@@ -24,9 +24,13 @@ type Team = {
 };
 
 type Prognose = {
-  id: number | undefined;
+  id?: number;
   gameID: number;
   game: Game;
+  /** false — прогноза в БД нет */
+  exists?: boolean;
+  /** false — прогноз есть, но счёт скрыт правилами видимости */
+  visible?: boolean;
   team1_result?: number;
   team2_result?: number;
   userOnTournamentTournamentID?: number;
