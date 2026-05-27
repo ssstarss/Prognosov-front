@@ -4,11 +4,17 @@ import { NavLink } from 'react-router-dom';
 import ChooseOption from '../chooseOption/chooseOption';
 import { Tournament } from '../../interfaces/types';
 import { useTournamentContext } from '../../context/TournamentContext';
+import { appState } from '../../constants';
 import AvatarCircle from '../common/AvatarCircle';
 import smartBall from '../../assets/svg/smartBall.png';
 function Header() {
   const { currentTournament, setCurrentTournament, tournaments } = useTournamentContext();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const isGlobalAdmin = appState.userRole === 'admin' || appState.userRole === 'superadmin';
+  const isTournamentAdmin =
+    currentTournament?.roomAdminID != null && currentTournament.roomAdminID === appState.userID;
+  const canManageUsersOnTournament = isGlobalAdmin || isTournamentAdmin;
 
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
@@ -87,9 +93,11 @@ function Header() {
           <NavLink to="/competitions" className={'headerLink adminHeaderLink'}>
             Competitions
           </NavLink>
-          <NavLink to="/usersOnTournament" className={'headerLink adminHeaderLink'}>
-            Users On Tournament
-          </NavLink>
+          {canManageUsersOnTournament && (
+            <NavLink to="/usersOnTournament" className={'headerLink'}>
+              Users On Tournament
+            </NavLink>
+          )}
           <NavLink to="/tournaments" className={'headerLink adminHeaderLink'}>
             Tournaments
           </NavLink>
@@ -152,13 +160,11 @@ function Header() {
           >
             Competitions
           </NavLink>
-          <NavLink
-            to="/usersOnTournament"
-            className={'headerLink adminHeaderLink'}
-            onClick={closeMobileMenu}
-          >
-            Users On Tournament
-          </NavLink>
+          {canManageUsersOnTournament && (
+            <NavLink to="/usersOnTournament" className={'headerLink'} onClick={closeMobileMenu}>
+              Users On Tournament
+            </NavLink>
+          )}
           <NavLink
             to="/tournaments"
             className={'headerLink adminHeaderLink'}
