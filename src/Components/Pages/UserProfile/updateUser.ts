@@ -12,7 +12,7 @@ export interface UpdateUserFormData {
 
 /**
  * Собирает данные формы в объект пользователя, отправляет на сервер,
- * при успехе обновляет состояние и вызывает onSuccess, при ошибке показывает alert.
+ * при успехе обновляет состояние и вызывает onSuccess; ошибки — toast из apiRequest.
  */
 export async function updateUser(
   user: UserProfile,
@@ -60,13 +60,8 @@ export async function updateUser(
       callbacks.onSuccess();
       return true;
     }
-    if (result !== undefined) {
-      alert(`Ошибка обновления данных. Статус: ${result}`);
-    }
     return false;
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : 'Неизвестная ошибка';
-    alert(`Ошибка при обновлении данных: ${message}`);
+  } catch {
     return false;
   }
 }
