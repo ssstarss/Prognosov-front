@@ -42,12 +42,11 @@ export default function ScoreEditModalBase({
 
   const hasTeam1 = typeof currentScore.team1 === 'number' && Number.isFinite(currentScore.team1);
   const hasTeam2 = typeof currentScore.team2 === 'number' && Number.isFinite(currentScore.team2);
-  const bothEmpty = !hasTeam1 && !hasTeam2;
   const bothFilled = hasTeam1 && hasTeam2;
   const nonNegative =
     (!hasTeam1 || (currentScore.team1 as number) >= 0) &&
     (!hasTeam2 || (currentScore.team2 as number) >= 0);
-  const canSubmit = (bothEmpty || bothFilled) && nonNegative;
+  const canSubmit = bothFilled && nonNegative;
 
   return (
     <div

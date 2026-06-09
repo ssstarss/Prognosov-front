@@ -55,6 +55,10 @@ const UpdateResult = (props: {
   );
 
   async function handleSubmitButton(score: { team1?: number; team2?: number }) {
+    if (typeof score.team1 !== 'number' || typeof score.team2 !== 'number') {
+      return;
+    }
+
     const newGame: Game = {
       id: props.game.id,
       starts_at: props.game.starts_at,

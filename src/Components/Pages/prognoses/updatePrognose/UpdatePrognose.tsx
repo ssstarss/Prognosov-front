@@ -1,10 +1,22 @@
 import './updatePrognose.scss';
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useMemo } from 'react';
 import { Prognose } from '../../../../interfaces/interfaces';
 import { appState } from '../../../../constants';
 
 import updatePrognoseHandle from './updatePrognoseHandle';
 import ScoreEditModalBase from '../../../common/ScoreEditModalBase';
+import { isPhoneDevice } from '../../../../functions/isPhoneDevice';
+
+function initialScoreForPrognose(prognose: Prognose): { team1?: number; team2?: number } {
+  if (isPhoneDevice()) {
+    return { team1: undefined, team2: undefined };
+  }
+
+  return {
+    team1: typeof prognose.team1_result === 'number' ? prognose.team1_result : undefined,
+    team2: typeof prognose.team2_result === 'number' ? prognose.team2_result : undefined,
+  };
+}
 
 const UpdatePrognose = (props: {
   prognose: Prognose;
@@ -17,21 +29,10 @@ const UpdatePrognose = (props: {
   ) => void;
   setShowModal: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const [initialScore, setInitialScore] = useState({
-    team1:
-      typeof props.prognose.team1_result === 'number' ? props.prognose.team1_result : undefined,
-    team2:
-      typeof props.prognose.team2_result === 'number' ? props.prognose.team2_result : undefined,
-  });
-
-  useEffect(() => {
-    setInitialScore({
-      team1:
-        typeof props.prognose.team1_result === 'number' ? props.prognose.team1_result : undefined,
-      team2:
-        typeof props.prognose.team2_result === 'number' ? props.prognose.team2_result : undefined,
-    });
-  }, [props.prognose.game?.id, props.prognose.team1_result, props.prognose.team2_result]);
+  const initialScore = useMemo(
+    () => initialScoreForPrognose(props.prognose),
+    [props.prognose.game?.id, props.prognose.team1_result, props.prognose.team2_result]
+  );
 
   return (
     <ScoreEditModalBase
@@ -47,6 +48,10 @@ const UpdatePrognose = (props: {
   );
 
   async function handleSubmitButton(score: { team1?: number; team2?: number }) {
+    if (typeof score.team1 !== 'number' || typeof score.team2 !== 'number') {
+      return;
+    }
+
     const newPrognose: Prognose = {
       id: undefined,
       gameID: props.prognose.game.id,
