@@ -3,6 +3,7 @@ import { updateData } from '../../../functions/updateData';
 
 export interface UpdateUserFormData {
   name: string;
+  nickName?: string;
   email: string;
   cellphone: string;
   city?: string;
@@ -28,6 +29,7 @@ export async function updateUser(
   const updatedUser: UserProfile = {
     ...user,
     name: formData.name,
+    nickName: formData.nickName ?? user.nickName ?? formData.name,
     email,
     cellphone: formData.cellphone,
     city: formData.city ?? user.city,
@@ -37,6 +39,7 @@ export async function updateUser(
   const requestData: Partial<UpdateUserFormData> & Pick<UpdateUserFormData, 'name' | 'cellphone'> =
     {
       name: updatedUser.name,
+      nickName: updatedUser.nickName,
       cellphone: updatedUser.cellphone,
       city: updatedUser.city,
       country: updatedUser.country,

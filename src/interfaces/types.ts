@@ -31,6 +31,7 @@ type Tournament = {
 interface User {
   id: number;
   name: string;
+  nickName: string;
   email: string;
   password: string;
   cellphone: string;
@@ -45,6 +46,7 @@ interface User {
 interface UserProfile {
   id: number;
   name: string;
+  nickName?: string;
   email: string;
   cellphone: string;
   avatar?: Uint8Array | string | null;

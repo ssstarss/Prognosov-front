@@ -86,6 +86,7 @@ export default function LoginPage() {
         setCodeError('');
         setRegisterData({
           name: pendingFormData.name,
+          nickName: pendingFormData.nickName,
           cellphone: pendingFormData.cellphone,
           city: pendingFormData.city,
           country: pendingFormData.country,

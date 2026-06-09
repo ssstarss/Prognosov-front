@@ -81,6 +81,10 @@ export default function UserProfile() {
             <h4 className="listName">{user?.name ?? '-'}</h4>
           </div>
           <div className=" modalEntityField">
+            <h3 className=" modalEntityFieldLabel">NickName:</h3>
+            <h4 className="listName">{user?.nickName ?? user?.name ?? '-'}</h4>
+          </div>
+          <div className=" modalEntityField">
             <h3 className=" modalEntityFieldLabel">Email:</h3>
             <h4 className="listName">{user?.email ?? '-'}</h4>
           </div>

@@ -40,6 +40,56 @@
   margin-bottom: 4px;
 }
 
+.rulesScoringList li {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.rulesScoreBadge {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #fff;
+  cursor: default;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    inset 0 2px 2px rgba(255, 255, 255, 0.3);
+}
+
+.rulesScoreBadge--blue {
+  background: linear-gradient(145deg, #4a90e2, #2f76e2);
+  border: 1px solid #1e5bbf;
+}
+
+.rulesScoreBadge--orange {
+  background: linear-gradient(145deg, orange, rgb(141, 92, 2));
+  border: 1px solid rgb(177, 115, 2);
+}
+
+.rulesScoreBadge--green {
+  background: linear-gradient(145deg, rgb(66, 154, 4), rgb(49, 115, 2));
+  border: 1px solid rgb(1, 116, 1);
+}
+
+.rulesScoreBadge--aqua {
+  background: linear-gradient(145deg, rgb(1, 182, 248), rgb(2, 154, 210));
+  border: 1px solid rgb(3, 143, 194);
+}
+
+.rulesScoreBadge--brown {
+  background: linear-gradient(145deg, #a0522d, #6b3410);
+  border: 1px solid #4a2409;
+}
+
 .rulesOrderedList li {
   list-style: decimal;
   margin-bottom: 4px;

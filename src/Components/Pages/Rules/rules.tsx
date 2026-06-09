@@ -65,11 +65,31 @@ export default function RulesPage() {
 
           <section className="rulesSection">
             <h3 className="rulesSectionTitle">Начисление очков</h3>
-            <ul className="rulesList">
-              <li>Угадан победитель матча - 2 очка.</li>
-              <li>Угаданы победитель и разница мячей - 3 очка.</li>
-              <li>Угадан счет в случае ничьей - 4 очка.</li>
-              <li>Угаданы победитель и точный счет в матче с победителем - 5 очков.</li>
+            <ul className="rulesList rulesScoringList">
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--blue">2</span>
+                Угадан победитель матча.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--green">3</span>
+                Угаданы победитель и разница мячей.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--aqua">4</span>
+                Угадан счет в случае ничьей.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--orange">5</span>
+                Угаданы победитель и точный счет в матче с победителем.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--brown">1</span>
+                Автопрогноз в случае угаданного победителя.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--brown">2</span>
+                Автопрогноз в случае угаданного счёта.
+              </li>
             </ul>
             <p>
               В матчах «на вылет» учитывается только результат основного и дополнительного времени.

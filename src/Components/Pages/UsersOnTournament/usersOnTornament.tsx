@@ -27,7 +27,7 @@ export default function UsersOnTournament() {
   useEffect(() => {
     fetchData(`/usersOnTournament/${currentTournament.id}`, setUsersOnTournament);
   }, [currentTournament.id]);
-  const listUsersOnTournament = usersOnTournament.map((user) => (
+  const listUsersOnTournament = usersOnTournament.sort((a, b) => a.user.name.localeCompare(b.user.name)).map((user) => (
     <EntityListRow
       key={user.userID}
       className="userLine"

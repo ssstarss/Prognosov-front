@@ -11,6 +11,7 @@ import './confirmPopUp.css';
 
 export default function ConfirmPopUp(props: {
   message: string;
+  title?: string;
   data:
     | Team
     | Competition
@@ -25,6 +26,8 @@ export default function ConfirmPopUp(props: {
   setShowModal: Function;
   skipFetchAfterAction?: boolean;
 }) {
+  const title = props.title ?? 'Удаление';
+
   return (
     <div className="formWrapper" onClick={(e) => e.stopPropagation()}>
       <div className="closeCrossWrapper">
@@ -33,7 +36,7 @@ export default function ConfirmPopUp(props: {
         </div>
       </div>
       <div className="formHeaderWrapper">
-        <h3 className="formHeader">Удаление</h3>
+        <h3 className="formHeader">{title}</h3>
       </div>
       <div className="formBody">
         <h3 className="formBodyText">{props.message}</h3>

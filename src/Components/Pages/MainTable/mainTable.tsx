@@ -300,7 +300,7 @@ export default function MainTable() {  const { currentTournament } = useTourname
                     placeholderClassName="playerAvatarPlaceholder"
                   />
                 </div>
-                <a className="playerName">{renderPlayerName(user.user.name)}</a>
+                <a className="playerName">{renderPlayerName(user.user.nickName || user.user.name)}</a>
               </div>
               <a className="playerResult">{showCupResult ? user.resultCup : user.result}</a>
             </div>

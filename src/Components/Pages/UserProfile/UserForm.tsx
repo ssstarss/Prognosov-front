@@ -78,6 +78,7 @@ export default function UserForm({
 
   async function submit() {
     const name = (document.getElementById('userFormFioInput') as HTMLInputElement)?.value;
+    const nickName = (document.getElementById('userFormNickNameInput') as HTMLInputElement)?.value;
     const city = (document.getElementById('userFormCityInput') as HTMLInputElement)?.value;
     const country = (document.getElementById('userFormCountryInput') as HTMLInputElement)?.value;
 
@@ -89,6 +90,7 @@ export default function UserForm({
 
     const data: RegisterFormData = {
       name,
+      nickName: nickName?.trim() || name,
       email,
       cellphone,
       city: city ?? '',
@@ -159,6 +161,15 @@ export default function UserForm({
             id="userFormFioInput"
             type="text"
             defaultValue={initialData.name}
+          />
+        </div>
+        <div className=" modalEntityField">
+          <h3 className="modalEntityFieldLabel">NickName:</h3>
+          <input
+            className="inputField"
+            id="userFormNickNameInput"
+            type="text"
+            defaultValue={initialData.nickName ?? initialData.name}
           />
         </div>
         <div className=" modalEntityField">

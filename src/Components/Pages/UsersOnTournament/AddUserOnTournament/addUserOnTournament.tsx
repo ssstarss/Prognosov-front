@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Tournament, User, UserOnTournament } from '../../../../interfaces/types';
 import './addUserOnTournament.scss';
 import '../../../common/ModalEntityForm.scss';
 import ConfirmPopUp from '../../../ConfirmPopUp/confirmPopup';
+import ModalWrapper from '../../../ModalPortal/modalWrapper';
 import ChooseOptionWithFilter from '../../../../Components/chooseOption/withFilter/chooseOptionFilter';
 import EntityModalForm from '../../../common/EntityModalForm';
 import { addData } from '../../../../functions/updateData';
@@ -18,23 +20,28 @@ export default function AddUserOnTournament(props: {
   const listHost = `/usersOnTournament/${props.currentTournament.id}`;
   return (
     <div className="addUserOnTournamentPageWrapper modalEntityFormWrapper">
-      {showModal && (
-        <ConfirmPopUp
-          message="Are you sure you want to add this user to the tournament?"
-          data={{ userID: currentUser.id, tournamentID: props.currentTournament.id }}
-          action={async (_host: string, data: { userID: number; tournamentID: number }) => {
-            await addData(`/usersOnTournaments`, { data: { ...data } as UserOnTournament });
-            /* ConfirmPopUp обновляет список только при result === 200 (как deleteData/addData) */
-            return 200;
-          }}
-          host={listHost}
-          setData={async (updated: UserOnTournament[]) => {
-            props.onAdded(updated);
-            props.onClose?.();
-          }}
-          setShowModal={setShowModal}
-        />
-      )}
+      {showModal &&
+        createPortal(
+          <ModalWrapper showModal={showModal} setShowModal={setShowModal}>
+            <ConfirmPopUp
+              title="Подтверждение"
+              message="Are you sure you want to add this user to the tournament?"
+              data={{ userID: currentUser.id, tournamentID: props.currentTournament.id }}
+              action={async (_host: string, data: { userID: number; tournamentID: number }) => {
+                await addData(`/usersOnTournaments`, { data: { ...data } as UserOnTournament });
+                /* ConfirmPopUp обновляет список только при result === 200 (как deleteData/addData) */
+                return 200;
+              }}
+              host={listHost}
+              setData={async (updated: UserOnTournament[]) => {
+                props.onAdded(updated);
+                props.onClose?.();
+              }}
+              setShowModal={setShowModal}
+            />
+          </ModalWrapper>,
+          document.body
+        )}
 
       <EntityModalForm
         title="Add User On Tournament"
