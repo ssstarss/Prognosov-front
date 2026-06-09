@@ -47,16 +47,23 @@ export default function UserForm({
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
   const validateCellphone = (phoneValue: string): boolean => {
-    const { valid, errorMessage } = validatePhone(phoneValue);
+    const { valid, errorMessage, normalized } = validatePhone(phoneValue);
     setCellphoneError(errorMessage);
+    if (valid && normalized) {
+      setCellphone(normalized);
+    }
     return valid;
   };
 
   const handleCellphoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = formatPhoneInput(e.target.value);
     setCellphone(value);
-    if (value) validateCellphone(value);
-    else setCellphoneError('Неверный телефон');
+    if (value) {
+      const { valid, errorMessage } = validatePhone(value);
+      setCellphoneError(valid ? '' : errorMessage);
+    } else {
+      setCellphoneError('');
+    }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +90,11 @@ export default function UserForm({
     const country = (document.getElementById('userFormCountryInput') as HTMLInputElement)?.value;
 
     const isEmailValid = validateEmail(email, setEmailError);
-    const isCellphoneValid = validateCellphone(cellphone);
+    const phoneCheck = validatePhone(cellphone);
+    if (!phoneCheck.valid) {
+      setCellphoneError(phoneCheck.errorMessage);
+    }
+    const isCellphoneValid = phoneCheck.valid;
     const isPasswordValid = validatePassword();
 
     if (!isEmailValid || !isCellphoneValid || !isPasswordValid) return;
@@ -92,7 +103,7 @@ export default function UserForm({
       name,
       nickName: nickName?.trim() || name,
       email,
-      cellphone,
+      cellphone: phoneCheck.normalized ?? cellphone,
       city: city ?? '',
       country: country ?? '',
     };
@@ -215,7 +226,7 @@ export default function UserForm({
               value={cellphone}
               onChange={handleCellphoneChange}
               onBlur={() => validateCellphone(cellphone)}
-              placeholder="+7XXXXXXXXXX"
+              placeholder="+7… или +49…"
             />
             {cellphoneError && <span className="errorMessage">{cellphoneError}</span>}
           </div>

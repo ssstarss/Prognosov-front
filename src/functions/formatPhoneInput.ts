@@ -1,45 +1,39 @@
 /**
- * Форматирование и нормализация ввода номера телефона.
- * - Замена 8 на +7
- * - Только цифры после +
- * - Максимум 12 символов (формат +7XXXXXXXXXX)
+ * Форматирование ввода номера телефона (международный формат).
+ * Допускает +, цифры, пробелы, скобки и дефисы; при сохранении нормализуется в E.164.
  */
 
-const MAX_PHONE_LENGTH = 12;
+const MAX_DIGITS_AFTER_PLUS = 15;
 
 export function formatPhoneInput(value: string): string {
   let result = value.trim();
+  if (!result) return '';
 
-  if (result.length === 0) {
-    return '';
+  const startsWithPlus = result.startsWith('+');
+  const digits = result.replace(/\D/g, '');
+
+  if (!startsWithPlus && digits.startsWith('8') && digits.length <= 11) {
+    return `+7${digits.slice(1)}`;
   }
 
-  // Если начинается с 8, заменяем на +7
-  if (result.startsWith('8')) {
-    result = '+7' + result.substring(1);
-  }
+  result = result.replace(/[^\d+\s()-]/g, '');
 
-  // Удаляем все символы кроме цифр и +
-  result = result.replace(/[^\d+]/g, '');
-
-  // Если начинается не с +, добавляем +
   if (!result.startsWith('+')) {
-    if (result.length > 0 && /^\d/.test(result)) {
-      result = '+' + result;
+    const limited = digits.slice(0, MAX_DIGITS_AFTER_PLUS);
+    return limited ? `+${limited}` : '';
+  }
+
+  let digitCount = 0;
+  let formatted = '+';
+  for (const ch of result.slice(1)) {
+    if (/\d/.test(ch)) {
+      if (digitCount >= MAX_DIGITS_AFTER_PLUS) continue;
+      digitCount += 1;
+      formatted += ch;
+    } else if (/[\s()-]/.test(ch)) {
+      formatted += ch;
     }
   }
 
-  // Проверяем, что после + только цифры
-  if (result.length > 1) {
-    const afterPlus = result.substring(1);
-    const digitsAfterPlus = afterPlus.replace(/\D/g, '');
-    result = '+' + digitsAfterPlus;
-  }
-
-  // Ограничиваем длину
-  if (result.length > MAX_PHONE_LENGTH) {
-    result = result.substring(0, MAX_PHONE_LENGTH);
-  }
-
-  return result;
+  return formatted;
 }
