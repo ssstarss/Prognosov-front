@@ -43,6 +43,14 @@ interface User {
   active: boolean;
 }
 
+type UserTournamentCandidate = {
+  id: number;
+  name: string;
+  nickName: string;
+  email: string;
+  cellphone: string;
+};
+
 interface UserProfile {
   id: number;
   name: string;
@@ -65,4 +73,4 @@ interface UserOnTournament {
   user: User;
   tournament?: Tournament;
 }
-export { User, UserProfile, Tournament, Competition, Team, UserOnTournament };
+export { User, UserProfile, UserTournamentCandidate, Tournament, Competition, Team, UserOnTournament };

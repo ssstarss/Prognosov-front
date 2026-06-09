@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './usersOnTornament.scss';
 import '../../common/ListRow.css';
 import fetchData from '../../../functions/fetchData';
-import {  User, UserOnTournament } from '../../../interfaces/types';
+import {  UserOnTournament } from '../../../interfaces/types';
 import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import AddUserOnTournament from './AddUserOnTournament/addUserOnTournament';
@@ -20,10 +20,6 @@ export default function UsersOnTournament() {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [user, setUser] = useState<UserOnTournament>({} as UserOnTournament);
   const [showModalAddUser, setShowModalAddUser] = useState(false);
-  const [users, setUsers] = useState<User[]>([] as User[]);
-  useEffect(() => {
-    fetchData(`/users`, setUsers);
-  }, []);
   useEffect(() => {
     fetchData(`/usersOnTournament/${currentTournament.id}`, setUsersOnTournament);
   }, [currentTournament.id]);
@@ -61,7 +57,6 @@ export default function UsersOnTournament() {
         <ModalWrapper showModal={showModalAddUser} setShowModal={setShowModalAddUser}>
           <AddUserOnTournament
             currentTournament={currentTournament}
-            users={users}
             onClose={() => setShowModalAddUser(false)}
             onAdded={(list) => setUsersOnTournament(list)}
           />
