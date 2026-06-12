@@ -72,7 +72,7 @@ export default function RulesPage() {
               </li>
               <li>
                 <span className="rulesScoreBadge rulesScoreBadge--green">3</span>
-                Угаданы победитель и разница мячей.
+                Угаданы победитель и разница мячей или ничья без счёта.
               </li>
               <li>
                 <span className="rulesScoreBadge rulesScoreBadge--aqua">4</span>

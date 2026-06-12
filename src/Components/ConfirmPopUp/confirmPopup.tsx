@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import fetchData from '../../functions/fetchData';
 import { Team } from '../../interfaces/interfaces';
 import {
@@ -10,7 +11,7 @@ import {
 import './confirmPopUp.css';
 
 export default function ConfirmPopUp(props: {
-  message: string;
+  message: ReactNode;
   title?: string;
   data:
     | Team

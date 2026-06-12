@@ -11,6 +11,11 @@ import EntityPageLayout from '../../common/EntityPageLayout';
 import EntityListRow from '../../common/EntityListRow';
 import { createPortal } from 'react-dom';
 import {useTournamentContext} from '../../../context/TournamentContext';
+
+function countExistingPrognoses(prognoses: UserOnTournament['prognoses']): number {
+  return prognoses?.filter((p) => p.exists === true).length ?? 0;
+}
+
 export default function UsersOnTournament() {
   const { currentTournament, setCurrentTournament } = useTournamentContext();
   const [usersOnTournament, setUsersOnTournament] = useState<UserOnTournament[]>(
@@ -41,7 +46,15 @@ export default function UsersOnTournament() {
         createPortal(
           <ModalWrapper showModal={showModalDelete} setShowModal={setShowModalDelete}>
             <ConfirmPopUp
-              message={`It is strongly not recommended to delete a user from a tournament. he already has ${user.prognoses?.length} prognoses? Are you sure?`}
+              message={
+                <>
+                  It is strongly not recommended to delete a user from a tournament. he already has{' '}
+                  <span className="confirmPopUpHighlight">
+                    {countExistingPrognoses(user.prognoses)}
+                  </span>{' '}
+                  prognoses? Are you sure?
+                </>
+              }
               data={user}
               action={deleteData}
               host={`/userOnTournament?tournamentID=${currentTournament.id}&userID=${user.userID}`}
