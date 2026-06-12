@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './usersOnTornament.scss';
 import '../../common/ListRow.css';
 import fetchData from '../../../functions/fetchData';
-import {  User, UserOnTournament } from '../../../interfaces/types';
+import {  UserOnTournament } from '../../../interfaces/types';
 import { deleteData } from '../../../functions/updateData';
 import ConfirmPopUp from '../../ConfirmPopUp/confirmPopup';
 import AddUserOnTournament from './AddUserOnTournament/addUserOnTournament';
@@ -11,6 +11,11 @@ import EntityPageLayout from '../../common/EntityPageLayout';
 import EntityListRow from '../../common/EntityListRow';
 import { createPortal } from 'react-dom';
 import {useTournamentContext} from '../../../context/TournamentContext';
+
+function countExistingPrognoses(prognoses: UserOnTournament['prognoses']): number {
+  return prognoses?.filter((p) => p.exists === true).length ?? 0;
+}
+
 export default function UsersOnTournament() {
   const { currentTournament, setCurrentTournament } = useTournamentContext();
   const [usersOnTournament, setUsersOnTournament] = useState<UserOnTournament[]>(
@@ -20,14 +25,10 @@ export default function UsersOnTournament() {
   const [showModalDelete, setShowModalDelete] = useState(false);
   const [user, setUser] = useState<UserOnTournament>({} as UserOnTournament);
   const [showModalAddUser, setShowModalAddUser] = useState(false);
-  const [users, setUsers] = useState<User[]>([] as User[]);
-  useEffect(() => {
-    fetchData(`/users`, setUsers);
-  }, []);
   useEffect(() => {
     fetchData(`/usersOnTournament/${currentTournament.id}`, setUsersOnTournament);
   }, [currentTournament.id]);
-  const listUsersOnTournament = usersOnTournament.map((user) => (
+  const listUsersOnTournament = usersOnTournament.sort((a, b) => a.user.name.localeCompare(b.user.name)).map((user) => (
     <EntityListRow
       key={user.userID}
       className="userLine"
@@ -45,7 +46,15 @@ export default function UsersOnTournament() {
         createPortal(
           <ModalWrapper showModal={showModalDelete} setShowModal={setShowModalDelete}>
             <ConfirmPopUp
-              message={`It is strongly not recommended to delete a user from a tournament. he already has ${user.prognoses?.length} prognoses? Are you sure?`}
+              message={
+                <>
+                  It is strongly not recommended to delete a user from a tournament. he already has{' '}
+                  <span className="confirmPopUpHighlight">
+                    {countExistingPrognoses(user.prognoses)}
+                  </span>{' '}
+                  prognoses? Are you sure?
+                </>
+              }
               data={user}
               action={deleteData}
               host={`/userOnTournament?tournamentID=${currentTournament.id}&userID=${user.userID}`}
@@ -61,7 +70,6 @@ export default function UsersOnTournament() {
         <ModalWrapper showModal={showModalAddUser} setShowModal={setShowModalAddUser}>
           <AddUserOnTournament
             currentTournament={currentTournament}
-            users={users}
             onClose={() => setShowModalAddUser(false)}
             onAdded={(list) => setUsersOnTournament(list)}
           />

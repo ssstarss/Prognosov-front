@@ -56,6 +56,7 @@ export default function UserModalForm({
           user,
           {
             name: data.name,
+            nickName: data.nickName,
             email: user.email,
             cellphone: data.cellphone,
             city: data.city,
@@ -87,6 +88,7 @@ export default function UserModalForm({
         user,
         {
           name: data.name,
+          nickName: data.nickName,
           email: data.email,
           cellphone: data.cellphone,
           city: data.city,
@@ -155,6 +157,7 @@ export default function UserModalForm({
           isEditMode && user
             ? {
                 name: user.name,
+                nickName: user.nickName ?? user.name,
                 email: user.email,
                 cellphone: user.cellphone,
                 city: user.city,

@@ -41,13 +41,11 @@ export const addData = async (
     | { data: RegisterFormData & { active: boolean; id: number; role?: string } }
     | { data: UserOnTournament }
 ) => {
-  console.log('body in addData', JSON.stringify(data));
   const result = await apiRequest({
     host,
     method: 'POST',
     body: data,
     errorMessage: `Ошибка добавления данных: ${host}`,
   });
-  if (result) console.log('result in add', result.status);
-  return result?.status;
+   return result?.status;
 };

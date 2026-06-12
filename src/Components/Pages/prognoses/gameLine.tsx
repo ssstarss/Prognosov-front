@@ -39,8 +39,8 @@ export default function PrognoseLine(props: MyProps) {
         startsAt={prognose.game.starts_at}
         team1Name={prognose.game.team1?.name}
         team2Name={prognose.game.team2?.name}
-        team1Avatar={prognose.game.team1?.avatar}
-        team2Avatar={prognose.game.team2?.avatar}
+        team1Id={prognose.game.team1?.id}
+        team2Id={prognose.game.team2?.id}
         team1Score={prognose.team1_result}
         team2Score={prognose.team2_result}
         extraRight={<div className={`prognose__player-score ${color}`}>{prognose.result ?? '-'}</div>}

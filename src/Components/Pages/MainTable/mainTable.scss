@@ -357,10 +357,14 @@
 }
 .prognose {
   font-size: 0.875rem;
-  border-bottom: 1px $dark-blue solid;
+  
   margin: 0 5px 0 5px;
   padding-bottom: 3px;
   padding-top: 3px;
+}
+
+.prognose--bottom-border{
+  border-bottom: 1px $dark-blue solid;
 }
 
 .scoreEditIcon {
@@ -378,6 +382,9 @@
   text-align: center;
   font-family: 'Manrope', sans-serif;
   font-size: 1rem;
+  color: $dark-blue;
+}
+.score--hidden{
   color: $dark-blue;
 }
 
@@ -398,6 +405,9 @@
   box-shadow:
     0 4px 8px rgba(0, 0, 0, 0.3),
     inset 0 2px 2px rgba(255, 255, 255, 0.3);
+}
+.score--hidden{
+  color: $dark-blue;
 }
 .score_black {
   color: $dark-blue;
@@ -455,11 +465,26 @@
   }
 
   .mainTablePageWrapper .formHeaderWrapper {
+    position: relative;
+    min-height: 0;
     padding: 6px 8px 0;
     flex-direction: row;
     align-items: center;
     gap: 6px;
     border: none;
+
+    .logo {
+      position: absolute;
+      top: 4px;
+      left: 8px;
+      width: 48px;
+      height: 48px;
+      max-width: 48px;
+      max-height: 48px;
+      margin: 0;
+      z-index: 1000;
+      pointer-events: none;
+    }
   }
 
   .mainTableHeaderControls {

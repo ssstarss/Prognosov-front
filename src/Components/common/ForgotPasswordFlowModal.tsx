@@ -118,14 +118,17 @@ export default function ForgotPasswordFlowModal({
           error={forgotError}
           submitLabel="Сменить пароль"
           extraContent={
-            <input
-              className="inputField"
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Новый пароль"
-              autoComplete="off"
-            />
+            <>
+              <p className="inputHint">Введите новый пароль</p>
+              <input
+                className="inputField"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Новый пароль"
+                autoComplete="new-password"
+              />
+            </>
           }
           onSubmit={handleForgotConfirmSubmit}
           onCancel={onClose}
@@ -135,8 +138,8 @@ export default function ForgotPasswordFlowModal({
       {step === 'success' && (
         <div className="codeInputModal" onClick={(e) => e.stopPropagation()}>
           <h3>Пароль успешно изменен</h3>
-          <div className="codeInputModalButtons">
-            <button className="codeInputButton" onClick={onClose}>
+          <div className="submitFormButtonsWrapper">
+            <button type="button" className="submitFormButton" onClick={onClose}>
               OK
             </button>
           </div>

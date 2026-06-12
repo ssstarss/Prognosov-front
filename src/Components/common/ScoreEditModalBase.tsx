@@ -11,6 +11,8 @@ type ScoreEditModalBaseProps = {
   title: string;
   team1Name?: string;
   team2Name?: string;
+  team1Id?: number;
+  team2Id?: number;
   team1Avatar?: unknown;
   team2Avatar?: unknown;
   initialScore: ScoreState;
@@ -23,6 +25,8 @@ export default function ScoreEditModalBase({
   title,
   team1Name,
   team2Name,
+  team1Id,
+  team2Id,
   team1Avatar,
   team2Avatar,
   initialScore,
@@ -38,12 +42,11 @@ export default function ScoreEditModalBase({
 
   const hasTeam1 = typeof currentScore.team1 === 'number' && Number.isFinite(currentScore.team1);
   const hasTeam2 = typeof currentScore.team2 === 'number' && Number.isFinite(currentScore.team2);
-  const bothEmpty = !hasTeam1 && !hasTeam2;
   const bothFilled = hasTeam1 && hasTeam2;
   const nonNegative =
     (!hasTeam1 || (currentScore.team1 as number) >= 0) &&
     (!hasTeam2 || (currentScore.team2 as number) >= 0);
-  const canSubmit = (bothEmpty || bothFilled) && nonNegative;
+  const canSubmit = bothFilled && nonNegative;
 
   return (
     <div
@@ -67,6 +70,7 @@ export default function ScoreEditModalBase({
           <div className="prognoses__team-name prognoses__team-name--edit-left">{team1Name}</div>
           <div className="prognoses__team-logo prognoses__team-logo--edit-left">
             <AvatarCircle
+              teamId={team1Id}
               avatar={team1Avatar}
               alt={team1Name ? `${team1Name} logo` : 'Team logo'}
               className="prognoses__team-logo-circle"
@@ -101,6 +105,7 @@ export default function ScoreEditModalBase({
           ></input>
           <div className="prognoses__team-logo prognoses__team-logo--edit-right">
             <AvatarCircle
+              teamId={team2Id}
               avatar={team2Avatar}
               alt={team2Name ? `${team2Name} logo` : 'Team logo'}
               className="prognoses__team-logo-circle"

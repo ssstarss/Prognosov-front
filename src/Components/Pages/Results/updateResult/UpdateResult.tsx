@@ -32,8 +32,8 @@ const UpdateResult = (props: {
       title="Enter your result"
       team1Name={props.game.team1?.name}
       team2Name={props.game.team2?.name}
-      team1Avatar={props.game.team1?.avatar}
-      team2Avatar={props.game.team2?.avatar}
+      team1Id={props.game.team1?.id}
+      team2Id={props.game.team2?.id}
       initialScore={initialScore}
       resetKey={props.game?.id}
       topContent={
@@ -55,6 +55,10 @@ const UpdateResult = (props: {
   );
 
   async function handleSubmitButton(score: { team1?: number; team2?: number }) {
+    if (typeof score.team1 !== 'number' || typeof score.team2 !== 'number') {
+      return;
+    }
+
     const newGame: Game = {
       id: props.game.id,
       starts_at: props.game.starts_at,

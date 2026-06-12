@@ -10,7 +10,7 @@ const fetchData = async (host: string, setFunc?: Function): Promise<any> => {
 
   const res = result.data;
   if (setFunc) {
-    console.log('res in fetchData', setFunc.name, res);
+
     setFunc(res);
   }
   return res;

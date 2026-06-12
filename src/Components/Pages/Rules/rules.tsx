@@ -55,7 +55,7 @@ export default function RulesPage() {
             </p>
             <p>
               После дедлайна редактирование закрывается. Если прогноз не внесен вовремя, по
-              умолчанию засчитывается счет 0:0.
+              умолчанию засчитывается счет 0:0 (<strong>Автопрогноз</strong>).
             </p>
             <p>
               Фактические результаты вносит организатор, после чего автоматически обновляется
@@ -65,12 +65,38 @@ export default function RulesPage() {
 
           <section className="rulesSection">
             <h3 className="rulesSectionTitle">Начисление очков</h3>
-            <ul className="rulesList">
-              <li>Угадан победитель матча - 2 очка.</li>
-              <li>Угаданы победитель и разница мячей - 3 очка.</li>
-              <li>Угадан счет в случае ничьей - 4 очка.</li>
-              <li>Угаданы победитель и точный счет в матче с победителем - 5 очков.</li>
+            <ul className="rulesList rulesScoringList">
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--blue">2</span>
+                Угадан победитель матча.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--green">3</span>
+                Угаданы победитель и разница мячей или ничья без счёта.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--aqua">4</span>
+                Угадан счет в случае ничьей.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--orange">5</span>
+                Угаданы победитель и точный счет в матче с победителем.
+              </li>
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--brown">1</span>
+                Автопрогноз в случае угаданной ничьей.
+              </li> 
+              <li>
+                <span className="rulesScoreBadge rulesScoreBadge--brown">2</span>
+                Автопрогноз в случае угаданного счёта ничьей.
+              </li>
             </ul>
+            <p>
+            <h3 className="rulesSectionTitle">Коэффициенты подсчета очков для матчей на вылет в Регулярном чемпионате</h3>
+              В <strong>Регулярном чемпионате</strong> результат прогноза в 
+              играх на вылет считается с коэффициентом <strong>×2</strong>, в{' '}
+              <strong>финальной</strong> игре — <strong>×4</strong>.  В случае <strong>Автопрогноза</strong>  коэффициент не применяется.
+            </p>
             <p>
               В матчах «на вылет» учитывается только результат основного и дополнительного времени.
               Без пенальти
@@ -98,7 +124,7 @@ export default function RulesPage() {
             <p>
               Участие в конкурсе означает согласие с правилами. По вопросам:{' '}
               <a href="mailto:s.s.star@mail.ru">s.s.star@mail.ru</a> или{' '}
-              <a href="tel:+79132344444">+7 913 234-44-44</a>.
+              <a href="tel:+79132344444">+7 913-234-4444</a>.
             </p>
           </section>
         </div>

@@ -22,6 +22,9 @@
   background-color: gray;
 }
 
+.formBodyText {
+ font-family: manrope, sans-serif;
+}
 .closeCrossWrapper {
   width: 100%;
   display: flex;
@@ -36,4 +39,10 @@
   flex-direction: row;
   justify-content: space-between;
   gap: 10px;
+}
+
+.confirmPopUpHighlight {
+  color: #f44336;
+  font-size: 1.35em;
+  font-weight: 700;
 }

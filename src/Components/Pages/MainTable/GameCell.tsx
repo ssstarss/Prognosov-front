@@ -4,8 +4,7 @@ import { Prognose } from '../../../interfaces/interfaces';
 import UpdatePrognose from '../prognoses/updatePrognose/UpdatePrognose';
 import { appState } from '../../../constants';
 import {
-  isGameBeforePrognoseDeadline,
-  isPrognoseDeadlineBypassRole,
+  isGameBeforePrognoseDeadline
 } from '../../../functions/prognoseEditPolicy';
 import { getPrognoseScoreCircleClass } from '../../../functions/prognoseScoreCircleClass';
 import editIcon from '../../../assets/edit.png';
@@ -14,7 +13,10 @@ import ModalWrapper from '../../ModalPortal/modalWrapper';
 
 interface MyProps {
   prognose: Prognose;
-  onPrognoseSaved?: (p: Prognose) => void;
+  onPrognoseSaved?: (
+    p: Prognose,
+    extras?: { result?: number; resultCup?: number }
+  ) => void;
   columnClassName?: string;
 }
 function GameCell(props: MyProps) {
@@ -27,14 +29,14 @@ function GameCell(props: MyProps) {
   }, [prognose, showModal]);
 
   const shownPrognose = chosenPrognose;
-  const color = getPrognoseScoreCircleClass(shownPrognose);
+  const isHidden = shownPrognose.exists === true && shownPrognose.visible === false;
+  const color = isHidden ? '' : getPrognoseScoreCircleClass(shownPrognose);
   const isOwn = appState.userID === shownPrognose.userOnTournamentUserID;
   const editable =
-    isPrognoseDeadlineBypassRole() ||
-    (isGameBeforePrognoseDeadline(shownPrognose.game.starts_at) && isOwn);
+    !isHidden && isGameBeforePrognoseDeadline(shownPrognose.game.starts_at) && isOwn;
   return (
     <td
-      className={`playerResultCell ${columnClassName} ${editable ? 'playerResultCell--editable' : 'playerResultCell--readonly'}`.trim()}
+      className={`playerResultCell ${columnClassName} ${editable ? 'playerResultCell--editable' : 'playerResultCell--readonly'} ${isHidden ? 'playerResultCell--hidden' : ''}`.trim()}
       key={shownPrognose.id}
       onClick={
         editable
@@ -58,15 +60,19 @@ function GameCell(props: MyProps) {
           document.body
         )}
       <div className="playerResultWrapper">
-        <p className="prognose">
-          {typeof shownPrognose.team1_result === 'number' ? shownPrognose.team1_result : '-'} -{' '}
-          {typeof shownPrognose.team2_result === 'number' ? shownPrognose.team2_result : '-'}
+        <p className={`prognose ${prognose.exists ? 'prognose--bottom-border' : ''}`}>
+          { prognose.visible && prognose.exists ? shownPrognose.team1_result + ' - ' + shownPrognose.team2_result : prognose.exists ? "? - ?" : "" }
+          
         </p>
         {editable ? (
           <img src={editIcon} alt="" className="scoreEditIcon" />
+        ) : isHidden && prognose.exists ? (
+          <div className="score score--hidden" title="Прогноз скрыт до начала матча">
+            ?
+          </div>
         ) : (
           <div className={`score ${color}`}>
-            {typeof shownPrognose.result === 'number' ? shownPrognose.result : '-'}
+            {typeof shownPrognose.result === 'number' ? shownPrognose.result : prognose.exists ? "?" : "" }
           </div>
         )}
       </div>

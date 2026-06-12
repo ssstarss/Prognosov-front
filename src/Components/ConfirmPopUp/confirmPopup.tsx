@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import fetchData from '../../functions/fetchData';
 import { Team } from '../../interfaces/interfaces';
 import {
@@ -10,7 +11,8 @@ import {
 import './confirmPopUp.css';
 
 export default function ConfirmPopUp(props: {
-  message: string;
+  message: ReactNode;
+  title?: string;
   data:
     | Team
     | Competition
@@ -25,6 +27,8 @@ export default function ConfirmPopUp(props: {
   setShowModal: Function;
   skipFetchAfterAction?: boolean;
 }) {
+  const title = props.title ?? 'Удаление';
+
   return (
     <div className="formWrapper" onClick={(e) => e.stopPropagation()}>
       <div className="closeCrossWrapper">
@@ -33,7 +37,7 @@ export default function ConfirmPopUp(props: {
         </div>
       </div>
       <div className="formHeaderWrapper">
-        <h3 className="formHeader">Удаление</h3>
+        <h3 className="formHeader">{title}</h3>
       </div>
       <div className="formBody">
         <h3 className="formBodyText">{props.message}</h3>
@@ -51,7 +55,7 @@ export default function ConfirmPopUp(props: {
 
   async function submit() {
     await props.action(props.host, props.data).then(async (result: any) => {
-      console.log('result in confirmPopup', result);
+
       if (result === 200) {
         if (props.setData) {
           if (props.skipFetchAfterAction) {

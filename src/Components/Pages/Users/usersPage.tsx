@@ -30,7 +30,7 @@ export default function UsersPage() {
         name={user.name}
         leading={
           <AvatarCircle
-            avatar={user.avatar}
+            userId={user.id}
             alt={user.name}
             className="userAvatar"
             placeholderClassName="userAvatarPlaceholder"

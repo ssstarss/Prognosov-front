@@ -73,8 +73,8 @@ export default function MatchLine(props: MyProps) {
         startsAt={game.starts_at}
         team1Name={game.team1?.name}
         team2Name={game.team2?.name}
-        team1Avatar={game.team1?.avatar}
-        team2Avatar={game.team2?.avatar}
+        team1Id={game.team1?.id}
+        team2Id={game.team2?.id}
         team1Score={game.team1_result}
         team2Score={game.team2_result}
         extraRight={
