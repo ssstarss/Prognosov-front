@@ -14,6 +14,7 @@ import UsersOnTournament from './Components/Pages/UsersOnTournament/usersOnTorna
 import { TournamentProvider } from './context/TournamentContext';
 import RulesPage from './Components/Pages/Rules/rules';
 import RequireAuth from './Components/common/RequireAuth';
+import BookmakerResultsPage from './Components/Pages/BookmakerResults/bookmakerResultsPage';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/prognoses" element={<PrognosesPage />} />
                 <Route path="/games" element={<GamesPage />} />
                 <Route path="/userprofile" element={<UserProfile />} />
+                <Route path="/bookmaker-results" element={<BookmakerResultsPage />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />

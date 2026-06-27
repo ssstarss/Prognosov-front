@@ -265,16 +265,132 @@
   &:active {
     z-index: 40;
   }
+}
+
+.playerAvatarZoomMedia {
+  position: relative;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
 
   .avatarCircle {
     transition: transform 1s ease;
     transform-origin: left center;
   }
+}
 
-  &:hover .avatarCircle,
-  &:active .avatarCircle {
-    transform: scale(3);
+.playerAvatarZoom:hover .playerAvatarZoomMedia .avatarCircle,
+.playerAvatarZoom:active .playerAvatarZoomMedia .avatarCircle {
+  transform: scale(3);
+}
+
+.playerAvatarStatsPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  left: calc(100% * 3 + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 41;
+  min-width: 110px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid $dark-blue;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+.playerAvatarStatsTitle{
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $dark-blue;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.playerAvatarZoom:hover .playerAvatarStatsPanel,
+.playerAvatarZoom:active .playerAvatarStatsPanel {
+  opacity: 1;
+  visibility: visible;
+}
+
+.playerAvatarStatsPoints,
+.playerAvatarStatsScores {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.playerAvatarStatsRow {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+
+  &:last-child {
+    margin-bottom: 0;
   }
+
+  .score {
+    min-width: 26px;
+    height: 26px;
+    padding: 0 6px;
+    font-size: 0.8rem;
+    margin: 0;
+  }
+}
+
+.playerAvatarStatsCount {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $dark-blue;
+}
+
+.playerAvatarStatsScores {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba($dark-blue, 0.2);
+}
+
+.playerAvatarStatsScoreRow {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.82rem;
+  color: $dark-blue;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.playerAvatarStatsScoreLabel {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.playerAvatarStatsScoreCount {
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .playerAvatar {
@@ -544,6 +660,11 @@
     min-height: 28px;
   }
 
+  .playerAvatarZoomMedia {
+    width: 28px;
+    height: 28px;
+  }
+
   .playerIdentity {
     gap: 4px;
     padding-left: 4px;
@@ -646,6 +767,11 @@
     height: 24px;
     min-width: 24px;
     min-height: 24px;
+  }
+
+  .playerAvatarZoomMedia {
+    width: 24px;
+    height: 24px;
   }
 
   .playerName {

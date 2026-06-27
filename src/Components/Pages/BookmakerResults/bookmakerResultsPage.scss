@@ -1,0 +1,156 @@
+@use '../../../variables.scss' as *;
+
+.bookmakerResultsPageWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  min-width: 50%;
+  max-width: 95%;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  border: solid 1px $dark-blue;
+  border-radius: 20px;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.pageWrapper.pageWrapper--bookmaker-results {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.bookmakerResultsPageWrapper .formHeaderWrapper {
+  padding: 20px 40px 14px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.bookmakerResultsControls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 340px;
+}
+
+.bookmakerResultsControlLabel {
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+}
+
+.bookmakerResultsSection {
+  padding: 0 18px 18px;
+}
+
+.bookmakerResultsSection h3 {
+  margin: 12px 0;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+}
+
+.bookmakerResultsPlayerFilter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  max-width: 420px;
+}
+
+.bookmakerResultsTableWrapper {
+  overflow: auto;
+  border: 1px solid $dark-blue;
+  border-radius: 10px;
+  max-width: 100%;
+}
+
+.bookmakerResultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Manrope', sans-serif;
+}
+
+.bookmakerResultsTable th,
+.bookmakerResultsTable td {
+  border: 1px solid #d7dce5;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  color: $dark-blue;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.bookmakerResultsTable th {
+  background: #f5f7fb;
+  font-weight: 700;
+}
+
+.bookmakerResultsTable--summary td,
+.bookmakerResultsTable--summary th {
+  text-align: right;
+}
+
+.bookmakerResultsTable--summary td:first-child,
+.bookmakerResultsTable--summary th:first-child {
+  text-align: left;
+}
+
+.bookmakerResultsMessage {
+  margin: 0 18px 18px;
+  padding: 14px;
+  border-radius: 8px;
+  background: #f2f6ff;
+  color: $dark-blue;
+  font-family: 'Manrope', sans-serif;
+}
+
+.bookmakerResultsMessage--error {
+  background: #ffecec;
+  color: #8c1f1f;
+}
+
+.matchCell {
+  display: flex;
+  flex-direction: column;
+}
+
+.mutedText {
+  color: #6f7f94;
+  font-size: 0.78rem;
+}
+
+.won {
+  color: #177a2f;
+  font-weight: 700;
+}
+
+.profitPositive {
+  color: #177a2f !important;
+  font-weight: 700;
+}
+
+.profitNegative {
+  color: #a11e1e !important;
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+  .bookmakerResultsPageWrapper .formHeaderWrapper {
+    padding: 10px 10px 4px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .bookmakerResultsControls {
+    min-width: 0;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .bookmakerResultsPlayerFilter {
+    max-width: 100%;
+  }
+}

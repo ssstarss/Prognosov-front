@@ -108,8 +108,12 @@ function Header() {
           <NavLink to="/games" className={'headerLink adminHeaderLink'}>
             Results{' '}
           </NavLink>
+         
           <NavLink to="/prognoses" className={'headerLink'}>
             Мои прогнозы{' '}
+          </NavLink>
+          <NavLink to="/bookmaker-results" className={'headerLink highlightLink'}>
+            Букмекер
           </NavLink>
           <NavLink to="/rules" className={'headerLink'}>
             Как играть{' '}
@@ -178,6 +182,9 @@ function Header() {
           </NavLink>
           <NavLink to="/games" className={'headerLink adminHeaderLink'} onClick={closeMobileMenu}>
             Results
+          </NavLink>
+          <NavLink to="/bookmaker-results" className={'headerLink'} onClick={closeMobileMenu}>
+            Букмекер
           </NavLink>
           <NavLink to="/prognoses" className={'headerLink'} onClick={closeMobileMenu}>
             Мои прогнозы

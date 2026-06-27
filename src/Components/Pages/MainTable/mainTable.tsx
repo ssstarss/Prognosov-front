@@ -8,6 +8,8 @@ import smartBall from '../../../assets/svg/smartBall.png';
 import GameCell from './GameCell';
 import { formatDateString } from '../../../functions/formatDate';
 import AvatarCircle from '../../common/AvatarCircle';
+import PlayerAvatarStatsPanel from './PlayerAvatarStatsPanel';
+import { ENABLE_PLAYER_AVATAR_STATS } from './mainTableFeatures';
 import { useTournamentContext } from '../../../context/TournamentContext';
 import { isGamePrognoseEditable } from '../../../functions/prognoseEditPolicy';
 import { gameByIdFromCompetition } from '../../../functions/competitionGameTiming';
@@ -294,11 +296,16 @@ export default function MainTable() {  const { currentTournament } = useTourname
             <div className="playerWrapper">
               <div className="playerIdentity">
                 <div className="playerAvatarZoom">
-                  <AvatarCircle
-                    userId={user.user.id}
-                    className="playerAvatar"
-                    placeholderClassName="playerAvatarPlaceholder"
-                  />
+                  <div className="playerAvatarZoomMedia">
+                    <AvatarCircle
+                      userId={user.user.id}
+                      className="playerAvatar"
+                      placeholderClassName="playerAvatarPlaceholder"
+                    />
+                    {ENABLE_PLAYER_AVATAR_STATS && (
+                      <PlayerAvatarStatsPanel prognoses={user.prognoses ?? []} />
+                    )}
+                  </div>
                 </div>
                 <a className="playerName">{renderPlayerName(user.user.nickName || user.user.name)}</a>
               </div>

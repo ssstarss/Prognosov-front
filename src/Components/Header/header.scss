@@ -41,7 +41,13 @@ a {
   display: block;
 }
 
-
+.highlightLink {
+  color: $green;
+  font-weight: 700;
+  border : 2px solid $green;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
 
 .mobileNavigationMenu .headerLogoLink {
   display: flex;
